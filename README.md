@@ -1,32 +1,87 @@
-# React + TypeScript + Vite
+# CareerAI - AI-Powered Career Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+CareerAI is an intelligent, modern web application built with **React**, **JavaScript**, and **Vite**. It provides students, job seekers, recruiters, and mentors with personalized tools including AI resume analysis, internship matching, skill gap detection, mock interviews, and career roadmaps.
 
-Currently, two official plugins are available:
+## 🚀 Technology Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **Frontend**: React 19, JavaScript (ES6+), React Router DOM v7
+- **Styling**: Modern Vanilla CSS, CSS Modules & Design Variables
+- **Icons**: Lucide React
+- **Build Tool**: Vite
+- **Linting**: Oxlint
 
-## React Compiler
+---
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 📁 Project Structure
 
-## Expanding the Oxlint configuration
-
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
-
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+```text
+course-project/
+├── public/
+│   └── favicon.svg
+├── src/
+│   ├── assets/
+│   ├── components/
+│   │   ├── AuthPage/
+│   │   │   ├── AuthPage.jsx
+│   │   │   └── AuthPage.css
+│   │   ├── DashboardPage/
+│   │   │   ├── DashboardPage.jsx
+│   │   │   └── DashboardPage.css
+│   │   ├── LandingPage/
+│   │   │   ├── LandingPage.jsx
+│   │   │   └── LandingPage.css
+│   │   ├── LearningPage/
+│   │   │   ├── LearningPage.jsx
+│   │   │   └── LearningPage.css
+│   │   └── ProjectsPage/
+│   │       ├── ProjectsPage.jsx
+│   │       └── ProjectsPage.css
+│   ├── App.css
+│   ├── App.jsx
+│   ├── index.css
+│   └── main.jsx
+├── index.html
+├── package.json
+├── README.md
+└── vite.config.js
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+---
+
+## 🛠️ Getting Started
+
+### Prerequisites
+
+Ensure you have Node.js (v18+) and npm installed.
+
+### Installation
+
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/susmitha8985/saas-.git
+   cd saas-
+   ```
+
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
+
+3. Start the development server:
+   ```bash
+   npm run dev
+   ```
+
+4. Build for production:
+   ```bash
+   npm run build
+   ```
+
+---
+
+## 📜 Available Scripts
+
+- `npm run dev` - Start local development server
+- `npm run build` - Bundle application for production using Vite
+- `npm run preview` - Preview production build locally
+- `npm run lint` - Lint codebase using Oxlint
