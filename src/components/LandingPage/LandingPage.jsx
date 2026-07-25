@@ -87,7 +87,7 @@ export default function LandingPage() {
       <nav className="landing-navbar">
         {/* Brand Logo & Mobile Hamburger */}
         <div className="nav-brand-group">
-          <button onClick={() => setIsMenuOpen(true)} className="icon-btn-clean">
+          <button onClick={() => setIsMenuOpen(true)} className="icon-btn-clean mobile-hamburger-btn" aria-label="Open mobile menu">
             <Menu size={22} color="#0f172a" />
           </button>
 

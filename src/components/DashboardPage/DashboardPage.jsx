@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import {
   Sparkles,
   Search,
@@ -14,7 +14,23 @@ import {
   BarChart3,
   FolderKanban,
   Settings,
-  Check
+  Check,
+  Menu,
+  X,
+  Plus,
+  Upload,
+  Play,
+  CheckCircle2,
+  Clock,
+  ExternalLink,
+  ShieldCheck,
+  Bell,
+  User,
+  Trash2,
+  RefreshCw,
+  Cpu,
+  Layers,
+  ChevronRight
 } from 'lucide-react';
 import '../../App.css';
 import './DashboardPage.css';
@@ -61,10 +77,20 @@ const ROLE_THEMES = {
 
 export default function DashboardPage() {
   const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
   const [selectedRole, setSelectedRole] = useState('Student');
   const [isLoading, setIsLoading] = useState(false);
-  const [activeTab, setActiveTab] = useState('overview'); // 'overview' | 'applications' | 'skills'
+  const [activeTab, setActiveTab] = useState('overview');
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [toast, setToast] = useState(null);
+
+  // Synchronize tab query param with state
+  useEffect(() => {
+    const tabParam = searchParams.get('tab');
+    if (tabParam) {
+      setActiveTab(tabParam);
+    }
+  }, [searchParams]);
 
   const theme = ROLE_THEMES[selectedRole];
 
@@ -79,6 +105,56 @@ export default function DashboardPage() {
     setTimeout(() => setToast(null), 3000);
   };
 
+  const handleTabChange = (tabId, path) => {
+    if (path) {
+      navigate(path);
+    } else {
+      setActiveTab(tabId);
+      setSearchParams({ tab: tabId });
+    }
+    setIsMobileMenuOpen(false);
+  };
+
+  // State data for functional views
+  const [applications, setApplications] = useState([
+    { id: 1, role: 'Data Science Intern', company: 'Google', location: 'Mountain View, CA', status: 'Interview Scheduled', date: 'May 24, 2026', color: '#16a34a', bg: 'rgba(22, 163, 74, 0.1)' },
+    { id: 2, role: 'ML Engineer Intern', company: 'Microsoft', location: 'Redmond, WA', status: 'Under Review', date: 'May 20, 2026', color: '#3b82f6', bg: 'rgba(59, 130, 246, 0.1)' },
+    { id: 3, role: 'Data Analyst Intern', company: 'Deloitte', location: 'New York, NY', status: 'Application Submitted', date: 'May 15, 2026', color: '#64748b', bg: '#f1f5f9' },
+    { id: 4, role: 'AI Research Assistant', company: 'OpenAI', location: 'San Francisco, CA', status: 'Interview Scheduled', date: 'May 10, 2026', color: '#16a34a', bg: 'rgba(22, 163, 74, 0.1)' },
+    { id: 5, role: 'Business Intelligence Intern', company: 'Amazon', location: 'Seattle, WA', status: 'Offer Received', date: 'May 02, 2026', color: '#7c3aed', bg: 'rgba(124, 58, 237, 0.1)' }
+  ]);
+
+  const [internships, setInternships] = useState([
+    { id: 101, title: 'AI & Data Science Summer Intern', company: 'Meta', location: 'Remote', stipend: '$45 - $60 / hr', match: '96%', tags: ['Python', 'PyTorch', 'SQL'], applied: false },
+    { id: 102, title: 'Junior Data Analyst', company: 'Stripe', location: 'San Francisco, CA', stipend: '$40 - $50 / hr', match: '92%', tags: ['SQL', 'Tableau', 'R'], applied: false },
+    { id: 103, title: 'Machine Learning Engineering Intern', company: 'NVIDIA', location: 'Santa Clara, CA', stipend: '$50 - $65 / hr', match: '88%', tags: ['C++', 'CUDA', 'TensorFlow'], applied: false },
+    { id: 104, title: 'Product Analytics Specialist', company: 'Airbnb', location: 'Hybrid', stipend: '$38 - $48 / hr', match: '85%', tags: ['Python', 'A/B Testing', 'Snowflake'], applied: false }
+  ]);
+
+  const [activeMockSession, setActiveMockSession] = useState(null);
+  const [quizModal, setQuizModal] = useState(false);
+
+  // Settings State
+  const [profileSettings, setProfileSettings] = useState({
+    name: 'Arjun Mehta',
+    email: 'arjun.mehta@university.edu',
+    title: 'Data Science & AI Undergraduate',
+    targetRole: 'Data Scientist / ML Engineer',
+    emailNotifications: true,
+    jobAlerts: true,
+    weeklyReport: true
+  });
+
+  const handleApplyInternship = (id) => {
+    setInternships(prev => prev.map(item => item.id === id ? { ...item, applied: true } : item));
+    showNotification('Applied successfully with your AI Resume!');
+  };
+
+  const handleRemoveApp = (id) => {
+    setApplications(prev => prev.filter(a => a.id !== id));
+    showNotification('Application record removed.');
+  };
+
   return (
     <div className="dashboard-wrapper">
       
@@ -90,7 +166,61 @@ export default function DashboardPage() {
         </div>
       )}
 
-      {/* LEFT SIDEBAR NAVIGATION */}
+      {/* MOBILE DRAWER MENU */}
+      {isMobileMenuOpen && (
+        <div className="drawer-overlay" onClick={() => setIsMobileMenuOpen(false)}>
+          <div className="drawer-content" onClick={(e) => e.stopPropagation()}>
+            <div>
+              <div className="drawer-header">
+                <div className="drawer-brand">
+                  <Sparkles size={22} color={theme.accent} />
+                  <span className="drawer-brand-title">CareerAI</span>
+                </div>
+                <button onClick={() => setIsMobileMenuOpen(false)} className="icon-btn-clean">
+                  <X size={24} color="#64748b" />
+                </button>
+              </div>
+
+              <div className="drawer-links">
+                {[
+                  { id: 'overview', label: 'Dashboard', icon: BarChart3 },
+                  { id: 'learning', label: 'Learning Path', icon: BookOpen, path: '/learning' },
+                  { id: 'projects', label: 'Projects', icon: FolderKanban, path: '/projects' },
+                  { id: 'applications', label: 'Applications', icon: Briefcase },
+                  { id: 'internships', label: 'Internships', icon: Target },
+                  { id: 'resume', label: 'AI Resume', icon: FileText },
+                  { id: 'mock', label: 'Mock Interviews', icon: Video },
+                  { id: 'roadmap', label: 'Career Roadmap', icon: Award },
+                  { id: 'skills', label: 'Skill Progress', icon: TrendingUp },
+                  { id: 'settings', label: 'Settings', icon: Settings }
+                ].map((item) => {
+                  const IconComp = item.icon;
+                  const isActive = activeTab === item.id;
+                  return (
+                    <button
+                      key={item.id}
+                      onClick={() => handleTabChange(item.id, item.path)}
+                      className={`sidebar-nav-item ${isActive ? 'active' : ''}`}
+                      style={{
+                        background: isActive ? theme.softBg : 'transparent',
+                        color: isActive ? theme.accent : '#0f172a'
+                      }}
+                    >
+                      <IconComp size={18} /> {item.label}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
+            <button onClick={() => navigate('/')} style={{ background: '#f1f5f9', color: '#0f172a', border: 'none', padding: '0.75rem', borderRadius: '12px', fontWeight: 700, cursor: 'pointer', marginTop: '1.5rem' }}>
+              Back to Home
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* LEFT SIDEBAR NAVIGATION (Desktop) */}
       <aside className="dashboard-sidebar">
         <div>
           {/* Logo */}
@@ -122,13 +252,7 @@ export default function DashboardPage() {
               return (
                 <button
                   key={item.id}
-                  onClick={() => {
-                    if (item.path) {
-                      navigate(item.path);
-                    } else {
-                      setActiveTab(item.id);
-                    }
-                  }}
+                  onClick={() => handleTabChange(item.id, item.path)}
                   className="sidebar-nav-item"
                   style={{
                     background: isActive ? theme.softBg : 'transparent',
@@ -167,18 +291,28 @@ export default function DashboardPage() {
         
         {/* TOP HEADER BAR */}
         <header className="dashboard-header">
-          <div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.2rem' }}>
-              <h1 className="dashboard-title-heading">
-                Welcome back, Arjun! 👋
-              </h1>
-              <span className="role-badge-pill" style={{ background: theme.softBg, border: `1px solid ${theme.border}`, color: theme.accent }}>
-                {theme.badgeText}
-              </span>
+          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+            <button
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="icon-btn-clean mobile-hamburger-btn"
+              style={{ background: '#ffffff', border: '1px solid #cbd5e1', padding: '0.5rem', borderRadius: '10px' }}
+              aria-label="Open navigation menu"
+            >
+              <Menu size={20} color="#0f172a" />
+            </button>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.2rem' }}>
+                <h1 className="dashboard-title-heading">
+                  Welcome back, Arjun! 👋
+                </h1>
+                <span className="role-badge-pill" style={{ background: theme.softBg, border: `1px solid ${theme.border}`, color: theme.accent }}>
+                  {theme.badgeText}
+                </span>
+              </div>
+              <p style={{ color: '#64748b', fontSize: '0.925rem' }}>
+                Track your progress, improve your skills, and land your dream career.
+              </p>
             </div>
-            <p style={{ color: '#64748b', fontSize: '0.925rem' }}>
-              Track your progress, improve your skills, and land your dream career.
-            </p>
           </div>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '1.25rem' }}>
@@ -232,263 +366,631 @@ export default function DashboardPage() {
           </div>
         ) : (
           <>
-            {/* PRIMARY CTA BANNER */}
-            <div className="cta-banner" style={{ background: theme.gradient, boxShadow: `0 15px 35px -5px ${theme.border}` }}>
-              <div>
-                <span className="cta-tag-pill">
-                  <Sparkles size={14} /> Priority Action Suggested
-                </span>
-                <h2 style={{ fontSize: '1.6rem', fontWeight: 800, lineHeight: 1.2, marginBottom: '0.3rem' }}>
-                  {selectedRole === 'Student' && 'Your AI Mock Interview is Ready to Begin'}
-                  {selectedRole === 'Recruiter' && 'Review 12 New Verified Candidate Profiles'}
-                  {selectedRole === 'Mentor' && '3 Mentorship Requests Awaiting Approval'}
-                  {selectedRole === 'Admin' && 'System Performance & Security Check Required'}
-                </h2>
-                <p style={{ opacity: 0.9, fontSize: '0.925rem' }}>
-                  {selectedRole === 'Student' && 'Practice technical & behavioral questions with instant automated AI score analysis.'}
-                  {selectedRole === 'Recruiter' && 'Candidates match your Data Science & Software Engineer opening parameters.'}
-                  {selectedRole === 'Mentor' && 'Help students refine their career roadmaps and technical portfolio.'}
-                  {selectedRole === 'Admin' && 'All platform services operational. Audit log summary ready.'}
-                </p>
-              </div>
+            {/* DYNAMIC TAB VIEW 1: OVERVIEW */}
+            {activeTab === 'overview' && (
+              <>
+                {/* PRIMARY CTA BANNER */}
+                <div className="cta-banner" style={{ background: theme.gradient, boxShadow: `0 15px 35px -5px ${theme.border}` }}>
+                  <div>
+                    <span className="cta-tag-pill">
+                      <Sparkles size={14} /> Priority Action Suggested
+                    </span>
+                    <h2 style={{ fontSize: '1.6rem', fontWeight: 800, lineHeight: 1.2, marginBottom: '0.3rem' }}>
+                      {selectedRole === 'Student' && 'Your AI Mock Interview is Ready to Begin'}
+                      {selectedRole === 'Recruiter' && 'Review 12 New Verified Candidate Profiles'}
+                      {selectedRole === 'Mentor' && '3 Mentorship Requests Awaiting Approval'}
+                      {selectedRole === 'Admin' && 'System Performance & Security Check Required'}
+                    </h2>
+                    <p style={{ opacity: 0.9, fontSize: '0.925rem' }}>
+                      {selectedRole === 'Student' && 'Practice technical & behavioral questions with instant automated AI score analysis.'}
+                      {selectedRole === 'Recruiter' && 'Candidates match your Data Science & Software Engineer opening parameters.'}
+                      {selectedRole === 'Mentor' && 'Help students refine their career roadmaps and technical portfolio.'}
+                      {selectedRole === 'Admin' && 'All platform services operational. Audit log summary ready.'}
+                    </p>
+                  </div>
 
-              <button
-                onClick={() => showNotification(`Executing action: ${theme.primaryCta}`)}
-                className="cta-banner-btn"
-                style={{ color: theme.accent }}
-              >
-                {theme.primaryCta} <ArrowRight size={18} />
-              </button>
-            </div>
+                  <button
+                    onClick={() => {
+                      if (selectedRole === 'Student') handleTabChange('mock');
+                      else showNotification(`Executing action: ${theme.primaryCta}`);
+                    }}
+                    className="cta-banner-btn"
+                    style={{ color: theme.accent }}
+                  >
+                    {theme.primaryCta} <ArrowRight size={18} />
+                  </button>
+                </div>
 
-            {/* UNCLUTTERED 4 CORE SCORE CARDS */}
-            <div className="stats-grid">
-              
-              {/* Card 1: Readiness Score */}
-              <div className="stat-card">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-                  <span style={{ fontSize: '0.875rem', fontWeight: 600, color: '#64748b' }}>Career Readiness Score</span>
-                  <div className="stat-icon-square" style={{ background: theme.softBg, color: theme.accent }}>
-                    <Award size={16} />
+                {/* UNCLUTTERED 4 CORE SCORE CARDS */}
+                <div className="stats-grid">
+                  
+                  {/* Card 1: Readiness Score */}
+                  <div className="stat-card" onClick={() => handleTabChange('roadmap')} style={{ cursor: 'pointer' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+                      <span style={{ fontSize: '0.875rem', fontWeight: 600, color: '#64748b' }}>Career Readiness Score</span>
+                      <div className="stat-icon-square" style={{ background: theme.softBg, color: theme.accent }}>
+                        <Award size={16} />
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem', marginBottom: '0.4rem' }}>
+                      <span style={{ fontSize: '2rem', fontWeight: 800, color: '#0f172a' }}>78</span>
+                      <span style={{ fontSize: '0.925rem', color: '#94a3b8' }}>/100</span>
+                      <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#16a34a', marginLeft: 'auto' }}>+12% vs last mo</span>
+                    </div>
+
+                    <div style={{ width: '100%', height: '8px', background: '#f1f5f9', borderRadius: '999px', overflow: 'hidden', marginTop: '0.75rem' }}>
+                      <div style={{ width: '78%', height: '100%', background: theme.gradient, borderRadius: '999px' }} />
+                    </div>
+                  </div>
+
+                  {/* Card 2: AI Resume Score */}
+                  <div className="stat-card" onClick={() => handleTabChange('resume')} style={{ cursor: 'pointer' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+                      <span style={{ fontSize: '0.875rem', fontWeight: 600, color: '#64748b' }}>AI Resume Score</span>
+                      <div className="stat-icon-square" style={{ background: 'rgba(124, 58, 237, 0.1)', color: '#7c3aed' }}>
+                        <FileText size={16} />
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem', marginBottom: '0.4rem' }}>
+                      <span style={{ fontSize: '2rem', fontWeight: 800, color: '#0f172a' }}>92</span>
+                      <span style={{ fontSize: '0.925rem', color: '#94a3b8' }}>/100</span>
+                      <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#7c3aed', marginLeft: 'auto' }}>ATS Ready</span>
+                    </div>
+
+                    <div style={{ width: '100%', height: '8px', background: '#f1f5f9', borderRadius: '999px', overflow: 'hidden', marginTop: '0.75rem' }}>
+                      <div style={{ width: '92%', height: '100%', background: 'linear-gradient(90deg, #7c3aed, #a855f7)', borderRadius: '999px' }} />
+                    </div>
+                  </div>
+
+                  {/* Card 3: Internship Match */}
+                  <div className="stat-card" onClick={() => handleTabChange('internships')} style={{ cursor: 'pointer' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+                      <span style={{ fontSize: '0.875rem', fontWeight: 600, color: '#64748b' }}>Internship Match</span>
+                      <div className="stat-icon-square" style={{ background: 'rgba(22, 163, 74, 0.1)', color: '#16a34a' }}>
+                        <Target size={16} />
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem', marginBottom: '0.4rem' }}>
+                      <span style={{ fontSize: '2rem', fontWeight: 800, color: '#0f172a' }}>89%</span>
+                      <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#16a34a', marginLeft: 'auto' }}>12 New Matches</span>
+                    </div>
+
+                    <div style={{ width: '100%', height: '8px', background: '#f1f5f9', borderRadius: '999px', overflow: 'hidden', marginTop: '0.75rem' }}>
+                      <div style={{ width: '89%', height: '100%', background: 'linear-gradient(90deg, #16a34a, #22c55e)', borderRadius: '999px' }} />
+                    </div>
+                  </div>
+
+                  {/* Card 4: Skill Progress */}
+                  <div className="stat-card" onClick={() => handleTabChange('skills')} style={{ cursor: 'pointer' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+                      <span style={{ fontSize: '0.875rem', fontWeight: 600, color: '#64748b' }}>Skill Progress</span>
+                      <div className="stat-icon-square" style={{ background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6' }}>
+                        <TrendingUp size={16} />
+                      </div>
+                    </div>
+
+                    <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem', marginBottom: '0.4rem' }}>
+                      <span style={{ fontSize: '2rem', fontWeight: 800, color: '#0f172a' }}>68%</span>
+                      <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#64748b', marginLeft: 'auto' }}>4/6 Modules</span>
+                    </div>
+
+                    <div style={{ width: '100%', height: '8px', background: '#f1f5f9', borderRadius: '999px', overflow: 'hidden', marginTop: '0.75rem' }}>
+                      <div style={{ width: '68%', height: '100%', background: 'linear-gradient(90deg, #3b82f6, #60a5fa)', borderRadius: '999px' }} />
+                    </div>
+                  </div>
+
+                </div>
+
+                {/* LOWER CONTENT GRID: REFINED 2-COLUMN VIEW */}
+                <div className="dashboard-lower-grid">
+                  
+                  {/* Left Column: Applications & Recommendations */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                    
+                    {/* Recent Applications */}
+                    <div className="card-panel">
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                        <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a' }}>Recent Applications</h3>
+                        <button onClick={() => handleTabChange('applications')} style={{ background: 'none', border: 'none', color: theme.accent, fontWeight: 700, fontSize: '0.875rem', cursor: 'pointer' }}>
+                          View All ({applications.length})
+                        </button>
+                      </div>
+
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+                        {applications.slice(0, 3).map((app) => (
+                          <div key={app.id} className="app-item-row">
+                            <div>
+                              <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#0f172a' }}>{app.role}</div>
+                              <div style={{ fontSize: '0.875rem', color: '#64748b', marginTop: '0.15rem' }}>{app.company} • Applied {app.date}</div>
+                            </div>
+
+                            <span style={{
+                              background: app.bg,
+                              color: app.color,
+                              fontWeight: 700,
+                              fontSize: '0.8rem',
+                              padding: '0.35rem 0.85rem',
+                              borderRadius: '9999px'
+                            }}>
+                              {app.status}
+                            </span>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* AI Recommendations */}
+                    <div className="card-panel">
+                      <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a', marginBottom: '1.25rem' }}>
+                        AI Recommendations
+                      </h3>
+
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem', borderRadius: '16px', background: '#f8fafc', borderLeft: `4px solid ${theme.accent}` }}>
+                          <div>
+                            <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#0f172a' }}>Improve your SQL skills</div>
+                            <div style={{ fontSize: '0.875rem', color: '#64748b', marginTop: '0.15rem' }}>Recommended based on your target role</div>
+                          </div>
+                          <button onClick={() => handleTabChange('skills')} style={{ background: theme.softBg, border: 'none', color: theme.accent, fontWeight: 700, fontSize: '0.8rem', padding: '0.35rem 0.75rem', borderRadius: '8px', cursor: 'pointer' }}>Start Practice</button>
+                        </div>
+
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem', borderRadius: '16px', background: '#f8fafc', borderLeft: '4px solid #7c3aed' }}>
+                          <div>
+                            <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#0f172a' }}>Build a Machine Learning project</div>
+                            <div style={{ fontSize: '0.875rem', color: '#64748b', marginTop: '0.15rem' }}>Top skill to boost profile matching by +15%</div>
+                          </div>
+                          <button onClick={() => navigate('/projects')} style={{ background: 'rgba(124, 58, 237, 0.1)', border: 'none', color: '#7c3aed', fontWeight: 700, fontSize: '0.8rem', padding: '0.35rem 0.75rem', borderRadius: '8px', cursor: 'pointer' }}>View Projects</button>
+                        </div>
+                      </div>
+                    </div>
+
+                  </div>
+
+                  {/* Right Column: Daily Checklist & Notifications */}
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                    
+                    {/* Daily Checklist Tasks */}
+                    <div className="card-panel">
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                        <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a' }}>Daily Tasks</h3>
+                        <span style={{ fontSize: '0.875rem', fontWeight: 700, color: theme.accent }}>4/6 Completed</span>
+                      </div>
+
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                        {[
+                          { text: 'Complete Python Module', done: true },
+                          { text: 'Apply to 3 Internships', done: true },
+                          { text: 'Take SQL Assessment', done: false },
+                          { text: 'Update AI Resume', done: true },
+                          { text: 'Attend Mock Interview', done: false },
+                          { text: 'Build Project Portfolio', done: true }
+                        ].map((task, idx) => (
+                          <label
+                            key={idx}
+                            style={{
+                              display: 'flex',
+                              alignItems: 'center',
+                              gap: '0.75rem',
+                              fontSize: '0.925rem',
+                              color: task.done ? '#94a3b8' : '#0f172a',
+                              textDecoration: task.done ? 'line-through' : 'none',
+                              cursor: 'pointer',
+                              padding: '0.4rem 0'
+                            }}
+                          >
+                            <div style={{
+                              width: '20px',
+                              height: '20px',
+                              borderRadius: '6px',
+                              background: task.done ? theme.accent : '#ffffff',
+                              border: task.done ? 'none' : '2px solid #cbd5e1',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              color: '#ffffff'
+                            }}>
+                              {task.done && <Check size={14} />}
+                            </div>
+                            <span style={{ fontWeight: 600 }}>{task.text}</span>
+                          </label>
+                        ))}
+                      </div>
+                    </div>
+
+                    {/* Notifications */}
+                    <div className="card-panel">
+                      <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a', marginBottom: '1rem' }}>
+                        Notifications
+                      </h3>
+
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', fontSize: '0.875rem' }}>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: '#475569' }}>
+                          <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#3b82f6' }} />
+                          <span>You have a new internship match from Google!</span>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: '#475569' }}>
+                          <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#16a34a' }} />
+                          <span>Your resume was viewed by Microsoft recruiters.</span>
+                        </div>
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: '#475569' }}>
+                          <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#f59e0b' }} />
+                          <span>Mock interview feedback is ready for review.</span>
+                        </div>
+                      </div>
+                    </div>
+
                   </div>
                 </div>
+              </>
+            )}
 
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem', marginBottom: '0.4rem' }}>
-                  <span style={{ fontSize: '2rem', fontWeight: 800, color: '#0f172a' }}>78</span>
-                  <span style={{ fontSize: '0.925rem', color: '#94a3b8' }}>/100</span>
-                  <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#16a34a', marginLeft: 'auto' }}>+12% vs last mo</span>
-                </div>
-
-                {/* Animated Progress Bar */}
-                <div style={{ width: '100%', height: '8px', background: '#f1f5f9', borderRadius: '999px', overflow: 'hidden', marginTop: '0.75rem' }}>
-                  <div style={{ width: '78%', height: '100%', background: theme.gradient, borderRadius: '999px' }} />
-                </div>
-              </div>
-
-              {/* Card 2: AI Resume Score */}
-              <div className="stat-card">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-                  <span style={{ fontSize: '0.875rem', fontWeight: 600, color: '#64748b' }}>AI Resume Score</span>
-                  <div className="stat-icon-square" style={{ background: 'rgba(124, 58, 237, 0.1)', color: '#7c3aed' }}>
-                    <FileText size={16} />
+            {/* DYNAMIC TAB VIEW 2: APPLICATIONS */}
+            {activeTab === 'applications' && (
+              <div className="card-panel">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+                  <div>
+                    <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a' }}>Application Tracker</h2>
+                    <p style={{ color: '#64748b', fontSize: '0.9rem' }}>Manage and track all your active job & internship applications.</p>
                   </div>
+                  <button
+                    onClick={() => {
+                      const newApp = { id: Date.now(), role: 'Software Engineer Intern', company: 'Apple', location: 'Cupertino, CA', status: 'Under Review', date: 'Just now', color: '#3b82f6', bg: 'rgba(59, 130, 246, 0.1)' };
+                      setApplications([newApp, ...applications]);
+                      showNotification('Added new sample application record!');
+                    }}
+                    className="gradient-btn"
+                    style={{ padding: '0.65rem 1.25rem', borderRadius: '12px', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+                  >
+                    <Plus size={16} /> Add New Application
+                  </button>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem', marginBottom: '0.4rem' }}>
-                  <span style={{ fontSize: '2rem', fontWeight: 800, color: '#0f172a' }}>92</span>
-                  <span style={{ fontSize: '0.925rem', color: '#94a3b8' }}>/100</span>
-                  <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#7c3aed', marginLeft: 'auto' }}>ATS Ready</span>
-                </div>
-
-                <div style={{ width: '100%', height: '8px', background: '#f1f5f9', borderRadius: '999px', overflow: 'hidden', marginTop: '0.75rem' }}>
-                  <div style={{ width: '92%', height: '100%', background: 'linear-gradient(90deg, #7c3aed, #a855f7)', borderRadius: '999px' }} />
+                <div style={{ overflowX: 'auto' }}>
+                  <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', fontSize: '0.9rem' }}>
+                    <thead>
+                      <tr style={{ borderBottom: '2px solid #e2e8f0', color: '#64748b' }}>
+                        <th style={{ padding: '0.75rem 1rem' }}>Role & Company</th>
+                        <th style={{ padding: '0.75rem 1rem' }}>Location</th>
+                        <th style={{ padding: '0.75rem 1rem' }}>Date Applied</th>
+                        <th style={{ padding: '0.75rem 1rem' }}>Status</th>
+                        <th style={{ padding: '0.75rem 1rem', textAlign: 'right' }}>Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      {applications.map((app) => (
+                        <tr key={app.id} style={{ borderBottom: '1px solid #f1f5f9' }}>
+                          <td style={{ padding: '1rem' }}>
+                            <div style={{ fontWeight: 800, color: '#0f172a' }}>{app.role}</div>
+                            <div style={{ fontSize: '0.8rem', color: '#64748b' }}>{app.company}</div>
+                          </td>
+                          <td style={{ padding: '1rem', color: '#475569' }}>{app.location}</td>
+                          <td style={{ padding: '1rem', color: '#64748b' }}>{app.date}</td>
+                          <td style={{ padding: '1rem' }}>
+                            <span style={{ background: app.bg, color: app.color, fontWeight: 700, fontSize: '0.8rem', padding: '0.35rem 0.85rem', borderRadius: '999px' }}>
+                              {app.status}
+                            </span>
+                          </td>
+                          <td style={{ padding: '1rem', textAlign: 'right' }}>
+                            <button
+                              onClick={() => handleRemoveApp(app.id)}
+                              style={{ background: 'none', border: 'none', color: '#ef4444', cursor: 'pointer', padding: '0.4rem' }}
+                              title="Withdraw / Remove"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
                 </div>
               </div>
+            )}
 
-              {/* Card 3: Internship Match */}
-              <div className="stat-card">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-                  <span style={{ fontSize: '0.875rem', fontWeight: 600, color: '#64748b' }}>Internship Match</span>
-                  <div className="stat-icon-square" style={{ background: 'rgba(22, 163, 74, 0.1)', color: '#16a34a' }}>
-                    <Target size={16} />
-                  </div>
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem', marginBottom: '0.4rem' }}>
-                  <span style={{ fontSize: '2rem', fontWeight: 800, color: '#0f172a' }}>89%</span>
-                  <span style={{ fontSize: '0.85rem', fontWeight: 700, color: '#16a34a', marginLeft: 'auto' }}>12 New Matches</span>
-                </div>
-
-                <div style={{ width: '100%', height: '8px', background: '#f1f5f9', borderRadius: '999px', overflow: 'hidden', marginTop: '0.75rem' }}>
-                  <div style={{ width: '89%', height: '100%', background: 'linear-gradient(90deg, #16a34a, #22c55e)', borderRadius: '999px' }} />
-                </div>
-              </div>
-
-              {/* Card 4: Skill Progress */}
-              <div className="stat-card">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
-                  <span style={{ fontSize: '0.875rem', fontWeight: 600, color: '#64748b' }}>Skill Progress</span>
-                  <div className="stat-icon-square" style={{ background: 'rgba(59, 130, 246, 0.1)', color: '#3b82f6' }}>
-                    <TrendingUp size={16} />
-                  </div>
-                </div>
-
-                <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.5rem', marginBottom: '0.4rem' }}>
-                  <span style={{ fontSize: '2rem', fontWeight: 800, color: '#0f172a' }}>68%</span>
-                  <span style={{ fontSize: '0.85rem', fontWeight: 600, color: '#64748b', marginLeft: 'auto' }}>4/6 Modules</span>
-                </div>
-
-                <div style={{ width: '100%', height: '8px', background: '#f1f5f9', borderRadius: '999px', overflow: 'hidden', marginTop: '0.75rem' }}>
-                  <div style={{ width: '68%', height: '100%', background: 'linear-gradient(90deg, #3b82f6, #60a5fa)', borderRadius: '999px' }} />
-                </div>
-              </div>
-
-            </div>
-
-            {/* LOWER CONTENT GRID: REFINED 2-COLUMN VIEW */}
-            <div className="dashboard-lower-grid">
-              
-              {/* Left Column: Applications & Recommendations */}
+            {/* DYNAMIC TAB VIEW 3: INTERNSHIPS */}
+            {activeTab === 'internships' && (
               <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                
-                {/* Recent Applications */}
                 <div className="card-panel">
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-                    <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a' }}>Recent Applications</h3>
-                    <button onClick={() => setActiveTab('applications')} style={{ background: 'none', border: 'none', color: theme.accent, fontWeight: 700, fontSize: '0.875rem', cursor: 'pointer' }}>
-                      View All
-                    </button>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
+                    <div>
+                      <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a' }}>AI Matched Internships</h2>
+                      <p style={{ color: '#64748b', fontSize: '0.9rem' }}>Verified opportunities tailored for Data Science & Engineering students.</p>
+                    </div>
+                    <span style={{ background: theme.softBg, color: theme.accent, fontWeight: 700, padding: '0.35rem 0.85rem', borderRadius: '999px', fontSize: '0.85rem' }}>
+                      {internships.length} Live Positions
+                    </span>
                   </div>
 
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
-                    {[
-                      { role: 'Data Science Intern', company: 'Google', status: 'Interview Scheduled', date: 'May 24, 2026', color: '#16a34a', bg: 'rgba(22, 163, 74, 0.1)' },
-                      { role: 'ML Engineer Intern', company: 'Microsoft', status: 'Under Review', date: 'May 20, 2026', color: '#3b82f6', bg: 'rgba(59, 130, 246, 0.1)' },
-                      { role: 'Data Analyst Intern', company: 'Deloitte', status: 'Application Submitted', date: 'May 15, 2026', color: '#64748b', bg: '#f1f5f9' }
-                    ].map((app, idx) => (
-                      <div key={idx} className="app-item-row">
+                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '1.25rem' }}>
+                    {internships.map((job) => (
+                      <div key={job.id} style={{ background: '#f8fafc', borderRadius: '18px', border: '1px solid #e2e8f0', padding: '1.25rem', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                         <div>
-                          <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#0f172a' }}>{app.role}</div>
-                          <div style={{ fontSize: '0.875rem', color: '#64748b', marginTop: '0.15rem' }}>{app.company} • Applied {app.date}</div>
+                          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: '0.5rem' }}>
+                            <div>
+                              <h3 style={{ fontSize: '1.05rem', fontWeight: 800, color: '#0f172a' }}>{job.title}</h3>
+                              <span style={{ fontSize: '0.875rem', fontWeight: 700, color: '#64748b' }}>{job.company} • {job.location}</span>
+                            </div>
+                            <span style={{ background: 'rgba(22, 163, 74, 0.1)', color: '#16a34a', fontWeight: 800, fontSize: '0.8rem', padding: '0.2rem 0.6rem', borderRadius: '8px' }}>
+                              {job.match} Match
+                            </span>
+                          </div>
+
+                          <div style={{ fontSize: '0.85rem', color: '#475569', fontWeight: 600, marginBottom: '0.75rem' }}>
+                            💰 {job.stipend}
+                          </div>
+
+                          <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap', marginBottom: '1.25rem' }}>
+                            {job.tags.map((tag, idx) => (
+                              <span key={idx} style={{ background: '#ffffff', border: '1px solid #cbd5e1', color: '#475569', fontSize: '0.75rem', padding: '0.15rem 0.5rem', borderRadius: '6px', fontWeight: 600 }}>
+                                {tag}
+                              </span>
+                            ))}
+                          </div>
                         </div>
 
-                        <span style={{
-                          background: app.bg,
-                          color: app.color,
-                          fontWeight: 700,
-                          fontSize: '0.8rem',
-                          padding: '0.35rem 0.85rem',
-                          borderRadius: '9999px'
-                        }}>
-                          {app.status}
-                        </span>
+                        <button
+                          onClick={() => handleApplyInternship(job.id)}
+                          disabled={job.applied}
+                          style={{
+                            background: job.applied ? '#cbd5e1' : theme.gradient,
+                            color: '#ffffff',
+                            border: 'none',
+                            padding: '0.65rem',
+                            borderRadius: '12px',
+                            fontWeight: 700,
+                            fontSize: '0.875rem',
+                            cursor: job.applied ? 'default' : 'pointer'
+                          }}
+                        >
+                          {job.applied ? '✓ Applied' : '⚡ 1-Click Apply with AI Resume'}
+                        </button>
                       </div>
                     ))}
                   </div>
                 </div>
+              </div>
+            )}
 
-                {/* AI Recommendations */}
-                <div className="card-panel">
-                  <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a', marginBottom: '1.25rem' }}>
-                    AI Recommendations
-                  </h3>
-
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem', borderRadius: '16px', background: '#f8fafc', borderLeft: `4px solid ${theme.accent}` }}>
-                      <div>
-                        <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#0f172a' }}>Improve your SQL skills</div>
-                        <div style={{ fontSize: '0.875rem', color: '#64748b', marginTop: '0.15rem' }}>Recommended based on your target role</div>
-                      </div>
-                      <span style={{ background: theme.softBg, color: theme.accent, fontWeight: 700, fontSize: '0.8rem', padding: '0.25rem 0.65rem', borderRadius: '8px' }}>High Impact</span>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: '1rem', borderRadius: '16px', background: '#f8fafc', borderLeft: '4px solid #7c3aed' }}>
-                      <div>
-                        <div style={{ fontWeight: 800, fontSize: '0.95rem', color: '#0f172a' }}>Build a Machine Learning project</div>
-                        <div style={{ fontSize: '0.875rem', color: '#64748b', marginTop: '0.15rem' }}>Top skill to boost profile matching by +15%</div>
-                      </div>
-                      <span style={{ background: 'rgba(124, 58, 237, 0.1)', color: '#7c3aed', fontWeight: 700, fontSize: '0.8rem', padding: '0.25rem 0.65rem', borderRadius: '8px' }}>Recommended</span>
-                    </div>
+            {/* DYNAMIC TAB VIEW 4: AI RESUME */}
+            {activeTab === 'resume' && (
+              <div className="card-panel">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+                  <div>
+                    <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a' }}>AI Resume Scanner & Builder</h2>
+                    <p style={{ color: '#64748b', fontSize: '0.9rem' }}>ATS optimization, keyword matching, and AI recommendations.</p>
                   </div>
+                  <button
+                    onClick={() => showNotification('Scanning resume against 500+ ATS parsers... Score updated!')}
+                    className="gradient-btn"
+                    style={{ padding: '0.65rem 1.25rem', borderRadius: '12px', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+                  >
+                    <RefreshCw size={16} /> Re-Scan Resume
+                  </button>
                 </div>
 
-              </div>
-
-              {/* Right Column: Daily Checklist & Notifications */}
-              <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                
-                {/* Daily Checklist Tasks */}
-                <div className="card-panel">
-                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
-                    <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a' }}>Daily Tasks</h3>
-                    <span style={{ fontSize: '0.875rem', fontWeight: 700, color: theme.accent }}>4/6 Completed</span>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
+                  {/* ATS Score Box */}
+                  <div style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '20px', border: '1px solid #e2e8f0', textAlign: 'center' }}>
+                    <div style={{ width: '100px', height: '100px', borderRadius: '50%', background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)', color: '#ffffff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem', boxShadow: '0 8px 20px rgba(124, 58, 237, 0.3)' }}>
+                      <span style={{ fontSize: '2rem', fontWeight: 800 }}>92</span>
+                      <span style={{ fontSize: '0.75rem', opacity: 0.8 }}>/ 100</span>
+                    </div>
+                    <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0f172a' }}>ATS Readiness: Excellent</h3>
+                    <p style={{ fontSize: '0.85rem', color: '#64748b', marginTop: '0.2rem' }}>Your resume passes 92% of automated Fortune 500 candidate filters.</p>
                   </div>
 
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                  {/* Section Ratings */}
+                  <div style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '20px', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                    <h4 style={{ fontWeight: 800, color: '#0f172a' }}>Section Breakdown</h4>
                     {[
-                      { text: 'Complete Python Module', done: true },
-                      { text: 'Apply to 3 Internships', done: true },
-                      { text: 'Take SQL Assessment', done: false },
-                      { text: 'Update AI Resume', done: true },
-                      { text: 'Attend Mock Interview', done: false },
-                      { text: 'Build Project Portfolio', done: true }
-                    ].map((task, idx) => (
-                      <label
-                        key={idx}
-                        style={{
-                          display: 'flex',
-                          alignItems: 'center',
-                          gap: '0.75rem',
-                          fontSize: '0.925rem',
-                          color: task.done ? '#94a3b8' : '#0f172a',
-                          textDecoration: task.done ? 'line-through' : 'none',
-                          cursor: 'pointer',
-                          padding: '0.4rem 0'
-                        }}
-                      >
-                        <div style={{
-                          width: '20px',
-                          height: '20px',
-                          borderRadius: '6px',
-                          background: task.done ? theme.accent : '#ffffff',
-                          border: task.done ? 'none' : '2px solid #cbd5e1',
-                          display: 'flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          color: '#ffffff'
-                        }}>
-                          {task.done && <Check size={14} />}
+                      { name: 'Technical Skills Match', score: '95%', color: '#16a34a' },
+                      { name: 'Impact Quantification', score: '88%', color: '#3b82f6' },
+                      { name: 'Formatting & ATS Parsing', score: '98%', color: '#7c3aed' },
+                      { name: 'Action Verbs Density', score: '84%', color: '#d97706' }
+                    ].map((sec, idx) => (
+                      <div key={idx}>
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', fontWeight: 700, marginBottom: '0.25rem' }}>
+                          <span>{sec.name}</span>
+                          <span style={{ color: sec.color }}>{sec.score}</span>
                         </div>
-                        <span style={{ fontWeight: 600 }}>{task.text}</span>
-                      </label>
+                        <div style={{ width: '100%', height: '6px', background: '#e2e8f0', borderRadius: '999px', overflow: 'hidden' }}>
+                          <div style={{ width: sec.score, height: '100%', background: sec.color, borderRadius: '999px' }} />
+                        </div>
+                      </div>
                     ))}
                   </div>
                 </div>
+              </div>
+            )}
 
-                {/* Notifications */}
-                <div className="card-panel">
-                  <h3 style={{ fontSize: '1.15rem', fontWeight: 800, color: '#0f172a', marginBottom: '1rem' }}>
-                    Notifications
-                  </h3>
-
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.85rem', fontSize: '0.875rem' }}>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: '#475569' }}>
-                      <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#3b82f6' }} />
-                      <span>You have a new internship match from Google!</span>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: '#475569' }}>
-                      <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#16a34a' }} />
-                      <span>Your resume was viewed by Microsoft recruiters.</span>
-                    </div>
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: '#475569' }}>
-                      <div style={{ width: '8px', height: '8px', borderRadius: '50%', background: '#f59e0b' }} />
-                      <span>Mock interview feedback is ready for review.</span>
-                    </div>
+            {/* DYNAMIC TAB VIEW 5: MOCK INTERVIEWS */}
+            {activeTab === 'mock' && (
+              <div className="card-panel">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+                  <div>
+                    <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a' }}>AI Mock Interview Studio</h2>
+                    <p style={{ color: '#64748b', fontSize: '0.9rem' }}>Practice real interview questions with voice AI & detailed scoring feedback.</p>
                   </div>
                 </div>
 
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem' }}>
+                  {[
+                    { title: 'Python & Data Structures', level: 'Intermediate', duration: '25 mins', questions: 5, icon: Cpu },
+                    { title: 'Data Science & Machine Learning', level: 'Advanced', duration: '35 mins', questions: 8, icon: Layers },
+                    { title: 'Behavioral & Leadership', level: 'All Levels', duration: '20 mins', questions: 4, icon: User },
+                    { title: 'System Design Basics', level: 'Intermediate', duration: '40 mins', questions: 3, icon: Globe }
+                  ].map((track, idx) => {
+                    const IconComp = track.icon || Video;
+                    return (
+                      <div key={idx} style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '20px', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                        <div>
+                          <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: theme.softBg, color: theme.accent, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
+                            <IconComp size={20} />
+                          </div>
+                          <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.4rem' }}>{track.title}</h3>
+                          <div style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '1rem' }}>
+                            ⏱️ {track.duration} • ❓ {track.questions} questions
+                          </div>
+                        </div>
+
+                        <button
+                          onClick={() => showNotification(`Starting AI Mock Session for: ${track.title}`)}
+                          className="gradient-btn"
+                          style={{ padding: '0.65rem', borderRadius: '12px', fontSize: '0.875rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem' }}
+                        >
+                          <Play size={16} /> Start Practice
+                        </button>
+                      </div>
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            )}
+
+            {/* DYNAMIC TAB VIEW 6: CAREER ROADMAP */}
+            {activeTab === 'roadmap' && (
+              <div className="card-panel">
+                <div style={{ marginBottom: '1.5rem' }}>
+                  <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a' }}>Data Scientist Career Roadmap</h2>
+                  <p style={{ color: '#64748b', fontSize: '0.9rem' }}>Step-by-step milestone path to land high-paying AI & Data Scientist roles.</p>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', position: 'relative' }}>
+                  {[
+                    { step: '01', title: 'Programming & Data Foundations', desc: 'Master Python, SQL, Git & Data Structures', status: 'Completed', done: true },
+                    { step: '02', title: 'Data Analysis & Visualization', desc: 'Pandas, NumPy, Matplotlib & Exploratory Analysis', status: 'Completed', done: true },
+                    { step: '03', title: 'Machine Learning Models', desc: 'Supervised/Unsupervised Learning, Scikit-Learn', status: 'In Progress', current: true },
+                    { step: '04', title: 'Deep Learning & Neural Networks', desc: 'PyTorch, Transformers & Computer Vision', status: 'Next Up' },
+                    { step: '05', title: 'Production Capstone & MLOps', desc: 'Deploy AI models with FastAPI, Docker & Cloud', status: 'Locked' }
+                  ].map((node, idx) => (
+                    <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', padding: '1.25rem', borderRadius: '18px', background: node.current ? theme.softBg : '#f8fafc', border: node.current ? `2px solid ${theme.accent}` : '1px solid #e2e8f0' }}>
+                      <div style={{ width: '44px', height: '44px', borderRadius: '14px', background: node.done ? '#16a34a' : node.current ? theme.accent : '#e2e8f0', color: '#ffffff', fontWeight: 800, fontSize: '1.1rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                        {node.done ? <Check size={20} /> : node.step}
+                      </div>
+                      <div style={{ flex: 1 }}>
+                        <div style={{ fontWeight: 800, fontSize: '1.05rem', color: '#0f172a' }}>{node.title}</div>
+                        <div style={{ fontSize: '0.875rem', color: '#64748b', marginTop: '0.2rem' }}>{node.desc}</div>
+                      </div>
+                      <span style={{ fontWeight: 700, fontSize: '0.8rem', padding: '0.3rem 0.75rem', borderRadius: '999px', background: node.done ? 'rgba(22, 163, 74, 0.1)' : node.current ? 'rgba(79, 70, 229, 0.15)' : '#e2e8f0', color: node.done ? '#16a34a' : node.current ? theme.accent : '#64748b' }}>
+                        {node.status}
+                      </span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* DYNAMIC TAB VIEW 7: SKILLS */}
+            {activeTab === 'skills' && (
+              <div className="card-panel">
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+                  <div>
+                    <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a' }}>Skill Analytics & Benchmarks</h2>
+                    <p style={{ color: '#64748b', fontSize: '0.9rem' }}>Real-time proficiency scoring based on quizzes and project submissions.</p>
+                  </div>
+                  <button
+                    onClick={() => showNotification('Launching SQL & Python Speed Quiz...')}
+                    className="gradient-btn"
+                    style={{ padding: '0.65rem 1.25rem', borderRadius: '12px', fontSize: '0.875rem' }}
+                  >
+                    Take Skill Quiz
+                  </button>
+                </div>
+
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.25rem' }}>
+                  {[
+                    { name: 'Python Programming', level: '92%', status: 'Advanced', color: '#4f46e5' },
+                    { name: 'SQL & Database Design', level: '85%', status: 'Proficient', color: '#059669' },
+                    { name: 'Machine Learning (Scikit-Learn)', level: '70%', status: 'Intermediate', color: '#d97706' },
+                    { name: 'Data Visualization (Plotly)', level: '78%', status: 'Proficient', color: '#7c3aed' },
+                    { name: 'Deep Learning (PyTorch)', level: '55%', status: 'Learning', color: '#e11d48' },
+                    { name: 'A/B Testing & Statistics', level: '65%', status: 'Intermediate', color: '#0284c7' }
+                  ].map((skill, idx) => (
+                    <div key={idx} style={{ background: '#f8fafc', padding: '1.25rem', borderRadius: '18px', border: '1px solid #e2e8f0' }}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.6rem' }}>
+                        <span style={{ fontWeight: 800, color: '#0f172a', fontSize: '0.95rem' }}>{skill.name}</span>
+                        <span style={{ fontWeight: 800, color: skill.color, fontSize: '0.9rem' }}>{skill.level}</span>
+                      </div>
+                      <div style={{ width: '100%', height: '8px', background: '#e2e8f0', borderRadius: '999px', overflow: 'hidden', marginBottom: '0.6rem' }}>
+                        <div style={{ width: skill.level, height: '100%', background: skill.color, borderRadius: '999px' }} />
+                      </div>
+                      <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#64748b' }}>Proficiency: {skill.status}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* DYNAMIC TAB VIEW 8: SETTINGS */}
+            {activeTab === 'settings' && (
+              <div className="card-panel" style={{ maxWidth: '700px' }}>
+                <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.3rem' }}>Account Settings</h2>
+                <p style={{ color: '#64748b', fontSize: '0.9rem', marginBottom: '1.5rem' }}>Manage your profile preferences and role integrations.</p>
+
+                <form onSubmit={(e) => { e.preventDefault(); showNotification('Settings saved successfully!'); }} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                  <div>
+                    <label style={{ fontSize: '0.85rem', fontWeight: 700, color: '#475569', display: 'block', marginBottom: '0.4rem' }}>Full Name</label>
+                    <input
+                      type="text"
+                      value={profileSettings.name}
+                      onChange={(e) => setProfileSettings({ ...profileSettings, name: e.target.value })}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '0.9rem', outline: 'none' }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ fontSize: '0.85rem', fontWeight: 700, color: '#475569', display: 'block', marginBottom: '0.4rem' }}>Email Address</label>
+                    <input
+                      type="email"
+                      value={profileSettings.email}
+                      onChange={(e) => setProfileSettings({ ...profileSettings, email: e.target.value })}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '0.9rem', outline: 'none' }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ fontSize: '0.85rem', fontWeight: 700, color: '#475569', display: 'block', marginBottom: '0.4rem' }}>Target Career Role</label>
+                    <input
+                      type="text"
+                      value={profileSettings.targetRole}
+                      onChange={(e) => setProfileSettings({ ...profileSettings, targetRole: e.target.value })}
+                      style={{ width: '100%', padding: '0.75rem', borderRadius: '12px', border: '1px solid #cbd5e1', fontSize: '0.9rem', outline: 'none' }}
+                    />
+                  </div>
+
+                  <div style={{ paddingTop: '1rem', borderTop: '1px solid #e2e8f0' }}>
+                    <h4 style={{ fontWeight: 800, color: '#0f172a', marginBottom: '0.75rem' }}>Notification Preferences</h4>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer', marginBottom: '0.6rem' }}>
+                      <input
+                        type="checkbox"
+                        checked={profileSettings.emailNotifications}
+                        onChange={(e) => setProfileSettings({ ...profileSettings, emailNotifications: e.target.checked })}
+                      />
+                      <span style={{ fontSize: '0.9rem', fontWeight: 600, color: '#0f172a' }}>Email alerts for new internship matches</span>
+                    </label>
+                    <label style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', cursor: 'pointer' }}>
+                      <input
+                        type="checkbox"
+                        checked={profileSettings.weeklyReport}
+                        onChange={(e) => setProfileSettings({ ...profileSettings, weeklyReport: e.target.checked })}
+                      />
+                      <span style={{ fontSize: '0.9rem', fontWeight: 600, color: '#0f172a' }}>Weekly skill progress digest</span>
+                    </label>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="gradient-btn"
+                    style={{ padding: '0.8rem', borderRadius: '12px', fontWeight: 700, fontSize: '0.9rem', marginTop: '0.5rem' }}
+                  >
+                    Save Preferences
+                  </button>
+                </form>
+              </div>
+            )}
           </>
         )}
       </main>

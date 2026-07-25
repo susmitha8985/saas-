@@ -306,3 +306,24 @@
   background: #f8fafc;
   border: 1px solid #f1f5f9;
 }
+
+.mobile-hamburger-btn {
+  display: flex;
+}
+
+@media (min-width: 1024px) {
+  .mobile-hamburger-btn {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  .dashboard-sidebar {
+    display: none;
+  }
+  .dashboard-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+  }
+}

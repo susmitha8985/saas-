@@ -58,6 +58,16 @@
   align-items: center;
 }
 
+.mobile-hamburger-btn {
+  display: flex;
+}
+
+@media (min-width: 769px) {
+  .mobile-hamburger-btn {
+    display: none !important;
+  }
+}
+
 .drawer-links {
   display: flex;
   flex-direction: column;

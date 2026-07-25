@@ -99,3 +99,19 @@
   justify-content: center;
   color: #ffffff;
 }
+
+.mobile-hamburger-btn {
+  display: flex;
+}
+
+@media (min-width: 1024px) {
+  .mobile-hamburger-btn {
+    display: none !important;
+  }
+}
+
+@media (max-width: 1023px) {
+  .projects-sidebar {
+    display: none;
+  }
+}

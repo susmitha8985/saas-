@@ -54,14 +54,20 @@ export default function LearningPage() {
                 <button onClick={() => { navigate('/learning'); setIsMobileMenuOpen(false); }} className="sidebar-nav-item active">
                   <BookOpen size={18} /> Learning Path
                 </button>
-                <button onClick={() => { navigate('/auth?mode=signin'); setIsMobileMenuOpen(false); }} className="sidebar-nav-item">
+                <button onClick={() => { navigate('/projects'); setIsMobileMenuOpen(false); }} className="sidebar-nav-item">
+                  <Award size={18} /> Projects
+                </button>
+                <button onClick={() => { navigate('/dashboard?tab=applications'); setIsMobileMenuOpen(false); }} className="sidebar-nav-item">
                   <Briefcase size={18} /> Applications
                 </button>
-                <button onClick={() => { navigate('/auth?mode=signin'); setIsMobileMenuOpen(false); }} className="sidebar-nav-item">
+                <button onClick={() => { navigate('/dashboard?tab=resume'); setIsMobileMenuOpen(false); }} className="sidebar-nav-item">
                   <FileText size={18} /> AI Resume
                 </button>
-                <button onClick={() => { navigate('/auth?mode=signin'); setIsMobileMenuOpen(false); }} className="sidebar-nav-item">
+                <button onClick={() => { navigate('/dashboard?tab=mock'); setIsMobileMenuOpen(false); }} className="sidebar-nav-item">
                   <Video size={18} /> Mock Interviews
+                </button>
+                <button onClick={() => { navigate('/dashboard?tab=roadmap'); setIsMobileMenuOpen(false); }} className="sidebar-nav-item">
+                  <Award size={18} /> Career Roadmap
                 </button>
               </div>
             </div>
@@ -88,14 +94,14 @@ export default function LearningPage() {
           <div className="sidebar-nav-group">
             {[
               { label: 'Dashboard', icon: BarChart3, path: '/dashboard' },
-              { label: 'AI Resume', icon: FileText, path: '/auth?mode=signin' },
-              { label: 'Applications', icon: Briefcase, path: '/auth?mode=signin' },
-              { label: 'Internships', icon: Target, path: '/auth?mode=signin' },
               { label: 'Learning', icon: BookOpen, path: '/learning', active: true },
               { label: 'Projects', icon: Award, path: '/projects' },
-              { label: 'Mock Interviews', icon: Video, path: '/auth?mode=signin' },
-              { label: 'Career Roadmap', icon: Award, path: '/auth?mode=signin' },
-              { label: 'Analytics', icon: TrendingUp, path: '/auth?mode=signin' }
+              { label: 'Applications', icon: Briefcase, path: '/dashboard?tab=applications' },
+              { label: 'Internships', icon: Target, path: '/dashboard?tab=internships' },
+              { label: 'AI Resume', icon: FileText, path: '/dashboard?tab=resume' },
+              { label: 'Mock Interviews', icon: Video, path: '/dashboard?tab=mock' },
+              { label: 'Career Roadmap', icon: Award, path: '/dashboard?tab=roadmap' },
+              { label: 'Analytics', icon: TrendingUp, path: '/dashboard?tab=skills' }
             ].map((item, idx) => {
               const IconComp = item.icon;
               return (
@@ -138,8 +144,9 @@ export default function LearningPage() {
           <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <button
               onClick={() => setIsMobileMenuOpen(true)}
-              className="icon-btn-clean"
+              className="icon-btn-clean mobile-hamburger-btn"
               style={{ background: '#ffffff', border: '1px solid #cbd5e1', padding: '0.5rem', borderRadius: '10px' }}
+              aria-label="Open menu"
             >
               <Menu size={20} color="#0f172a" />
             </button>
