@@ -103,6 +103,7 @@ export default function LandingPage() {
 
         {/* Center Nav Links */}
         <div className="nav-center-links">
+          <button onClick={() => navigate('/overview')} className="nav-btn-link">Overview</button>
           <button onClick={() => navigate('/dashboard')} className="nav-btn-link">Dashboard</button>
           <button onClick={() => navigate('/learning')} className="nav-btn-link nav-btn-active">Learning</button>
           <a href="#features" className="nav-anchor-link">Features</a>

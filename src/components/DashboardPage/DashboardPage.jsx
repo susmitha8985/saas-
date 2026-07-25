@@ -237,6 +237,7 @@ export default function DashboardPage() {
           <div className="sidebar-nav-group">
             {[
               { id: 'overview', label: 'Dashboard', icon: BarChart3 },
+              { id: 'portfolio', label: 'Portfolio Overview', icon: User, path: '/overview' },
               { id: 'learning', label: 'Learning Path', icon: BookOpen, path: '/learning' },
               { id: 'projects', label: 'Projects', icon: FolderKanban, path: '/projects' },
               { id: 'applications', label: 'Applications', icon: Briefcase },
