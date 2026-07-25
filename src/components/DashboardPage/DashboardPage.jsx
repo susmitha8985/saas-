@@ -32,6 +32,9 @@ import {
   Layers,
   ChevronRight
 } from 'lucide-react';
+import ResumeBuilderPage from '../ResumeBuilderPage/ResumeBuilderPage';
+import MockInterviewPage from '../MockInterviewPage/MockInterviewPage';
+import CareerRoadmapPage from '../CareerRoadmapPage/CareerRoadmapPage';
 import '../../App.css';
 import './DashboardPage.css';
 
@@ -757,131 +760,17 @@ export default function DashboardPage() {
 
             {/* DYNAMIC TAB VIEW 4: AI RESUME */}
             {activeTab === 'resume' && (
-              <div className="card-panel">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
-                  <div>
-                    <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a' }}>AI Resume Scanner & Builder</h2>
-                    <p style={{ color: '#64748b', fontSize: '0.9rem' }}>ATS optimization, keyword matching, and AI recommendations.</p>
-                  </div>
-                  <button
-                    onClick={() => showNotification('Scanning resume against 500+ ATS parsers... Score updated!')}
-                    className="gradient-btn"
-                    style={{ padding: '0.65rem 1.25rem', borderRadius: '12px', fontSize: '0.875rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
-                  >
-                    <RefreshCw size={16} /> Re-Scan Resume
-                  </button>
-                </div>
-
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '1.5rem' }}>
-                  {/* ATS Score Box */}
-                  <div style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '20px', border: '1px solid #e2e8f0', textAlign: 'center' }}>
-                    <div style={{ width: '100px', height: '100px', borderRadius: '50%', background: 'linear-gradient(135deg, #7c3aed 0%, #a855f7 100%)', color: '#ffffff', display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', margin: '0 auto 1rem', boxShadow: '0 8px 20px rgba(124, 58, 237, 0.3)' }}>
-                      <span style={{ fontSize: '2rem', fontWeight: 800 }}>92</span>
-                      <span style={{ fontSize: '0.75rem', opacity: 0.8 }}>/ 100</span>
-                    </div>
-                    <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0f172a' }}>ATS Readiness: Excellent</h3>
-                    <p style={{ fontSize: '0.85rem', color: '#64748b', marginTop: '0.2rem' }}>Your resume passes 92% of automated Fortune 500 candidate filters.</p>
-                  </div>
-
-                  {/* Section Ratings */}
-                  <div style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '20px', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
-                    <h4 style={{ fontWeight: 800, color: '#0f172a' }}>Section Breakdown</h4>
-                    {[
-                      { name: 'Technical Skills Match', score: '95%', color: '#16a34a' },
-                      { name: 'Impact Quantification', score: '88%', color: '#3b82f6' },
-                      { name: 'Formatting & ATS Parsing', score: '98%', color: '#7c3aed' },
-                      { name: 'Action Verbs Density', score: '84%', color: '#d97706' }
-                    ].map((sec, idx) => (
-                      <div key={idx}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.85rem', fontWeight: 700, marginBottom: '0.25rem' }}>
-                          <span>{sec.name}</span>
-                          <span style={{ color: sec.color }}>{sec.score}</span>
-                        </div>
-                        <div style={{ width: '100%', height: '6px', background: '#e2e8f0', borderRadius: '999px', overflow: 'hidden' }}>
-                          <div style={{ width: sec.score, height: '100%', background: sec.color, borderRadius: '999px' }} />
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              </div>
+              <ResumeBuilderPage />
             )}
 
             {/* DYNAMIC TAB VIEW 5: MOCK INTERVIEWS */}
             {activeTab === 'mock' && (
-              <div className="card-panel">
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
-                  <div>
-                    <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a' }}>AI Mock Interview Studio</h2>
-                    <p style={{ color: '#64748b', fontSize: '0.9rem' }}>Practice real interview questions with voice AI & detailed scoring feedback.</p>
-                  </div>
-                </div>
-
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))', gap: '1.25rem' }}>
-                  {[
-                    { title: 'Python & Data Structures', level: 'Intermediate', duration: '25 mins', questions: 5, icon: Cpu },
-                    { title: 'Data Science & Machine Learning', level: 'Advanced', duration: '35 mins', questions: 8, icon: Layers },
-                    { title: 'Behavioral & Leadership', level: 'All Levels', duration: '20 mins', questions: 4, icon: User },
-                    { title: 'System Design Basics', level: 'Intermediate', duration: '40 mins', questions: 3, icon: Globe }
-                  ].map((track, idx) => {
-                    const IconComp = track.icon || Video;
-                    return (
-                      <div key={idx} style={{ background: '#f8fafc', padding: '1.5rem', borderRadius: '20px', border: '1px solid #e2e8f0', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                        <div>
-                          <div style={{ width: '40px', height: '40px', borderRadius: '12px', background: theme.softBg, color: theme.accent, display: 'flex', alignItems: 'center', justifyContent: 'center', marginBottom: '1rem' }}>
-                            <IconComp size={20} />
-                          </div>
-                          <h3 style={{ fontSize: '1.1rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.4rem' }}>{track.title}</h3>
-                          <div style={{ fontSize: '0.85rem', color: '#64748b', marginBottom: '1rem' }}>
-                            ⏱️ {track.duration} • ❓ {track.questions} questions
-                          </div>
-                        </div>
-
-                        <button
-                          onClick={() => showNotification(`Starting AI Mock Session for: ${track.title}`)}
-                          className="gradient-btn"
-                          style={{ padding: '0.65rem', borderRadius: '12px', fontSize: '0.875rem', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.4rem' }}
-                        >
-                          <Play size={16} /> Start Practice
-                        </button>
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
+              <MockInterviewPage />
             )}
 
             {/* DYNAMIC TAB VIEW 6: CAREER ROADMAP */}
             {activeTab === 'roadmap' && (
-              <div className="card-panel">
-                <div style={{ marginBottom: '1.5rem' }}>
-                  <h2 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a' }}>Data Scientist Career Roadmap</h2>
-                  <p style={{ color: '#64748b', fontSize: '0.9rem' }}>Step-by-step milestone path to land high-paying AI & Data Scientist roles.</p>
-                </div>
-
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', position: 'relative' }}>
-                  {[
-                    { step: '01', title: 'Programming & Data Foundations', desc: 'Master Python, SQL, Git & Data Structures', status: 'Completed', done: true },
-                    { step: '02', title: 'Data Analysis & Visualization', desc: 'Pandas, NumPy, Matplotlib & Exploratory Analysis', status: 'Completed', done: true },
-                    { step: '03', title: 'Machine Learning Models', desc: 'Supervised/Unsupervised Learning, Scikit-Learn', status: 'In Progress', current: true },
-                    { step: '04', title: 'Deep Learning & Neural Networks', desc: 'PyTorch, Transformers & Computer Vision', status: 'Next Up' },
-                    { step: '05', title: 'Production Capstone & MLOps', desc: 'Deploy AI models with FastAPI, Docker & Cloud', status: 'Locked' }
-                  ].map((node, idx) => (
-                    <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '1.25rem', padding: '1.25rem', borderRadius: '18px', background: node.current ? theme.softBg : '#f8fafc', border: node.current ? `2px solid ${theme.accent}` : '1px solid #e2e8f0' }}>
-                      <div style={{ width: '44px', height: '44px', borderRadius: '14px', background: node.done ? '#16a34a' : node.current ? theme.accent : '#e2e8f0', color: '#ffffff', fontWeight: 800, fontSize: '1.1rem', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                        {node.done ? <Check size={20} /> : node.step}
-                      </div>
-                      <div style={{ flex: 1 }}>
-                        <div style={{ fontWeight: 800, fontSize: '1.05rem', color: '#0f172a' }}>{node.title}</div>
-                        <div style={{ fontSize: '0.875rem', color: '#64748b', marginTop: '0.2rem' }}>{node.desc}</div>
-                      </div>
-                      <span style={{ fontWeight: 700, fontSize: '0.8rem', padding: '0.3rem 0.75rem', borderRadius: '999px', background: node.done ? 'rgba(22, 163, 74, 0.1)' : node.current ? 'rgba(79, 70, 229, 0.15)' : '#e2e8f0', color: node.done ? '#16a34a' : node.current ? theme.accent : '#64748b' }}>
-                        {node.status}
-                      </span>
-                    </div>
-                  ))}
-                </div>
-              </div>
+              <CareerRoadmapPage />
             )}
 
             {/* DYNAMIC TAB VIEW 7: SKILLS */}
