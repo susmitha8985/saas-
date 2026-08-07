@@ -1,24 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
-import confetti from 'canvas-confetti';
 import {
-  User,
-  Mail,
-  Lock,
-  Eye,
-  EyeOff,
-  ArrowRight,
-  CheckCircle2,
-  ShieldCheck,
-  Sparkles,
-  Rocket,
-  GraduationCap,
-  Briefcase,
-  ChevronRight,
-  TrendingUp,
-  Target
+  Search,
+  ShoppingCart,
+  Globe,
+  ChevronDown,
+  X,
+  Menu,
+  GraduationCap
 } from 'lucide-react';
-import '../../App.css';
 import './AuthPage.css';
 
 export default function AuthPage() {
@@ -26,539 +16,277 @@ export default function AuthPage() {
   const navigate = useNavigate();
 
   const initialMode = searchParams.get('mode') === 'signin' ? 'signin' : 'signup';
-  const [authMode, setAuthMode] = useState(initialMode);
-  const [currentStep, setCurrentStep] = useState(1);
-  const [showPassword, setShowPassword] = useState(false);
-  const [toastMessage, setToastMessage] = useState(null);
+  const [authMode, setAuthMode] = useState(initialMode); // 'signup', 'signin', 'signin_email'
+  
+  // Form fields
+  const [fullName, setFullName] = useState('');
+  const [email, setEmail] = useState('');
+  const [sendOffers, setSendOffers] = useState(true);
 
   useEffect(() => {
     const mode = searchParams.get('mode');
-    if (mode === 'signin' || mode === 'signup') {
-      setAuthMode(mode);
+    if (mode === 'signin') {
+      setAuthMode('signin');
+    } else if (mode === 'signup') {
+      setAuthMode('signup');
     }
   }, [searchParams]);
 
-  const [formData, setFormData] = useState({
-    fullName: '',
-    email: '',
-    password: '',
-    role: '',
-    industry: '',
-    location: '',
-    experience: '1-3 years',
-    degree: '',
-    university: '',
-    gradYear: '2025',
-    skills: ['React', 'JavaScript', 'Data Analysis'],
-    rememberMe: true,
-  });
-
-  const triggerToast = (msg) => {
-    setToastMessage(msg);
-    setTimeout(() => setToastMessage(null), 3000);
-  };
-
-  // Password validations
-  const passLength = formData.password.length >= 8;
-  const passUpper = /[A-Z]/.test(formData.password);
-  const passNumber = /[0-9]/.test(formData.password);
-  const passSpecial = /[^A-Za-z0-9]/.test(formData.password);
-
-  const score = [passLength, passUpper, passNumber, passSpecial].filter(Boolean).length;
-
-  const getStrengthLabel = () => {
-    if (score <= 1) return { label: 'Weak', color: '#ef4444' };
-    if (score === 2 || score === 3) return { label: 'Medium', color: '#f59e0b' };
-    return { label: 'Strong', color: '#22c55e' };
-  };
-
-  const handleNextStep = (e) => {
+  const handleSubmit = (e) => {
     e.preventDefault();
-    if (authMode === 'signin') {
-      triggerToast('Signed in successfully! Redirecting to dashboard...');
-      return;
-    }
-
-    if (currentStep < 4) {
-      const next = currentStep + 1;
-      setCurrentStep(next);
-      if (next === 4) {
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 }
-        });
-      }
-    }
-  };
-
-  const handleSSOLogin = (provider) => {
-    triggerToast(`Connecting to ${provider}... Redirecting to auth portal.`);
-  };
-
-  const availableSkills = ['React', 'JavaScript', 'Node.js', 'Python', 'Data Science', 'UX Design', 'AI/ML', 'Product Management'];
-
-  const toggleSkill = (skill) => {
-    setFormData(prev => ({
-      ...prev,
-      skills: prev.skills.includes(skill)
-        ? prev.skills.filter(s => s !== skill)
-        : [...prev.skills, skill]
-    }));
+    // Simulate instant successful authentication
+    navigate('/dashboard');
   };
 
   return (
-    <div className="career-app-wrapper">
-      {/* Top Brand Navbar */}
-      <header className="auth-header">
-        <div onClick={() => navigate('/')} className="auth-logo">
-          <div className="auth-logo-icon">
-            <Sparkles size={22} />
+    <div className="udemy-auth-root">
+      
+      {/* 1. HEADER NAVBAR */}
+      <header className="udemy-in-header">
+        <button className="mobile-hamburger-btn" aria-label="Toggle Menu">
+          <Menu size={22} />
+        </button>
+
+        <div onClick={() => navigate('/')} className="in-brand-wrap" title="CareerHub Home">
+          <div className="in-brand-icon">
+            <GraduationCap size={22} color="#ffffff" />
           </div>
-          <span className="auth-logo-text">
-            Career<span className="auth-logo-text-accent">AI</span>
+          <span className="in-brand-title">
+            Career<span className="purple-txt">Hub</span>
           </span>
         </div>
 
-        <div>
-          {authMode === 'signin' ? (
-            <button
-              type="button"
-              onClick={() => { setAuthMode('signup'); setCurrentStep(1); }}
-              className="auth-nav-btn"
-            >
-              New here? <span className="auth-logo-text-accent">Sign up</span> <ArrowRight size={16} />
-            </button>
-          ) : (
-            <button
-              type="button"
-              onClick={() => setAuthMode('signin')}
-              className="auth-nav-btn"
-            >
-              Already registered? <span className="auth-logo-text-accent">Log in</span> <ArrowRight size={16} />
-            </button>
-          )}
+        <button onClick={() => navigate('/')} className="in-nav-btn hide-mobile">
+          Explore <ChevronDown size={14} style={{ marginLeft: 2 }} />
+        </button>
+        <button onClick={() => navigate('/overview')} className="in-nav-btn hide-mobile">
+          Subscribe
+        </button>
+
+        <div className="in-search-container hide-mobile">
+          <div className="in-search-box">
+            <Search size={18} className="in-search-icon" />
+            <input type="text" placeholder="Search for anything..." />
+          </div>
+        </div>
+
+        <div className="in-nav-actions">
+          <button className="in-nav-txt-link hide-tablet">CareerHub Business</button>
+          <button className="in-nav-txt-link hide-tablet">Teach on CareerHub</button>
+
+          <button onClick={() => navigate('/')} className="in-icon-btn" title="Shopping Cart">
+            <ShoppingCart size={20} />
+          </button>
+
+          <button
+            onClick={() => setAuthMode('signin')}
+            className={`in-btn-login ${authMode === 'signin' || authMode === 'signin_email' ? 'active-tab' : ''}`}
+          >
+            Log in
+          </button>
+          <button
+            onClick={() => setAuthMode('signup')}
+            className="in-btn-signup"
+          >
+            Sign up
+          </button>
+          <button className="in-btn-globe" title="Change Language">
+            <Globe size={18} />
+          </button>
         </div>
       </header>
 
-      {/* Main Glass Card Container */}
-      <div className="auth-card-container">
-        
-        {/* LEFT PANEL: Branding + 3D Robot Showcase */}
-        <div className="left-panel">
-          <div>
-            <div className="auth-pill-badge">
-              <Sparkles size={14} /> AI-Powered Career Platform
+      {/* 2. SPLIT SCREEN AUTH CONTAINER */}
+      <main className="auth-main-container">
+        <div className="auth-split-wrapper">
+          
+          {/* LEFT COLUMN: CUSTOM AI GENERATED 3D ARTWORK */}
+          <div className="auth-left-artwork">
+            <div className="art-frame-container">
+              <img
+                src="/auth_illustration.jpg"
+                alt="CareerHub AI Learning Illustration"
+                className="art-image"
+              />
             </div>
-
-            <h1 className="auth-heading">
-              {authMode === 'signup' ? (
-                <>
-                  Create Your Account <br />
-                  &amp; Unlock <span className="auth-heading-accent">Your Future</span>
-                </>
-              ) : (
-                <>
-                  Take the Next Step <br />
-                  Toward Your <span className="auth-heading-accent">Dream Career</span>
-                </>
-              )}
-            </h1>
-
-            <p className="auth-subtext">
-              {authMode === 'signup' 
-                ? 'Join thousands of students and professionals building smarter careers with AI.'
-                : 'Sign in to access personalized career insights, AI tools, internships, and personalized learning recommendations.'}
-            </p>
           </div>
 
-          {/* Center 3D Robot Mascot Illustration */}
-          <div className="auth-robot-container">
-            <div className="auth-robot-glow animate-pulse-glow" />
-
-            <div className="auth-robot-svg-wrap animate-float">
-              <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <ellipse cx="100" cy="175" rx="75" ry="18" fill="url(#podiumGrad3)" opacity="0.9" />
-                <ellipse cx="100" cy="175" rx="60" ry="12" fill="url(#podiumTop3)" />
-                <path d="M40 175 C40 185, 160 185, 160 175" stroke="#a5b4fc" strokeWidth="2" fill="none" opacity="0.6" />
-
-                <rect x="68" y="105" width="64" height="52" rx="26" fill="url(#botBody3)" />
-                <rect x="74" y="112" width="52" height="38" rx="19" fill="#ffffff" opacity="0.95" />
-                <circle cx="100" cy="131" r="8" fill="url(#coreGlow3)" />
-
-                <rect x="60" y="55" width="80" height="58" rx="29" fill="url(#botHead3)" />
-                <rect x="68" y="63" width="64" height="42" rx="21" fill="#0f172a" />
+          {/* RIGHT COLUMN: AUTH FORM BOX */}
+          <div className="auth-right-form-container">
+            
+            {/* --- SIGN UP WITH EMAIL MODE --- */}
+            {authMode === 'signup' && (
+              <div className="auth-box-content">
+                <h1 className="auth-heading">Sign up with email</h1>
                 
-                <ellipse cx="84" cy="84" rx="7" ry="9" fill="#38bdf8" />
-                <ellipse cx="116" cy="84" rx="7" ry="9" fill="#38bdf8" />
-                <circle cx="86" cy="82" r="2.5" fill="#ffffff" />
-                <circle cx="118" cy="82" r="2.5" fill="#ffffff" />
-
-                <circle cx="56" cy="84" r="7" fill="#818cf8" />
-                <circle cx="144" cy="84" r="7" fill="#818cf8" />
-                <circle cx="100" cy="48" r="6" fill="#38bdf8" />
-                <line x1="100" y1="54" x2="100" y2="48" stroke="#818cf8" strokeWidth="3" />
-
-                <rect x="42" y="115" width="18" height="32" rx="9" fill="url(#botHead3)" />
-                <rect x="140" y="115" width="18" height="32" rx="9" fill="url(#botHead3)" />
-
-                <defs>
-                  <linearGradient id="podiumGrad3" x1="25" y1="175" x2="175" y2="175">
-                    <stop stopColor="#e0e7ff" />
-                    <stop offset="0.5" stopColor="#c7d2fe" />
-                    <stop offset="1" stopColor="#e0e7ff" />
-                  </linearGradient>
-                  <linearGradient id="podiumTop3" x1="40" y1="175" x2="160" y2="175">
-                    <stop stopColor="#ffffff" />
-                    <stop offset="1" stopColor="#e0e7ff" />
-                  </linearGradient>
-                  <linearGradient id="botHead3" x1="60" y1="55" x2="140" y2="113">
-                    <stop stopColor="#ffffff" />
-                    <stop offset="0.5" stopColor="#e0e7ff" />
-                    <stop offset="1" stopColor="#c7d2fe" />
-                  </linearGradient>
-                  <linearGradient id="botBody3" x1="68" y1="105" x2="132" y2="157">
-                    <stop stopColor="#818cf8" />
-                    <stop offset="1" stopColor="#4f46e5" />
-                  </linearGradient>
-                  <linearGradient id="coreGlow3" x1="92" y1="123" x2="108" y2="139">
-                    <stop stopColor="#38bdf8" />
-                    <stop offset="1" stopColor="#818cf8" />
-                  </linearGradient>
-                </defs>
-              </svg>
-            </div>
-
-            {/* Floating Stats Cards */}
-            <div className="glass-badge-card animate-float-reverse auth-badge-resume">
-              <span style={{ fontSize: '0.7rem', fontWeight: 600, color: '#64748b' }}>AI Resume Score</span>
-              <div style={{ display: 'flex', alignItems: 'baseline', gap: '0.4rem' }}>
-                <span style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a' }}>92</span>
-                <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#22c55e' }}>Excellent</span>
-                <TrendingUp size={14} color="#22c55e" />
-              </div>
-            </div>
-
-            <div className="glass-badge-card animate-float auth-badge-skill">
-              <div style={{ textAlign: 'left' }}>
-                <span style={{ fontSize: '0.7rem', fontWeight: 600, color: '#64748b', display: 'block' }}>Skill Match</span>
-                <span style={{ fontSize: '1.2rem', fontWeight: 800, color: '#0f172a' }}>78%</span>
-              </div>
-              <div style={{ position: 'relative', width: '28px', height: '28px' }}>
-                <svg width="28" height="28" viewBox="0 0 36 36">
-                  <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#e2e8f0" strokeWidth="4" />
-                  <path d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" fill="none" stroke="#22c55e" strokeWidth="4" strokeDasharray="78, 100" />
-                </svg>
-              </div>
-            </div>
-          </div>
-
-          {/* Bottom Feature Badges */}
-          <div className="auth-feature-grid">
-            <div className="auth-feature-card">
-              <div className="auth-feature-icon" style={{ background: '#eff6ff', color: '#3b82f6' }}>
-                <ShieldCheck size={18} />
-              </div>
-              <div className="auth-feature-title">Secure &amp; Private</div>
-              <div className="auth-feature-desc">Enterprise security.</div>
-            </div>
-
-            <div className="auth-feature-card">
-              <div className="auth-feature-icon" style={{ background: '#f3e8ff', color: '#a855f7' }}>
-                <Sparkles size={18} />
-              </div>
-              <div className="auth-feature-title">AI-Powered</div>
-              <div className="auth-feature-desc">Smart tools.</div>
-            </div>
-
-            <div className="auth-feature-card">
-              <div className="auth-feature-icon" style={{ background: '#e0e7ff', color: '#4f46e5' }}>
-                <Rocket size={18} />
-              </div>
-              <div className="auth-feature-title">Career Focused</div>
-              <div className="auth-feature-desc">Land dream role.</div>
-            </div>
-          </div>
-        </div>
-
-        {/* RIGHT PANEL: Form */}
-        <div className="right-panel">
-          {toastMessage && (
-            <div className="toast-notification">
-              <Sparkles size={16} color="#38bdf8" />
-              <span>{toastMessage}</span>
-            </div>
-          )}
-
-          {/* Stepper Header (Sign Up Mode) */}
-          {authMode === 'signup' && (
-            <div className="stepper-header">
-              <div className="stepper-bar-container">
-                <div className="stepper-track">
-                  <div
-                    className="stepper-progress"
-                    style={{ width: `${((currentStep - 1) / 3) * 100}%` }}
-                  />
-                </div>
-
-                {[
-                  { num: 1, label: 'Account' },
-                  { num: 2, label: 'Personal Info' },
-                  { num: 3, label: 'Education' },
-                  { num: 4, label: 'Complete' }
-                ].map((step) => {
-                  const isActive = currentStep === step.num;
-                  const isDone = currentStep > step.num;
-
-                  return (
-                    <div
-                      key={step.num}
-                      onClick={() => isDone && setCurrentStep(step.num)}
-                      className="stepper-item"
-                      style={{ cursor: isDone ? 'pointer' : 'default' }}
-                    >
-                      <div
-                        className="stepper-num"
-                        style={{
-                          background: isActive ? '#3b82f6' : isDone ? '#4f46e5' : '#ffffff',
-                          border: isActive || isDone ? 'none' : '2px solid #e2e8f0',
-                          color: isActive || isDone ? '#ffffff' : '#94a3b8'
-                        }}
-                      >
-                        {isDone ? <CheckCircle2 size={18} /> : step.num}
-                      </div>
-                      <span
-                        style={{
-                          fontSize: '0.75rem',
-                          fontWeight: isActive ? 700 : 500,
-                          color: isActive ? '#3b82f6' : isDone ? '#0f172a' : '#94a3b8'
-                        }}
-                      >
-                        {step.label}
-                      </span>
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          )}
-
-          {/* Title */}
-          <div className="auth-section-title">
-            <h2 style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0f172a', letterSpacing: '-0.02em', marginBottom: '0.3rem' }}>
-              {authMode === 'signin' ? 'Welcome back 👋' : currentStep === 1 ? "Let's Get Started!" : currentStep === 2 ? 'Personal Profile' : currentStep === 3 ? 'Education & Skills' : 'Account Ready!'}
-            </h2>
-            <p style={{ color: '#64748b', fontSize: '0.9rem' }}>
-              {authMode === 'signin' ? 'Sign in to your account and continue your journey' : 'Create your account to continue your career journey.'}
-            </p>
-          </div>
-
-          {/* SSO */}
-          {(authMode === 'signin' || (authMode === 'signup' && currentStep === 1)) && (
-            <>
-              <div className="sso-grid">
-                <button type="button" className="sso-button" onClick={() => handleSSOLogin('Google')}>
-                  <span>Google</span>
-                </button>
-                <button type="button" className="sso-button" onClick={() => handleSSOLogin('Microsoft')}>
-                  <span>Microsoft</span>
-                </button>
-                <button type="button" className="sso-button" onClick={() => handleSSOLogin('LinkedIn')}>
-                  <span>LinkedIn</span>
-                </button>
-              </div>
-
-              <div className="divider-with-text">
-                <div className="divider-line" />
-                <span>{authMode === 'signin' ? 'or continue with email' : 'or sign up with email'}</span>
-                <div className="divider-line" />
-              </div>
-            </>
-          )}
-
-          {/* Form */}
-          <form onSubmit={handleNextStep} className="auth-form">
-            {authMode === 'signin' ? (
-              <>
-                <div>
-                  <label className="auth-label">Email address</label>
-                  <div className="custom-input-group">
-                    <input type="email" required placeholder="Enter your email address" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
-                    <Mail className="input-icon" size={18} />
+                <form onSubmit={handleSubmit} className="udemy-auth-form">
+                  <div className="udemy-form-group">
+                    <input
+                      type="text"
+                      required
+                      placeholder="Full name"
+                      value={fullName}
+                      onChange={(e) => setFullName(e.target.value)}
+                      className="udemy-input"
+                    />
                   </div>
-                </div>
 
-                <div>
-                  <label className="auth-label">Password</label>
-                  <div className="custom-input-group">
-                    <input type={showPassword ? 'text' : 'password'} required placeholder="Enter your password" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} />
-                    <Lock className="input-icon" size={18} />
-                    <button type="button" onClick={() => setShowPassword(!showPassword)} className="pwd-toggle-btn">
-                      {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                    </button>
+                  <div className="udemy-form-group">
+                    <input
+                      type="email"
+                      required
+                      placeholder="Email"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="udemy-input"
+                    />
                   </div>
-                </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', fontSize: '0.85rem' }}>
-                  <label style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', cursor: 'pointer', color: '#475569' }}>
-                    <input type="checkbox" checked={formData.rememberMe} onChange={(e) => setFormData({ ...formData, rememberMe: e.target.checked })} style={{ accentColor: '#4f46e5' }} />
-                    Remember me
+                  <label className="udemy-checkbox-label">
+                    <input
+                      type="checkbox"
+                      checked={sendOffers}
+                      onChange={(e) => setSendOffers(e.target.checked)}
+                      className="udemy-checkbox"
+                    />
+                    <span>Send me special offers, personalized recommendations, and learning tips.</span>
                   </label>
-                  <a href="#forgot" onClick={(e) => { e.preventDefault(); triggerToast('Password reset link sent.'); }} style={{ color: '#4f46e5', fontWeight: 600, textDecoration: 'none' }}>
-                    Forgot password?
-                  </a>
+
+                  <button type="submit" className="udemy-btn-continue">
+                    Continue
+                  </button>
+                </form>
+
+                <div className="udemy-divider">
+                  <span>Other sign up options</span>
                 </div>
 
-                <button type="submit" className="gradient-btn" style={{ marginTop: '0.5rem' }}>
-                  Sign In <ArrowRight size={18} />
-                </button>
-              </>
-            ) : (
-              <>
-                {currentStep === 1 && (
-                  <>
-                    <div>
-                      <label className="auth-label">Full Name</label>
-                      <div className="custom-input-group">
-                        <input type="text" required placeholder="Enter your full name" value={formData.fullName} onChange={(e) => setFormData({ ...formData, fullName: e.target.value })} />
-                        <User className="input-icon" size={18} />
-                      </div>
-                    </div>
+                {/* Social Icon Buttons Row */}
+                <div className="social-buttons-row">
+                  <button type="button" onClick={handleSubmit} className="social-icon-btn" title="Sign up with Google">
+                    <svg viewBox="0 0 24 24" width="22" height="22">
+                      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                      <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
+                      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
+                    </svg>
+                  </button>
+                  <button type="button" onClick={handleSubmit} className="social-icon-btn" title="Sign up with Facebook">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="#1877F2">
+                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                  </button>
+                  <button type="button" onClick={handleSubmit} className="social-icon-btn" title="Sign up with Apple">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="#000000">
+                      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.85c.67-.82 1.13-1.96.99-3.1-.98.04-2.19.66-2.88 1.47-.62.72-1.16 1.88-.99 3.01 1.09.09 2.22-.56 2.88-1.38z" />
+                    </svg>
+                  </button>
+                </div>
 
-                    <div>
-                      <label className="auth-label">Email Address</label>
-                      <div className="custom-input-group">
-                        <input type="email" required placeholder="Enter your email address" value={formData.email} onChange={(e) => setFormData({ ...formData, email: e.target.value })} />
-                        <Mail className="input-icon" size={18} />
-                      </div>
-                    </div>
+                <div className="auth-footer-link">
+                  Already have an account?{' '}
+                  <button onClick={() => setAuthMode('signin')} className="link-btn">
+                    Log in
+                  </button>
+                </div>
+              </div>
+            )}
 
-                    <div>
-                      <label className="auth-label">Password</label>
-                      <div className="custom-input-group">
-                        <input type={showPassword ? 'text' : 'password'} required placeholder="Create a password" value={formData.password} onChange={(e) => setFormData({ ...formData, password: e.target.value })} />
-                        <Lock className="input-icon" size={18} />
-                        <button type="button" onClick={() => setShowPassword(!showPassword)} className="pwd-toggle-btn">
-                          {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
-                        </button>
-                      </div>
+            {/* --- LOG IN MAIN OPTIONS MODE (SCREENSHOT 2) --- */}
+            {authMode === 'signin' && (
+              <div className="auth-box-content">
+                <h1 className="auth-heading">Log in to continue your learning journey</h1>
 
-                      {formData.password.length > 0 && (
-                        <div style={{ marginTop: '0.6rem' }}>
-                          <div style={{ display: 'flex', gap: '0.3rem', alignItems: 'center' }}>
-                            {[1, 2, 3, 4].map((bar) => (
-                              <div key={bar} className={`strength-bar ${score >= bar ? 'active' : ''}`} />
-                            ))}
-                            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: getStrengthLabel().color, marginLeft: '0.5rem' }}>
-                              {getStrengthLabel().label}
-                            </span>
-                          </div>
-                        </div>
-                      )}
-                    </div>
+                <div className="udemy-login-options">
+                  <button onClick={handleSubmit} className="btn-google-sso">
+                    <svg viewBox="0 0 24 24" width="20" height="20">
+                      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                      <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
+                      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
+                    </svg>
+                    <span>Continue with Google</span>
+                  </button>
 
-                    <button type="submit" className="gradient-btn" style={{ marginTop: '0.75rem' }}>
-                      Continue <ArrowRight size={18} />
+                  <div className="login-menu-box">
+                    <button onClick={() => setAuthMode('signin_email')} className="menu-option-btn">
+                      Log in to a different account
                     </button>
-                  </>
-                )}
-
-                {currentStep === 2 && (
-                  <>
-                    <div>
-                      <label className="auth-label">Current Role / Title</label>
-                      <div className="custom-input-group">
-                        <input type="text" required placeholder="e.g. Software Engineer, Student" value={formData.role} onChange={(e) => setFormData({ ...formData, role: e.target.value })} />
-                        <Briefcase className="input-icon" size={18} />
-                      </div>
-                    </div>
-                    <div>
-                      <label className="auth-label">Target Industry</label>
-                      <div className="custom-input-group">
-                        <input type="text" required placeholder="e.g. AI & Robotics" value={formData.industry} onChange={(e) => setFormData({ ...formData, industry: e.target.value })} />
-                        <Target className="input-icon" size={18} />
-                      </div>
-                    </div>
-                    <div className="btn-row">
-                      <button type="button" onClick={() => setCurrentStep(1)} className="btn-secondary">Back</button>
-                      <button type="submit" className="gradient-btn" style={{ flex: 1 }}>Next Step <ArrowRight size={18} /></button>
-                    </div>
-                  </>
-                )}
-
-                {currentStep === 3 && (
-                  <>
-                    <div>
-                      <label className="auth-label">Degree / Field of Study</label>
-                      <div className="custom-input-group">
-                        <input type="text" required placeholder="e.g. B.S. Computer Science" value={formData.degree} onChange={(e) => setFormData({ ...formData, degree: e.target.value })} />
-                        <GraduationCap className="input-icon" size={18} />
-                      </div>
-                    </div>
-                    <div>
-                      <label className="auth-label">Key Skills</label>
-                      <div className="skills-chip-group">
-                        {availableSkills.map(skill => {
-                          const selected = formData.skills.includes(skill);
-                          return (
-                            <button
-                              key={skill}
-                              type="button"
-                              onClick={() => toggleSkill(skill)}
-                              className="skill-chip"
-                              style={{
-                                border: selected ? 'none' : '1px solid #cbd5e1',
-                                background: selected ? 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)' : '#f8fafc',
-                                color: selected ? '#ffffff' : '#475569'
-                              }}
-                            >
-                              {selected ? `✓ ${skill}` : `+ ${skill}`}
-                            </button>
-                          );
-                        })}
-                      </div>
-                    </div>
-                    <div className="btn-row">
-                      <button type="button" onClick={() => setCurrentStep(2)} className="btn-secondary">Back</button>
-                      <button type="submit" className="gradient-btn" style={{ flex: 1 }}>Finish Setup <Sparkles size={18} /></button>
-                    </div>
-                  </>
-                )}
-
-                {currentStep === 4 && (
-                  <div style={{ textAlign: 'center', padding: '1rem 0' }}>
-                    <div className="success-icon-wrap">
-                      <CheckCircle2 size={36} />
-                    </div>
-                    <h3 style={{ fontSize: '1.3rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.5rem' }}>
-                      Welcome aboard, {formData.fullName || 'User'}! 🎉
-                    </h3>
-                    <p style={{ color: '#64748b', fontSize: '0.9rem', marginBottom: '1.5rem' }}>Your AI profile setup is complete.</p>
-                    <button type="button" className="gradient-btn" style={{ width: '100%' }} onClick={() => navigate('/')}>
-                      Go to Home Page <ChevronRight size={18} />
+                    <div className="menu-divider" />
+                    <button onClick={() => setAuthMode('signup')} className="menu-option-btn">
+                      Don't have an account? <span className="purple-bold">Sign up</span>
+                    </button>
+                    <div className="menu-divider" />
+                    <button onClick={() => alert('Redirecting to Organization SSO...')} className="menu-option-btn">
+                      Log in with your organization
                     </button>
                   </div>
-                )}
-              </>
+                </div>
+              </div>
             )}
-          </form>
 
-          {/* Toggle */}
-          <div className="auth-toggle-footer">
-            {authMode === 'signup' ? (
-              <p style={{ fontSize: '0.875rem', color: '#64748b' }}>
-                Already have an account?{' '}
-                <a href="#login" onClick={(e) => { e.preventDefault(); setAuthMode('signin'); }} className="auth-toggle-link">Log in</a>
-              </p>
-            ) : (
-              <p style={{ fontSize: '0.875rem', color: '#64748b' }}>
-                Don't have an account?{' '}
-                <a href="#signup" onClick={(e) => { e.preventDefault(); setAuthMode('signup'); setCurrentStep(1); }} className="auth-toggle-link">Sign up</a>
-              </p>
+            {/* --- LOG IN WITH EMAIL MODE (SCREENSHOT 3) --- */}
+            {authMode === 'signin_email' && (
+              <div className="auth-box-content">
+                <h1 className="auth-heading">Log in to continue your learning journey</h1>
+
+                <form onSubmit={handleSubmit} className="udemy-auth-form">
+                  <div className="udemy-form-group">
+                    <input
+                      type="text"
+                      required
+                      placeholder="Email or Phone Number"
+                      value={email}
+                      onChange={(e) => setEmail(e.target.value)}
+                      className="udemy-input"
+                    />
+                  </div>
+
+                  <button type="submit" className="udemy-btn-continue">
+                    Continue
+                  </button>
+                </form>
+
+                <div className="udemy-divider">
+                  <span>Other log in options</span>
+                </div>
+
+                {/* Social Icon Buttons Row */}
+                <div className="social-buttons-row">
+                  <button type="button" onClick={handleSubmit} className="social-icon-btn" title="Log in with Google">
+                    <svg viewBox="0 0 24 24" width="22" height="22">
+                      <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" />
+                      <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" />
+                      <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z" />
+                      <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z" />
+                    </svg>
+                  </button>
+                  <button type="button" onClick={handleSubmit} className="social-icon-btn" title="Log in with Facebook">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="#1877F2">
+                      <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
+                    </svg>
+                  </button>
+                  <button type="button" onClick={handleSubmit} className="social-icon-btn" title="Log in with Apple">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="#000000">
+                      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.85c.67-.82 1.13-1.96.99-3.1-.98.04-2.19.66-2.88 1.47-.62.72-1.16 1.88-.99 3.01 1.09.09 2.22-.56 2.88-1.38z" />
+                    </svg>
+                  </button>
+                </div>
+
+                <div className="auth-footer-link">
+                  Don't have an account?{' '}
+                  <button onClick={() => setAuthMode('signup')} className="link-btn">
+                    Sign up
+                  </button>
+                </div>
+              </div>
             )}
+
           </div>
+
         </div>
-      </div>
+      </main>
+
     </div>
   );
 }
