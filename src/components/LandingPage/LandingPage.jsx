@@ -367,13 +367,12 @@ export default function LandingPage() {
           <Menu size={22} />
         </button>
 
-        {/* Brand Logo: CareerHub in Purple/Black */}
-        <div onClick={() => navigate('/')} className="in-brand-wrap" title="CareerHub Home">
+        <div onClick={() => navigate('/')} className="in-brand-wrap" title="codeForEveryBody Home">
           <div className="in-brand-icon">
             <GraduationCap size={22} color="#ffffff" />
           </div>
           <span className="in-brand-title">
-            Career<span className="purple-txt">Hub</span>
+            code<span className="purple-txt">ForEveryBody</span>
           </span>
         </div>
 

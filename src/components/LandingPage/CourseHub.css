@@ -1,0 +1,469 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body, html {
+  width: 100%;
+  height: 100%;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background-color: #e5e5e5;
+  color: #1a1a1a;
+  overflow-x: hidden;
+}
+
+/* Base Landing Container & Grid Pattern */
+.landing-container {
+  position: relative;
+  min-height: 100vh;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: #dedede;
+  overflow: hidden;
+}
+
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-size: 80px 80px;
+  background-image: 
+    linear-gradient(to right, rgba(0, 0, 0, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.05) 1px, transparent 1px);
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* Header Navbar */
+.landing-container .navbar {
+  position: relative;
+  z-index: 100;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 48px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.brand {
+  cursor: pointer;
+}
+
+.brand-name {
+  font-weight: 700;
+  color: #111;
+}
+
+.brand-title {
+  color: #666;
+}
+
+.nav-center {
+  display: flex;
+  gap: 28px;
+}
+
+.nav-link {
+  text-decoration: none;
+  color: #666;
+  transition: color 0.2s ease;
+}
+
+.nav-link.active, .nav-link:hover {
+  color: #000;
+  font-weight: 600;
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.lang-switch {
+  color: #555;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+.contact-btn {
+  background: transparent;
+  border: 1px solid #111;
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.contact-btn:hover {
+  background: #111;
+  color: #fff;
+}
+
+/* Main Content Wrapper */
+.main-content {
+  position: relative;
+  z-index: 5;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 0 40px;
+}
+
+/* Dynamic Big Background Watermark */
+.bg-watermark {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  text-align: center;
+  pointer-events: none;
+  z-index: 2;
+}
+
+.bg-watermark h1 {
+  font-size: clamp(3rem, 7vw, 7.5rem);
+  font-weight: 800;
+  color: rgba(0, 0, 0, 0.12);
+  white-space: nowrap;
+  letter-spacing: -2px;
+  transition: all 0.5s ease-in-out;
+}
+
+/* Deck View Layout */
+.deck-wrapper {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  margin-top: 60px;
+}
+
+.cards-deck {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  perspective: 1000px;
+}
+
+/* Individual Card Styling */
+.course-card {
+  width: 200px;
+  height: 280px;
+  background-color: var(--card-bg, #1e293b);
+  border-radius: 16px;
+  box-shadow: 0 20px 30px rgba(0, 0, 0, 0.15), 0 4px 6px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.course-card:hover {
+  transform: translateY(-12px) scale(1.03);
+  box-shadow: 0 28px 40px rgba(0, 0, 0, 0.25);
+}
+
+.course-card.active-card {
+  transform: translateY(-16px) scale(1.05);
+  box-shadow: 0 32px 50px rgba(0, 0, 0, 0.3);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+}
+
+.card-inner {
+  padding: 20px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  color: #fff;
+}
+
+.card-top-badge {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.card-icon {
+  font-size: 3.5rem;
+  text-align: center;
+  margin: auto 0;
+}
+
+.card-bottom {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.card-title-preview {
+  font-size: 0.85rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.card-tag {
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.5);
+  text-transform: uppercase;
+}
+
+.deck-subtitle {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #555;
+  letter-spacing: 0.5px;
+  margin-top: 10px;
+}
+
+/* Detail Split View Layout */
+.detail-layout {
+  position: relative;
+  z-index: 6;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  max-width: 1100px;
+  align-items: center;
+  gap: 60px;
+  margin-top: 40px;
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.detail-panel-left {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 16px;
+}
+
+.back-btn {
+  background: none;
+  border: none;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #333;
+  cursor: pointer;
+  margin-bottom: 8px;
+  transition: transform 0.2s ease;
+}
+
+.back-btn:hover {
+  transform: translateX(-4px);
+}
+
+.detail-tags {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.tag-pill {
+  background: rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 4px 10px;
+  border-radius: 6px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: #444;
+}
+
+.detail-title {
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #111;
+  line-height: 1.15;
+}
+
+.detail-description {
+  font-size: 0.95rem;
+  color: #4b5563;
+  line-height: 1.6;
+}
+
+.detail-features {
+  list-style-type: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 12px 0;
+}
+
+.detail-features li {
+  font-size: 0.88rem;
+  color: #374151;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.detail-features li::before {
+  content: "•";
+  color: #2563eb;
+  font-weight: bold;
+}
+
+.see-project-btn {
+  background: #111;
+  color: #fff;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: background 0.2s ease;
+}
+
+.see-project-btn:hover {
+  background: #2563eb;
+}
+
+/* Detail Right Panel - Stacked Deck */
+.detail-panel-right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.stacked-cards-preview {
+  position: relative;
+  width: 220px;
+  height: 300px;
+}
+
+.stacked-card {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: var(--card-bg, #1e293b);
+  border-radius: 16px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.stacked-card.is-selected {
+  z-index: 10;
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.35);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.mini-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  opacity: 0.8;
+  margin-top: auto;
+}
+
+/* Footer Section */
+.footer {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 48px;
+  font-size: 0.85rem;
+  color: #555;
+}
+
+.social-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.social-links a {
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+}
+
+.social-links .separator {
+  font-size: 0.7rem;
+  color: #888;
+}
+
+/* Floating Tilted Profile Card */
+.footer-profile-card {
+  position: absolute;
+  bottom: 20px;
+  left: 140px;
+  transform: rotate(-12deg);
+  width: 70px;
+  height: 90px;
+  background: #fff;
+  border-radius: 8px;
+  padding: 4px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.12);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.profile-photo-placeholder {
+  width: 100%;
+  height: 100%;
+  background: #222;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 800;
+  font-size: 1.1rem;
+}
+
+.location-info {
+  font-size: 0.8rem;
+  color: #666;
+}
+
+/* Responsive Breakpoints */
+@media (max-width: 900px) {
+  .navbar {
+    padding: 16px 24px;
+  }
+  
+  .detail-layout {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .cards-deck {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .bg-watermark h1 {
+    font-size: 3rem;
+  }
+}

@@ -7,7 +7,19 @@ import {
   ChevronDown,
   X,
   Menu,
-  GraduationCap
+  GraduationCap,
+  User,
+  Mail,
+  Lock,
+  Eye,
+  EyeOff,
+  ArrowRight,
+  Building2,
+  UserPlus,
+  UserCheck,
+  CheckCircle2,
+  ShieldCheck,
+  Sparkles
 } from 'lucide-react';
 import './AuthPage.css';
 
@@ -21,6 +33,8 @@ export default function AuthPage() {
   // Form fields
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
   const [sendOffers, setSendOffers] = useState(true);
 
   useEffect(() => {
@@ -41,66 +55,23 @@ export default function AuthPage() {
   return (
     <div className="udemy-auth-root">
       
-      {/* 1. HEADER NAVBAR */}
-      <header className="udemy-in-header">
-        <button className="mobile-hamburger-btn" aria-label="Toggle Menu">
-          <Menu size={22} />
-        </button>
-
-        <div onClick={() => navigate('/')} className="in-brand-wrap" title="CareerHub Home">
+      {/* Clean Top Brand Bar */}
+      <div className="auth-top-bar">
+        <div onClick={() => navigate('/')} className="in-brand-wrap" title="Back to Home">
           <div className="in-brand-icon">
-            <GraduationCap size={22} color="#ffffff" />
+            <GraduationCap size={20} color="#ffffff" />
           </div>
           <span className="in-brand-title">
-            Career<span className="purple-txt">Hub</span>
+            code<span className="purple-txt">ForEveryBody</span>
           </span>
         </div>
-
-        <button onClick={() => navigate('/')} className="in-nav-btn hide-mobile">
-          Explore <ChevronDown size={14} style={{ marginLeft: 2 }} />
-        </button>
-        <button onClick={() => navigate('/overview')} className="in-nav-btn hide-mobile">
-          Subscribe
-        </button>
-
-        <div className="in-search-container hide-mobile">
-          <div className="in-search-box">
-            <Search size={18} className="in-search-icon" />
-            <input type="text" placeholder="Search for anything..." />
-          </div>
-        </div>
-
-        <div className="in-nav-actions">
-          <button className="in-nav-txt-link hide-tablet">CareerHub Business</button>
-          <button className="in-nav-txt-link hide-tablet">Teach on CareerHub</button>
-
-          <button onClick={() => navigate('/')} className="in-icon-btn" title="Shopping Cart">
-            <ShoppingCart size={20} />
-          </button>
-
-          <button
-            onClick={() => setAuthMode('signin')}
-            className={`in-btn-login ${authMode === 'signin' || authMode === 'signin_email' ? 'active-tab' : ''}`}
-          >
-            Log in
-          </button>
-          <button
-            onClick={() => setAuthMode('signup')}
-            className="in-btn-signup"
-          >
-            Sign up
-          </button>
-          <button className="in-btn-globe" title="Change Language">
-            <Globe size={18} />
-          </button>
-        </div>
-      </header>
+      </div>
 
       {/* 2. SPLIT SCREEN AUTH CONTAINER */}
       <main className="auth-main-container">
         <div className="auth-split-wrapper">
           
-          {/* LEFT COLUMN: CUSTOM AI GENERATED 3D ARTWORK */}
+          {/* LEFT COLUMN: CUSTOM AI GENERATED 3D ARTWORK & BENEFITS */}
           <div className="auth-left-artwork">
             <div className="art-frame-container">
               <img
@@ -108,6 +79,21 @@ export default function AuthPage() {
                 alt="CareerHub AI Learning Illustration"
                 className="art-image"
               />
+              <div className="art-overlay-badge">
+                <Sparkles size={16} className="sparkle-icon" />
+                <span>AI-Powered Career Academy</span>
+              </div>
+            </div>
+            
+            <div className="art-highlights">
+              <div className="highlight-item">
+                <CheckCircle2 size={18} className="highlight-icon" />
+                <span>Over 250,000+ interactive courses & real-world projects</span>
+              </div>
+              <div className="highlight-item">
+                <ShieldCheck size={18} className="highlight-icon" />
+                <span>Enterprise grade security & instant AI feedback</span>
+              </div>
             </div>
           </div>
 
@@ -121,25 +107,56 @@ export default function AuthPage() {
                 
                 <form onSubmit={handleSubmit} className="udemy-auth-form">
                   <div className="udemy-form-group">
-                    <input
-                      type="text"
-                      required
-                      placeholder="Full name"
-                      value={fullName}
-                      onChange={(e) => setFullName(e.target.value)}
-                      className="udemy-input"
-                    />
+                    <label className="input-label">Full Name</label>
+                    <div className="input-with-icon-wrapper">
+                      <User size={18} className="input-lead-icon" />
+                      <input
+                        type="text"
+                        required
+                        placeholder="Full name"
+                        value={fullName}
+                        onChange={(e) => setFullName(e.target.value)}
+                        className="udemy-input input-has-lead"
+                      />
+                    </div>
                   </div>
 
                   <div className="udemy-form-group">
-                    <input
-                      type="email"
-                      required
-                      placeholder="Email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="udemy-input"
-                    />
+                    <label className="input-label">Email Address</label>
+                    <div className="input-with-icon-wrapper">
+                      <Mail size={18} className="input-lead-icon" />
+                      <input
+                        type="email"
+                        required
+                        placeholder="name@example.com"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="udemy-input input-has-lead"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="udemy-form-group">
+                    <label className="input-label">Password</label>
+                    <div className="input-with-icon-wrapper">
+                      <Lock size={18} className="input-lead-icon" />
+                      <input
+                        type={showPassword ? 'text' : 'password'}
+                        required
+                        placeholder="Create a strong password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="udemy-input input-has-lead input-has-trail"
+                      />
+                      <button
+                        type="button"
+                        className="password-toggle-btn"
+                        onClick={() => setShowPassword(!showPassword)}
+                        title={showPassword ? 'Hide password' : 'Show password'}
+                      >
+                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                      </button>
+                    </div>
                   </div>
 
                   <label className="udemy-checkbox-label">
@@ -153,7 +170,8 @@ export default function AuthPage() {
                   </label>
 
                   <button type="submit" className="udemy-btn-continue">
-                    Continue
+                    <span>Continue</span>
+                    <ArrowRight size={18} />
                   </button>
                 </form>
 
@@ -181,6 +199,11 @@ export default function AuthPage() {
                       <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.85c.67-.82 1.13-1.96.99-3.1-.98.04-2.19.66-2.88 1.47-.62.72-1.16 1.88-.99 3.01 1.09.09 2.22-.56 2.88-1.38z" />
                     </svg>
                   </button>
+                  <button type="button" onClick={handleSubmit} className="social-icon-btn" title="Sign up with GitHub">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="#24292e">
+                      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
+                    </svg>
+                  </button>
                 </div>
 
                 <div className="auth-footer-link">
@@ -192,7 +215,7 @@ export default function AuthPage() {
               </div>
             )}
 
-            {/* --- LOG IN MAIN OPTIONS MODE (SCREENSHOT 2) --- */}
+            {/* --- LOG IN MAIN OPTIONS MODE --- */}
             {authMode === 'signin' && (
               <div className="auth-box-content">
                 <h1 className="auth-heading">Log in to continue your learning journey</h1>
@@ -210,40 +233,80 @@ export default function AuthPage() {
 
                   <div className="login-menu-box">
                     <button onClick={() => setAuthMode('signin_email')} className="menu-option-btn">
-                      Log in to a different account
+                      <div className="menu-btn-content">
+                        <Mail size={18} className="menu-btn-icon" />
+                        <span>Log in to a different account</span>
+                      </div>
+                      <ArrowRight size={16} className="menu-arrow-icon" />
                     </button>
                     <div className="menu-divider" />
                     <button onClick={() => setAuthMode('signup')} className="menu-option-btn">
-                      Don't have an account? <span className="purple-bold">Sign up</span>
+                      <div className="menu-btn-content">
+                        <UserPlus size={18} className="menu-btn-icon" />
+                        <span>Don't have an account? <span className="purple-bold">Sign up</span></span>
+                      </div>
+                      <ArrowRight size={16} className="menu-arrow-icon" />
                     </button>
                     <div className="menu-divider" />
                     <button onClick={() => alert('Redirecting to Organization SSO...')} className="menu-option-btn">
-                      Log in with your organization
+                      <div className="menu-btn-content">
+                        <Building2 size={18} className="menu-btn-icon" />
+                        <span>Log in with your organization</span>
+                      </div>
+                      <ArrowRight size={16} className="menu-arrow-icon" />
                     </button>
                   </div>
                 </div>
               </div>
             )}
 
-            {/* --- LOG IN WITH EMAIL MODE (SCREENSHOT 3) --- */}
+            {/* --- LOG IN WITH EMAIL MODE --- */}
             {authMode === 'signin_email' && (
               <div className="auth-box-content">
                 <h1 className="auth-heading">Log in to continue your learning journey</h1>
 
                 <form onSubmit={handleSubmit} className="udemy-auth-form">
                   <div className="udemy-form-group">
-                    <input
-                      type="text"
-                      required
-                      placeholder="Email or Phone Number"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      className="udemy-input"
-                    />
+                    <label className="input-label">Email or Phone Number</label>
+                    <div className="input-with-icon-wrapper">
+                      <Mail size={18} className="input-lead-icon" />
+                      <input
+                        type="text"
+                        required
+                        placeholder="Email or Phone Number"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                        className="udemy-input input-has-lead"
+                      />
+                    </div>
+                  </div>
+
+                  <div className="udemy-form-group">
+                    <label className="input-label">Password</label>
+                    <div className="input-with-icon-wrapper">
+                      <Lock size={18} className="input-lead-icon" />
+                      <input
+                        type={showPassword ? 'text' : 'password'}
+                        required
+                        placeholder="Your password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                        className="udemy-input input-has-lead input-has-trail"
+                      />
+                      <button
+                        type="button"
+                        className="password-toggle-btn"
+                        onClick={() => setShowPassword(!showPassword)}
+                        title={showPassword ? 'Hide password' : 'Show password'}
+                      >
+                        {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                      </button>
+                    </div>
                   </div>
 
                   <button type="submit" className="udemy-btn-continue">
-                    Continue
+                    <span>Continue</span>
+                    <ArrowRight size={18} />
                   </button>
                 </form>
 
@@ -269,6 +332,11 @@ export default function AuthPage() {
                   <button type="button" onClick={handleSubmit} className="social-icon-btn" title="Log in with Apple">
                     <svg viewBox="0 0 24 24" width="22" height="22" fill="#000000">
                       <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.81-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M15.97 6.85c.67-.82 1.13-1.96.99-3.1-.98.04-2.19.66-2.88 1.47-.62.72-1.16 1.88-.99 3.01 1.09.09 2.22-.56 2.88-1.38z" />
+                    </svg>
+                  </button>
+                  <button type="button" onClick={handleSubmit} className="social-icon-btn" title="Log in with GitHub">
+                    <svg viewBox="0 0 24 24" width="22" height="22" fill="#24292e">
+                      <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z" />
                     </svg>
                   </button>
                 </div>

@@ -1,0 +1,482 @@
+/* ============================================
+   CourseShowcase — theme tokens
+   ============================================ */
+.cs-root {
+  --bg: #f1f1ee;
+  --grid-line: rgba(20, 20, 20, 0.055);
+  --ink: #161616;
+  --ink-soft: #6f6f6c;
+  --card-bg: #ffffff;
+  --card-border: rgba(0, 0, 0, 0.07);
+  --accent: #141414;
+  --accent-contrast: #f7f7f5;
+  --radius-lg: 16px;
+  --radius-sm: 10px;
+  --shadow-card: 0 10px 26px rgba(20, 20, 20, 0.12), 0 2px 6px rgba(20, 20, 20, 0.06);
+  --shadow-card-hover: 0 22px 40px rgba(20, 20, 20, 0.18), 0 6px 12px rgba(20, 20, 20, 0.08);
+
+  position: relative;
+  min-height: 100vh;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  overflow-x: clip;
+}
+
+/* ============================================
+   Grid background
+   ============================================ */
+.cs-grid-bg {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
+  background-size: 130px 130px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 30%, black 40%, transparent 90%);
+  pointer-events: none;
+}
+
+/* ============================================
+   Nav (High Visibility Fixed Starting Page Header)
+   ============================================ */
+.cs-root .cs-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  z-index: 999999 !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 48px;
+  background: #ffffff !important;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+}
+
+.cs-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cs-brand-badge {
+  width: 32px;
+  height: 32px;
+  background: #111111;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.cs-brand-name {
+  font-size: 17px;
+  font-weight: 800;
+  color: #111111;
+  letter-spacing: -0.4px;
+}
+
+.cs-brand-sub {
+  font-size: 13px;
+  color: #666666;
+  font-weight: 500;
+}
+
+.cs-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 28px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.cs-nav-links a {
+  color: #555555;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  transition: all 0.2s ease;
+}
+
+.cs-nav-links a:hover,
+.cs-nav-links a.active {
+  color: #111111;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.cs-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.cs-signin-btn {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  background: transparent;
+  color: #111111;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  padding: 9px 18px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.cs-signin-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+  border-color: #111111;
+}
+
+.cs-cta-btn {
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  background: #111111;
+  color: #ffffff;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 999px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  transition: transform 0.2s ease, background 0.2s ease;
+}
+
+.cs-cta-btn:hover {
+  background: #000000;
+  transform: translateY(-1px);
+}
+
+/* ============================================
+   Hero
+   ============================================ */
+.cs-hero {
+  position: relative;
+  z-index: 2;
+  min-height: 640px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 110px 40px 60px;
+  text-align: center;
+}
+
+.cs-title {
+  font-size: clamp(34px, 6vw, 76px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  margin: 0 0 8px;
+  background: linear-gradient(180deg, #2b2b2b 0%, #6f6f6c 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  animation: titleIn 0.6s cubic-bezier(0.22, 0.9, 0.32, 1) backwards;
+}
+
+@keyframes titleIn {
+  from { opacity: 0; transform: translateY(14px); filter: blur(4px); }
+  to   { opacity: 1; transform: translateY(0);    filter: blur(0); }
+}
+
+.cs-caption {
+  margin-top: 22px;
+  font-size: 14px;
+  color: var(--ink-soft);
+  animation: titleIn 0.6s cubic-bezier(0.22, 0.9, 0.32, 1) backwards;
+  animation-delay: 0.1s;
+}
+
+/* ============================================
+   Card deck (flat overlapping stack)
+   ============================================ */
+.cs-deck {
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  margin-top: 46px;
+  padding: 20px 40px;
+}
+
+.cs-card {
+  --delay: 0ms;
+  position: relative;
+  width: 152px;
+  height: 270px;
+  border-radius: 14px;
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  padding: 18px 12px;
+  font-family: inherit;
+  cursor: pointer;
+  background: var(--card-bg);
+  /* resting state: flat, upright, no rotation */
+  transform: translateY(0) rotate(0deg) scale(1);
+  transition: transform 0.3s cubic-bezier(0.22, 0.9, 0.32, 1), box-shadow 0.3s ease;
+  animation: cardEnter 0.7s cubic-bezier(0.34, 1.56, 0.64, 1) backwards;
+  animation-delay: var(--delay);
+}
+
+.cs-card:not(:first-child) {
+  margin-left: -16px;
+}
+
+.cs-card:hover {
+  transform: translateY(-16px) scale(1.045);
+  box-shadow: var(--shadow-card-hover);
+  z-index: 40 !important;
+}
+
+.cs-card:focus-visible {
+  outline: 2px solid var(--ink);
+  outline-offset: 3px;
+}
+
+.cs-card.is-dark {
+  background: #14161a !important;
+  color: #f2f2f0;
+}
+
+/* Cards fly in from lower-right at an angle, then settle flat */
+@keyframes cardEnter {
+  from { opacity: 0; transform: translate(70px, 100px) rotate(16deg) scale(0.92); }
+  to   { opacity: 1; transform: translate(0, 0) rotate(0deg) scale(1); }
+}
+
+.cs-card-icon {
+  font-size: 30px;
+  line-height: 1;
+}
+.cs-card-icon.large {
+  font-size: 44px;
+}
+
+.cs-card-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  text-align: center;
+}
+
+/* ============================================
+   Detail mode
+   ============================================ */
+.cs-detail {
+  position: relative;
+  width: 100%;
+  max-width: 1180px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 40px;
+  text-align: left;
+  animation: detailIn 0.5s cubic-bezier(0.22, 0.9, 0.32, 1) both;
+}
+
+@keyframes detailIn {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.cs-detail-info {
+  flex: 0 0 400px;
+}
+
+.cs-back {
+  font-family: inherit;
+  font-size: 13px;
+  color: var(--ink-soft);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 22px;
+}
+.cs-back:hover {
+  color: var(--ink);
+}
+
+.cs-detail-info h2 {
+  font-size: clamp(26px, 3.4vw, 38px);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin: 0 0 14px;
+}
+
+.cs-tags {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 18px;
+  flex-wrap: wrap;
+}
+.cs-tag {
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--ink-soft);
+  border: 1px solid var(--card-border);
+  border-radius: 999px;
+  padding: 5px 12px;
+  background: var(--card-bg);
+}
+
+.cs-detail-desc {
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--ink-soft);
+  margin: 0 0 18px;
+}
+
+.cs-detail-list {
+  list-style: none;
+  margin: 0 0 26px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+}
+.cs-detail-list li {
+  font-size: 13.5px;
+  color: var(--ink);
+  padding-left: 18px;
+  position: relative;
+}
+.cs-detail-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 7px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--ink);
+}
+
+.cs-see-course {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1.5px solid var(--ink);
+  padding-bottom: 2px;
+}
+
+/* Diagonal cascading gallery */
+.cs-detail-gallery {
+  position: relative;
+  flex: 1 1 auto;
+  height: 420px;
+  min-width: 320px;
+}
+
+.cs-gallery-card {
+  position: absolute;
+  width: 190px;
+  height: 260px;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 20px 14px;
+  background: var(--card-bg);
+  left: calc(var(--i) * 62px);
+  top: calc(190px - var(--i) * 46px);
+  transform: rotate(calc(-8deg + var(--i) * 4deg));
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  animation: galleryIn 0.6s cubic-bezier(0.22, 0.9, 0.32, 1) backwards;
+  animation-delay: var(--delay);
+}
+.cs-gallery-card:hover {
+  transform: rotate(calc(-8deg + var(--i) * 4deg)) translateY(-10px) scale(1.03);
+  z-index: 30;
+}
+.cs-gallery-card.is-dark {
+  background: #14161a !important;
+  color: #f2f2f0;
+}
+
+@keyframes galleryIn {
+  from { opacity: 0; transform: translate(40px, 30px) rotate(0deg); }
+  to   { opacity: 1; transform: rotate(calc(-8deg + var(--i) * 4deg)); }
+}
+
+/* ============================================
+   Sparkle decoration
+   ============================================ */
+.cs-sparkle {
+  position: absolute;
+  bottom: 64px;
+  right: 64px;
+  font-size: 26px;
+  color: #cfcfca;
+  animation: twinkle 3s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes twinkle {
+  0%, 100% { opacity: 0.35; transform: scale(0.8) rotate(0deg); }
+  50%      { opacity: 1;    transform: scale(1.2) rotate(20deg); }
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+.cs-footer {
+  position: relative;
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 48px 30px;
+  font-size: 12.5px;
+  color: var(--ink-soft);
+}
+.cs-socials {
+  display: flex;
+  gap: 22px;
+}
+.cs-socials a {
+  color: var(--ink-soft);
+  text-decoration: none;
+}
+.cs-socials a:hover {
+  color: var(--ink);
+}
+
+/* ============================================
+   Responsive
+   ============================================ */
+@media (max-width: 900px) {
+  .cs-nav-links { display: none; }
+  .cs-card { width: 110px; height: 195px; }
+  .cs-card-icon { font-size: 22px; }
+  .cs-card-label { font-size: 10.5px; }
+  .cs-detail { flex-direction: column; }
+  .cs-detail-gallery { width: 100%; height: 320px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cs-card, .cs-title, .cs-caption, .cs-detail, .cs-gallery-card, .cs-sparkle {
+    animation: none !important;
+    transition: none !important;
+  }
+}

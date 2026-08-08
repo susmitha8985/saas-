@@ -9,13 +9,27 @@ import OverviewPage from './components/OverviewPage/OverviewPage';
 import ResumeBuilderPage from './components/ResumeBuilderPage/ResumeBuilderPage';
 import MockInterviewPage from './components/MockInterviewPage/MockInterviewPage';
 import CareerRoadmapPage from './components/CareerRoadmapPage/CareerRoadmapPage';
+import CourseShowcase from './components/LandingPage/CourseShowcase';
+import CourseLandingPage from './components/LandingPage/CourseLandingPage';
+import CourseHub from './components/LandingPage/CourseHub';
+import SoftwareCourses3D from './components/LandingPage/SoftwareCourses3D';
+import Portfolio3D from './components/Portfolio/Portfolio3D';
+import Portfolio from './components/Portfolio/Portfolio';
 import './App.css';
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<LandingPage />} />
+        <Route path="/" element={<CourseShowcase />} />
+        <Route path="/showcase" element={<CourseShowcase />} />
+        <Route path="/courselanding" element={<CourseLandingPage />} />
+        <Route path="/coursehub" element={<CourseHub />} />
+        <Route path="/devforge" element={<SoftwareCourses3D />} />
+        <Route path="/landing" element={<LandingPage />} />
+        <Route path="/home" element={<LandingPage />} />
+        <Route path="/portfolio3d" element={<Portfolio3D />} />
+        <Route path="/portfolio" element={<Portfolio />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/overview" element={<OverviewPage />} />
         <Route path="/dashboard" element={<DashboardPage />} />

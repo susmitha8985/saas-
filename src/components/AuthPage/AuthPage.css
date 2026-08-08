@@ -1,5 +1,5 @@
-/* UDEMY AUTH PAGE EXACT MATCH STYLES */
-@import url('https://fonts.googleapis.com/css2?family=Udemy+Sans:ital,wght@0,400;0,500;0,700;0,800;1,400;1,700&family=Inter:wght@400;500;600;700;800&display=swap');
+/* UDEMY / CAREERHUB AUTH PAGE EXACT MATCH STYLES */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
 
 .udemy-auth-root {
   width: 100%;
@@ -7,15 +7,249 @@
   background-color: #ffffff;
   display: flex;
   flex-direction: column;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  color: #1c1d1f;
 }
 
-/* MAIN CONTAINER SPLIT SCREEN */
+/* ============================================
+   1. CLEAN TOP BRAND BAR (NAVBAR REMOVED)
+   ============================================ */
+.auth-top-bar {
+  padding: 24px 36px 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  background: transparent;
+}
+
+.mobile-hamburger-btn {
+  display: none;
+  background: none;
+  border: none;
+  color: #1c1d1f;
+  cursor: pointer;
+  padding: 8px;
+}
+
+.in-brand-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.in-brand-icon {
+  width: 38px;
+  height: 38px;
+  background: #6e2594;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 10px rgba(110, 37, 148, 0.25);
+  transition: transform 0.2s ease;
+}
+
+.in-brand-wrap:hover .in-brand-icon {
+  transform: scale(1.04);
+}
+
+.in-brand-title {
+  font-size: 20px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  color: #1c1d1f;
+}
+
+.purple-txt {
+  color: #6e2594;
+}
+
+.in-nav-btn {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1c1d1f;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  transition: background 0.15s ease;
+}
+
+.in-nav-btn:hover {
+  color: #561c77;
+  background: #f7f9fa;
+}
+
+.in-search-container {
+  flex: 1;
+  max-width: 480px;
+  margin: 0 12px;
+}
+
+.in-search-box {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.in-search-icon {
+  position: absolute;
+  left: 16px;
+  color: #6a6f73;
+  pointer-events: none;
+}
+
+.in-search-box input {
+  width: 100%;
+  height: 46px;
+  border-radius: 999px;
+  border: 1px solid #1c1d1f;
+  background: #f7f9fa;
+  padding: 0 18px 0 46px;
+  font-family: inherit;
+  font-size: 14px;
+  color: #1c1d1f;
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.in-search-box input:focus {
+  background: #ffffff;
+  border-color: #6e2594;
+  box-shadow: 0 0 0 2px rgba(110, 37, 148, 0.15);
+}
+
+.in-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.in-nav-txt-link {
+  background: none;
+  border: none;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 500;
+  color: #1c1d1f;
+  cursor: pointer;
+  padding: 8px 12px;
+  border-radius: 4px;
+  transition: color 0.15s ease;
+}
+
+.in-nav-txt-link:hover {
+  color: #561c77;
+}
+
+.in-icon-btn {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: none;
+  color: #1c1d1f;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.in-icon-btn:hover {
+  background: #f7f9fa;
+}
+
+.cart-badge-dot {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 8px;
+  height: 8px;
+  background: #6e2594;
+  border-radius: 50%;
+}
+
+.in-btn-login {
+  height: 40px;
+  padding: 0 16px;
+  border: 1px solid #1c1d1f;
+  background: #ffffff;
+  color: #1c1d1f;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.in-btn-login:hover {
+  background: #f7f9fa;
+}
+
+.in-btn-login.active-tab {
+  background: #6e2594;
+  color: #ffffff;
+  border-color: #6e2594;
+}
+
+.in-btn-signup {
+  height: 40px;
+  padding: 0 16px;
+  border: 1px solid #1c1d1f;
+  background: #1c1d1f;
+  color: #ffffff;
+  font-family: inherit;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.in-btn-signup:hover {
+  background: #2d2f31;
+}
+
+.in-btn-signup.active-tab-signup {
+  background: #6e2594;
+  border-color: #6e2594;
+}
+
+.in-btn-globe {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #1c1d1f;
+  background: #ffffff;
+  color: #1c1d1f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.in-btn-globe:hover {
+  background: #f7f9fa;
+}
+
+/* ============================================
+   2. MAIN CONTAINER SPLIT SCREEN
+   ============================================ */
 .auth-main-container {
   flex: 1;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 40px 24px;
+  padding: 48px 24px;
+  background: #fafafa;
 }
 
 .auth-split-wrapper {
@@ -23,34 +257,38 @@
   width: 100%;
   display: flex;
   align-items: center;
-  gap: 80px;
+  gap: 72px;
   margin: 0 auto;
 }
 
-/* LEFT COLUMN: CUSTOM AI GENERATED 3D ARTWORK */
+/* LEFT COLUMN: ARTWORK & HIGHLIGHTS */
 .auth-left-artwork {
   flex: 1;
   display: flex;
-  justify-content: center;
+  flex-direction: column;
   align-items: center;
+  gap: 24px;
 }
 
 .art-frame-container {
+  position: relative;
   width: 100%;
   max-width: 440px;
   aspect-ratio: 1 / 1;
   border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 12px 32px rgba(110, 37, 148, 0.15);
-  background: #f7f9fa;
+  box-shadow: 0 16px 40px rgba(110, 37, 148, 0.18);
+  background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
-  transition: transform 0.3s ease;
+  border: 1px solid rgba(110, 37, 148, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .art-frame-container:hover {
   transform: translateY(-4px);
+  box-shadow: 0 20px 48px rgba(110, 37, 148, 0.22);
 }
 
 .art-image {
@@ -59,10 +297,72 @@
   object-fit: cover;
 }
 
+.art-overlay-badge {
+  position: absolute;
+  bottom: 20px;
+  left: 20px;
+  right: 20px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 12px 18px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+  font-size: 13px;
+  font-weight: 700;
+  color: #6e2594;
+  border: 1px solid rgba(110, 37, 148, 0.15);
+}
+
+.sparkle-icon {
+  color: #6e2594;
+  animation: pulseSparkle 2s infinite ease-in-out;
+}
+
+@keyframes pulseSparkle {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+.art-highlights {
+  width: 100%;
+  max-width: 440px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.highlight-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 13.5px;
+  font-weight: 500;
+  color: #2d2f31;
+  background: #ffffff;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid #e8e8e8;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.highlight-icon {
+  color: #6e2594;
+  flex-shrink: 0;
+}
+
 /* RIGHT COLUMN: AUTH FORM CONTAINER */
 .auth-right-form-container {
   flex: 1;
-  max-width: 420px;
+  max-width: 440px;
+  background: #ffffff;
+  padding: 36px 32px;
+  border-radius: 16px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  border: 1px solid #e8e8e8;
 }
 
 .auth-box-content {
@@ -72,42 +372,99 @@
 }
 
 .auth-heading {
-  font-size: 28px;
+  font-size: 24px;
   font-weight: 800;
   color: #1c1d1f;
-  margin: 0 0 32px 0;
-  line-height: 1.25;
-  letter-spacing: -0.5px;
+  margin: 0 0 28px 0;
+  line-height: 1.3;
+  letter-spacing: -0.4px;
 }
 
-/* FORM FIELDS */
+/* FORM FIELDS WITH ICONS */
 .udemy-auth-form {
   display: flex;
   flex-direction: column;
-  gap: 16px;
+  gap: 18px;
 }
 
 .udemy-form-group {
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.input-label {
+  font-size: 12px;
+  font-weight: 700;
+  color: #1c1d1f;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.input-with-icon-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input-lead-icon {
+  position: absolute;
+  left: 16px;
+  color: #6a6f73;
+  pointer-events: none;
+  transition: color 0.15s ease;
 }
 
 .udemy-input {
   width: 100%;
-  height: 54px;
+  height: 50px;
   border: 1px solid #1c1d1f;
   padding: 0 16px;
   font-family: inherit;
-  font-size: 15px;
+  font-size: 14.5px;
   color: #1c1d1f;
   background: #ffffff;
   outline: none;
-  border-radius: 0;
+  border-radius: 4px;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.udemy-input.input-has-lead {
+  padding-left: 46px;
+}
+
+.udemy-input.input-has-trail {
+  padding-right: 46px;
 }
 
 .udemy-input:focus {
   border-color: #6e2594;
-  box-shadow: 0 0 0 1px #6e2594;
+  box-shadow: 0 0 0 2px rgba(110, 37, 148, 0.15);
+}
+
+.input-with-icon-wrapper:focus-within .input-lead-icon {
+  color: #6e2594;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  color: #6a6f73;
+  cursor: pointer;
+  padding: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: color 0.15s ease;
+}
+
+.password-toggle-btn:hover {
+  color: #1c1d1f;
 }
 
 .udemy-checkbox-label {
@@ -118,7 +475,7 @@
   color: #6a6f73;
   cursor: pointer;
   line-height: 1.4;
-  margin-top: 4px;
+  margin-top: 2px;
 }
 
 .udemy-checkbox {
@@ -131,20 +488,26 @@
 
 .udemy-btn-continue {
   width: 100%;
-  height: 52px;
+  height: 50px;
   background: #6e2594;
   color: #ffffff;
   border: none;
+  border-radius: 4px;
   font-family: inherit;
-  font-size: 16px;
+  font-size: 15px;
   font-weight: 700;
   cursor: pointer;
-  margin-top: 12px;
-  transition: background 0.15s ease;
+  margin-top: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  transition: background 0.15s ease, transform 0.15s ease;
 }
 
 .udemy-btn-continue:hover {
   background: #561c77;
+  transform: translateY(-1px);
 }
 
 /* DIVIDER */
@@ -153,14 +516,15 @@
   text-align: center;
   border-bottom: 1px solid #d1d7dc;
   line-height: 0.1em;
-  margin: 28px 0;
+  margin: 26px 0;
 }
 
 .udemy-divider span {
   background: #ffffff;
   padding: 0 12px;
-  font-size: 13px;
+  font-size: 12.5px;
   color: #6a6f73;
+  font-weight: 500;
 }
 
 /* SOCIAL BUTTONS ROW */
@@ -168,26 +532,29 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: 14px;
 }
 
 .social-icon-btn {
-  width: 54px;
-  height: 54px;
+  flex: 1;
+  height: 48px;
   border: 1px solid #1c1d1f;
+  border-radius: 4px;
   background: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: all 0.15s ease;
 }
 
 .social-icon-btn:hover {
   background: #f7f9fa;
+  border-color: #6e2594;
+  transform: translateY(-1px);
 }
 
-/* MAIN LOGIN OPTIONS (SCREENSHOT 2) */
+/* MAIN LOGIN OPTIONS */
 .udemy-login-options {
   display: flex;
   flex-direction: column;
@@ -196,9 +563,10 @@
 
 .btn-google-sso {
   width: 100%;
-  height: 52px;
+  height: 50px;
   background: #ffffff;
   border: 1px solid #6e2594;
+  border-radius: 4px;
   color: #6e2594;
   font-family: inherit;
   font-size: 15px;
@@ -208,34 +576,60 @@
   justify-content: center;
   gap: 12px;
   cursor: pointer;
-  transition: background 0.15s ease;
+  transition: all 0.15s ease;
 }
 
 .btn-google-sso:hover {
   background: rgba(110, 37, 148, 0.05);
+  transform: translateY(-1px);
 }
 
 .login-menu-box {
   border: 1px solid #d1d7dc;
+  border-radius: 6px;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .menu-option-btn {
   width: 100%;
-  padding: 16px 20px;
+  padding: 16px 18px;
   background: #ffffff;
   border: none;
-  text-align: left;
   font-family: inherit;
-  font-size: 15px;
+  font-size: 14.5px;
   color: #1c1d1f;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
   transition: background 0.15s ease;
+}
+
+.menu-btn-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.menu-btn-icon {
+  color: #6e2594;
+  flex-shrink: 0;
+}
+
+.menu-arrow-icon {
+  color: #6a6f73;
+  transition: transform 0.15s ease, color 0.15s ease;
 }
 
 .menu-option-btn:hover {
   background: #f7f9fa;
+}
+
+.menu-option-btn:hover .menu-arrow-icon {
+  color: #6e2594;
+  transform: translateX(3px);
 }
 
 .menu-divider {
@@ -268,20 +662,52 @@
   margin-left: 4px;
 }
 
-.active-tab {
-  background: rgba(0,0,0,0.05);
-}
-
 /* RESPONSIVE BREAKPOINTS */
-@media (max-width: 900px) {
+@media (max-width: 992px) {
   .auth-split-wrapper {
     flex-direction: column;
-    gap: 40px;
+    gap: 36px;
   }
+  
   .auth-left-artwork {
     width: 100%;
   }
+  
   .art-frame-container {
-    max-width: 320px;
+    max-width: 360px;
+  }
+  
+  .auth-right-form-container {
+    width: 100%;
+    max-width: 440px;
+  }
+}
+
+@media (max-width: 768px) {
+  .mobile-hamburger-btn {
+    display: block;
+  }
+  
+  .hide-mobile {
+    display: none !important;
+  }
+  
+  .udemy-in-header {
+    padding: 0 16px;
+  }
+  
+  .auth-right-form-container {
+    padding: 24px 20px;
+  }
+}
+
+@media (max-width: 480px) {
+  .hide-tablet {
+    display: none !important;
+  }
+  
+  .social-buttons-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 }
