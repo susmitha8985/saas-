@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ArrowUpRight, Terminal, Database, Cpu, Cloud } from 'lucide-react';
 import ExploreCourses from './ExploreCourses';
@@ -108,6 +109,7 @@ const CATEGORIES = [
 ];
 
 export default function HeroCardsShowcase() {
+  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(true);
   const [loadingText, setLoadingText] = useState('Loading Portfolio Assets');
   const [catIndex, setCatIndex] = useState(0);
@@ -201,7 +203,11 @@ export default function HeroCardsShowcase() {
           >
             {lang === 'EN' ? 'EN – FR' : 'FR – EN'}
           </button>
-          <button type="button" className="hk-contact-btn">
+          <button
+            type="button"
+            className="hk-contact-btn"
+            onClick={() => navigate('/auth')}
+          >
             Get In Touch
           </button>
         </div>

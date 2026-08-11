@@ -446,6 +446,288 @@
   cursor: pointer;
 }
 
+/* ==========================================================================
+   Additional Udemy Sections (Stats, Career Tracks, Reviews, FAQ)
+   ========================================================================== */
+
+/* 1. Stats Strip */
+.ec-stats-strip {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  margin-top: 50px;
+  margin-bottom: 60px;
+  background-color: #ffffff;
+  border-radius: 16px;
+  padding: 24px 30px;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+}
+
+.ec-stat-item {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ec-stat-icon {
+  color: #111111;
+  flex-shrink: 0;
+}
+
+.ec-stat-icon.star {
+  color: #e59819;
+  fill: #e59819;
+}
+
+.ec-stat-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.ec-stat-num {
+  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  font-size: 17px;
+  font-weight: 800;
+  color: #111111;
+}
+
+.ec-stat-lbl {
+  font-size: 12px;
+  font-weight: 500;
+  color: #666666;
+}
+
+/* 2. Generic Section Block */
+.ec-section-block {
+  margin-top: 70px;
+}
+
+.ec-block-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 36px;
+}
+
+.ec-block-title {
+  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  font-size: 2rem;
+  font-weight: 800;
+  color: #111111;
+  letter-spacing: -1px;
+  margin-bottom: 8px;
+}
+
+.ec-block-desc {
+  font-size: 14px;
+  color: #666666;
+  max-width: 600px;
+  line-height: 1.5;
+}
+
+/* Career Tracks Grid */
+.ec-tracks-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.ec-track-card {
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.ec-track-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.08);
+}
+
+.ec-track-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+  font-size: 12px;
+}
+
+.ec-track-badge {
+  font-size: 10px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  background-color: #111111;
+  color: #ffffff;
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+.ec-track-meta {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  color: #666666;
+  font-weight: 600;
+}
+
+.ec-track-title {
+  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  font-size: 17px;
+  font-weight: 700;
+  color: #111111;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.ec-track-desc {
+  font-size: 13px;
+  color: #666666;
+  line-height: 1.5;
+  margin-bottom: 18px;
+}
+
+.ec-skills-tags {
+  margin-top: auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.ec-skill-pill {
+  font-size: 11px;
+  font-weight: 600;
+  color: #333333;
+  background-color: #f0f0f5;
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+/* Student Reviews Grid */
+.ec-reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+}
+
+.ec-review-card {
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ec-rev-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ec-avatar {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background-color: #111111;
+  color: #ffffff;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ec-rev-info {
+  display: flex;
+  flex-direction: column;
+}
+
+.ec-rev-name {
+  font-size: 14px;
+  font-weight: 700;
+  color: #111111;
+}
+
+.ec-rev-role {
+  font-size: 11px;
+  color: #666666;
+  font-weight: 500;
+}
+
+.ec-rev-text {
+  font-size: 13px;
+  color: #444444;
+  line-height: 1.5;
+  font-style: italic;
+}
+
+.ec-rev-course {
+  margin-top: auto;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 600;
+  color: #2563eb;
+  padding-top: 10px;
+  border-top: 1px solid #f0f0f4;
+}
+
+/* FAQ Accordion */
+.ec-faq-container {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ec-faq-item {
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 14px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+.ec-faq-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 24px;
+  background: none;
+  border: none;
+  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  font-size: 15px;
+  font-weight: 700;
+  color: #111111;
+  text-align: left;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.ec-faq-trigger:hover,
+.ec-faq-trigger.open {
+  background-color: #f8f8fc;
+}
+
+.ec-faq-answer {
+  padding: 0 24px 20px;
+  font-size: 14px;
+  color: #555555;
+  line-height: 1.6;
+}
+
 /* Modal Styling */
 .ec-modal-overlay {
   position: fixed;
@@ -818,6 +1100,12 @@
   .ec-grid {
     grid-template-columns: repeat(2, 1fr);
   }
+  .ec-stats-strip {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ec-tracks-grid, .ec-reviews-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
   .ec-modal-body {
     grid-template-columns: 1fr;
   }
@@ -831,6 +1119,12 @@
     padding: 40px 20px 60px;
   }
   .ec-grid {
+    grid-template-columns: 1fr;
+  }
+  .ec-stats-strip {
+    grid-template-columns: 1fr;
+  }
+  .ec-tracks-grid, .ec-reviews-grid {
     grid-template-columns: 1fr;
   }
   .ec-controls-bar {

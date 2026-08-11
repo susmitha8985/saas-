@@ -17,6 +17,11 @@ import {
   ArrowRight,
   ShieldCheck,
   Zap,
+  HelpCircle,
+  MessageSquare,
+  Compass,
+  Layers,
+  GraduationCap,
 } from 'lucide-react';
 import './ExploreCourses.css';
 
@@ -390,12 +395,107 @@ const CATEGORY_TABS = [
   { id: 'deployment', label: 'DevOps & Cloud' },
 ];
 
+const CAREER_TRACKS = [
+  {
+    id: 'track-1',
+    title: 'Full-Stack Python & Microservices Architect',
+    coursesCount: '3 Courses Included',
+    totalHours: '140 Hours',
+    badge: 'Popular Career Track',
+    description:
+      'Comprehensive roadmap from Python API design to PostgreSQL database tuning and frontend integration.',
+    skills: ['Python 3.12', 'Django REST', 'FastAPI', 'PostgreSQL', 'Redis', 'Docker'],
+  },
+  {
+    id: 'track-2',
+    title: 'Cloud DevOps & Site Reliability Engineer (SRE)',
+    coursesCount: '3 Courses Included',
+    totalHours: '120 Hours',
+    badge: 'High Demand',
+    description:
+      'Master containerization, Kubernetes cluster management, Infrastructure as Code, and automated CI/CD pipelines.',
+    skills: ['Multi-Stage Docker', 'Kubernetes', 'GitHub Actions', 'Terraform', 'AWS'],
+  },
+  {
+    id: 'track-3',
+    title: 'High-Scale Distributed Systems Specialist',
+    coursesCount: '3 Courses Included',
+    totalHours: '150 Hours',
+    badge: 'Advanced Level',
+    description:
+      'Learn how to architect systems handling millions of req/sec with rate limiting, Kafka event streaming, and saga transactions.',
+    skills: ['Kafka', 'RabbitMQ', 'Rate Limiting', 'Circuit Breakers', 'Consistent Hashing'],
+  },
+];
+
+const STUDENT_REVIEWS = [
+  {
+    id: 'rev-1',
+    name: 'Sarah Jenkins',
+    role: 'Senior Backend Engineer @ CloudScale',
+    rating: 5,
+    avatar: 'SJ',
+    courseCompleted: 'Python Backend Engineering',
+    review:
+      'The FastAPI and PostgreSQL query optimization modules completely changed how I write production APIs. Clear, concise, and straight to real architectural patterns!',
+  },
+  {
+    id: 'rev-2',
+    name: 'David Chen',
+    role: 'DevOps Lead @ FinTech Global',
+    rating: 5,
+    avatar: 'DC',
+    courseCompleted: 'Cloud Infrastructure & DevOps',
+    review:
+      'The Kubernetes zero-downtime deployment pipeline lesson saved our team weeks of work. Best hands-on DevOps masterclass on the market.',
+  },
+  {
+    id: 'rev-3',
+    name: 'Elena Rostova',
+    role: 'System Architect @ DataNexus',
+    rating: 5,
+    avatar: 'ER',
+    courseCompleted: 'High-Scale System Design',
+    review:
+      'Deep dive into Kafka, Celery task queues, and circuit breaker patterns. Crucial knowledge if you are scaling high-load backend services.',
+  },
+];
+
+const FAQ_ITEMS = [
+  {
+    question: 'Do I get lifetime access to all course materials and updates?',
+    answer:
+      'Yes! Once enrolled, you receive full lifetime access to all video lectures, code repositories, downloadable resources, and future course updates at no additional cost.',
+  },
+  {
+    question: 'Will I receive a verifiable Certificate of Completion?',
+    answer:
+      'Absolutely. Upon completing 100% of the lectures and practical assignments, you will receive a verifiable Certificate of Completion issued by codeforeverybody.',
+  },
+  {
+    question: 'Are the source code repositories and exercise files included?',
+    answer:
+      'Yes. Every course comes with full GitHub repository access containing step-by-step branch commits for every module and complete starter & solution code.',
+  },
+  {
+    question: 'What if I need assistance during a project or exercise?',
+    answer:
+      'Our dedicated Q&A forum and Discord developer community are monitored daily by codeforeverybody instructors to assist with code debugging and architectural queries.',
+  },
+  {
+    question: 'Is there a money-back guarantee if I am not satisfied?',
+    answer:
+      'Yes. All courses come with a 30-day money-back guarantee. If you decide the course is not right for you within 30 days, you can request a full refund.',
+  },
+];
+
 export default function ExploreCourses() {
   const [activeTab, setActiveTab] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [expandedModule, setExpandedModule] = useState(0);
   const [enrolledCourseId, setEnrolledCourseId] = useState(null);
+  const [expandedFaq, setExpandedFaq] = useState(0);
 
   // Filter courses by category and search keyword
   const filteredCourses = COURSES_DATA.filter((course) => {
@@ -585,6 +685,160 @@ export default function ExploreCourses() {
             </div>
           )}
         </div>
+
+        {/* =================================================================== */}
+        {/* Additional Udemy Sections Below Course Grid                       */}
+        {/* =================================================================== */}
+
+        {/* 1. Instructor & Learning Proof Metrics Counter Strip */}
+        <div className="ec-stats-strip">
+          <div className="ec-stat-item">
+            <Users size={24} className="ec-stat-icon" />
+            <div className="ec-stat-info">
+              <span className="ec-stat-num">120,000+</span>
+              <span className="ec-stat-lbl">Students Enrolled</span>
+            </div>
+          </div>
+
+          <div className="ec-stat-item">
+            <Star size={24} className="ec-stat-icon star" />
+            <div className="ec-stat-info">
+              <span className="ec-stat-num">4.9 ★★★★★</span>
+              <span className="ec-stat-lbl">Instructor Rating (15k+ Reviews)</span>
+            </div>
+          </div>
+
+          <div className="ec-stat-item">
+            <Zap size={24} className="ec-stat-icon" />
+            <div className="ec-stat-info">
+              <span className="ec-stat-num">100% Hands-On</span>
+              <span className="ec-stat-lbl">Real Production Code Projects</span>
+            </div>
+          </div>
+
+          <div className="ec-stat-item">
+            <ShieldCheck size={24} className="ec-stat-icon" />
+            <div className="ec-stat-info">
+              <span className="ec-stat-num">Lifetime Access</span>
+              <span className="ec-stat-lbl">Certificates & Free Updates</span>
+            </div>
+          </div>
+        </div>
+
+        {/* 2. Structured Career Learning Paths Section */}
+        <div className="ec-section-block">
+          <div className="ec-block-header">
+            <div className="ec-pill-tag">
+              <Compass size={13} />
+              <span>Guided Roadmap</span>
+            </div>
+            <h3 className="ec-block-title">Structured Career Learning Tracks</h3>
+            <p className="ec-block-desc">
+              Follow curated step-by-step learning pathways designed to take you from foundational syntax to principal software architect.
+            </p>
+          </div>
+
+          <div className="ec-tracks-grid">
+            {CAREER_TRACKS.map((track) => (
+              <div key={track.id} className="ec-track-card">
+                <div className="ec-track-header">
+                  <span className="ec-track-badge">{track.badge}</span>
+                  <span className="ec-track-meta">
+                    <Layers size={13} /> {track.coursesCount} • {track.totalHours}
+                  </span>
+                </div>
+
+                <h4 className="ec-track-title">{track.title}</h4>
+                <p className="ec-track-desc">{track.description}</p>
+
+                <div className="ec-skills-tags">
+                  {track.skills.map((skill) => (
+                    <span key={skill} className="ec-skill-pill">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* 3. Student Reviews & Testimonials Section */}
+        <div className="ec-section-block">
+          <div className="ec-block-header">
+            <div className="ec-pill-tag">
+              <MessageSquare size={13} />
+              <span>Student Community</span>
+            </div>
+            <h3 className="ec-block-title">What Our Graduates Say</h3>
+            <p className="ec-block-desc">
+              Thousands of engineers have leveled up their careers with <strong>codeforeverybody</strong> courses.
+            </p>
+          </div>
+
+          <div className="ec-reviews-grid">
+            {STUDENT_REVIEWS.map((rev) => (
+              <div key={rev.id} className="ec-review-card">
+                <div className="ec-rev-header">
+                  <div className="ec-avatar">{rev.avatar}</div>
+                  <div className="ec-rev-info">
+                    <h5 className="ec-rev-name">{rev.name}</h5>
+                    <span className="ec-rev-role">{rev.role}</span>
+                  </div>
+                </div>
+
+                <div className="ec-stars">
+                  {[...Array(rev.rating)].map((_, i) => (
+                    <Star key={i} size={14} className="ec-star-icon filled" />
+                  ))}
+                </div>
+
+                <p className="ec-rev-text">"{rev.review}"</p>
+
+                <div className="ec-rev-course">
+                  <GraduationCap size={13} />
+                  <span>{rev.courseCompleted}</span>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* 4. Frequently Asked Questions (FAQ Accordion) */}
+        <div className="ec-section-block">
+          <div className="ec-block-header">
+            <div className="ec-pill-tag">
+              <HelpCircle size={13} />
+              <span>Got Questions?</span>
+            </div>
+            <h3 className="ec-block-title">Frequently Asked Questions</h3>
+            <p className="ec-block-desc">
+              Everything you need to know about our courses, certifications, and learning platform.
+            </p>
+          </div>
+
+          <div className="ec-faq-container">
+            {FAQ_ITEMS.map((faq, idx) => (
+              <div key={idx} className="ec-faq-item">
+                <button
+                  type="button"
+                  className={`ec-faq-trigger ${expandedFaq === idx ? 'open' : ''}`}
+                  onClick={() => setExpandedFaq(expandedFaq === idx ? -1 : idx)}
+                >
+                  <span>{faq.question}</span>
+                  {expandedFaq === idx ? <ChevronUp size={18} /> : <ChevronDown size={18} />}
+                </button>
+
+                {expandedFaq === idx && (
+                  <div className="ec-faq-answer">
+                    <p>{faq.answer}</p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </div>
+
       </div>
 
       {/* Udemy-Style Detailed Course Modal Overlay */}
