@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ArrowUpRight, Terminal, Database, Cpu, Cloud } from 'lucide-react';
+import ExploreCourses from './ExploreCourses';
 import './HeroCardsShowcase.css';
 
 const CATEGORIES = [
@@ -380,6 +381,9 @@ export default function HeroCardsShowcase() {
 
         <div className="hk-sparkle-star">✦</div>
       </main>
+
+      {/* Explore Courses Section */}
+      <ExploreCourses />
 
       {/* Footer */}
       <footer className="hk-footer">
