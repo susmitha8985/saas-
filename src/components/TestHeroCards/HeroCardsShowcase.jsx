@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ArrowUpRight, Terminal, Database, Cpu, Cloud } from 'lucide-react';
 import ExploreCourses from './ExploreCourses';
+import AboutUs from './AboutUs';
 import './HeroCardsShowcase.css';
 
 const CATEGORIES = [
@@ -150,6 +151,18 @@ export default function HeroCardsShowcase() {
     }, 100);
   };
 
+  const scrollToAboutUs = () => {
+    if (selectedCard !== null) {
+      setSelectedCard(null);
+    }
+    setTimeout(() => {
+      const el = document.getElementById('about-us');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
+
   return (
     <div className="hk-root">
       <div className="hk-grid-bg" />
@@ -189,7 +202,9 @@ export default function HeroCardsShowcase() {
           >
             Highlights
           </span>
-          <span className="hk-nav-item">About</span>
+          <span className="hk-nav-item" onClick={scrollToAboutUs}>
+            About Us
+          </span>
           <span className="hk-nav-item" onClick={scrollToExploreCourses}>
             Explore Courses
           </span>
@@ -404,6 +419,9 @@ export default function HeroCardsShowcase() {
 
       {/* Explore Courses Section */}
       <ExploreCourses />
+
+      {/* About Us Section */}
+      <AboutUs />
 
       {/* Footer */}
       <footer className="hk-footer">

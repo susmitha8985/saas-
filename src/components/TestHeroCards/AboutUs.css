@@ -1,0 +1,317 @@
+/* ==========================================================================
+   AboutUs.css — Exact match for root route theme & typography
+   ========================================================================== */
+
+.au-section {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+  padding: 70px 48px 80px;
+  background-color: var(--bg-color, #f5f5f7);
+  color: var(--text-main, #111111);
+  font-family: var(--font-family, 'Plus Jakarta Sans', sans-serif);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+.au-container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+
+/* Header */
+.au-header-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.au-pill-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #111111;
+  background-color: rgba(0, 0, 0, 0.05);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 6px 14px;
+  border-radius: 20px;
+  margin-bottom: 14px;
+}
+
+.au-section-title {
+  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  font-size: clamp(2rem, 4vw, 3.2rem);
+  font-weight: 800;
+  color: var(--text-main, #111111);
+  letter-spacing: -1.5px;
+  line-height: 1.15;
+  margin-bottom: 12px;
+}
+
+.au-section-subtitle {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--text-muted, #666666);
+  max-width: 680px;
+  line-height: 1.6;
+}
+
+/* Content Grid */
+.au-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 40px;
+  align-items: start;
+}
+
+/* Left Column */
+.au-left-col {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+.au-story-card {
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+.au-card-title {
+  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #111111;
+  letter-spacing: -0.8px;
+  margin-bottom: 16px;
+  line-height: 1.25;
+}
+
+.au-story-text {
+  font-size: 14px;
+  color: #555555;
+  line-height: 1.75;
+  margin-bottom: 14px;
+}
+
+.au-story-text:last-child {
+  margin-bottom: 0;
+}
+
+.au-story-text strong {
+  color: #111111;
+}
+
+/* Pillars Grid */
+.au-pillars-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+
+.au-pillar-item {
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 16px;
+  padding: 20px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.03);
+  display: flex;
+  flex-direction: column;
+}
+
+.au-pillar-icon-wrap {
+  width: 40px;
+  height: 40px;
+  border-radius: 12px;
+  background-color: #111111;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.au-pillar-title {
+  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  font-size: 14px;
+  font-weight: 700;
+  color: #111111;
+  margin-bottom: 6px;
+}
+
+.au-pillar-desc {
+  font-size: 12px;
+  color: #666666;
+  line-height: 1.55;
+}
+
+/* Right Column Spotlight Card */
+.au-right-col {
+  position: sticky;
+  top: 30px;
+}
+
+.au-spotlight-card {
+  background-color: #ffffff;
+  border: 1px solid rgba(0, 0, 0, 0.08);
+  border-radius: 20px;
+  padding: 32px;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.au-avatar-block {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.au-avatar {
+  width: 54px;
+  height: 54px;
+  border-radius: 16px;
+  background-color: #111111;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.au-inst-meta {
+  display: flex;
+  flex-direction: column;
+}
+
+.au-inst-name-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.au-inst-name {
+  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  font-size: 18px;
+  font-weight: 800;
+  color: #111111;
+}
+
+.au-verified-check {
+  font-size: 14px;
+  color: #2563eb;
+}
+
+.au-inst-role {
+  font-size: 12px;
+  color: #666666;
+  font-weight: 600;
+}
+
+.au-spotlight-bio {
+  font-size: 13px;
+  color: #555555;
+  line-height: 1.6;
+}
+
+/* Stats Grid */
+.au-stats-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  background-color: #f8f8fc;
+  border-radius: 14px;
+  padding: 16px;
+  border: 1px solid #e5e5eb;
+}
+
+.au-stat-box {
+  display: flex;
+  flex-direction: column;
+}
+
+.au-stat-value {
+  font-family: var(--font-heading, 'Space Grotesk', sans-serif);
+  font-size: 16px;
+  font-weight: 800;
+  color: #111111;
+}
+
+.au-stat-label {
+  font-size: 11px;
+  color: #666666;
+  font-weight: 500;
+}
+
+/* Check List */
+.au-check-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #444444;
+}
+
+.au-check-list li {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.au-check-icon {
+  color: #10b981;
+  flex-shrink: 0;
+}
+
+/* CTA Button */
+.au-cta-btn {
+  width: 100%;
+  font-size: 14px;
+  font-weight: 700;
+  color: #ffffff;
+  background-color: #111111;
+  border: none;
+  padding: 12px 20px;
+  border-radius: 30px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+  margin-top: 4px;
+}
+
+.au-cta-btn:hover {
+  background-color: #333333;
+  transform: translateY(-1px);
+}
+
+/* Responsive adjustments */
+@media (max-width: 1024px) {
+  .au-grid {
+    grid-template-columns: 1fr;
+  }
+  .au-right-col {
+    position: static;
+  }
+}
+
+@media (max-width: 768px) {
+  .au-section {
+    padding: 50px 20px 60px;
+  }
+  .au-pillars-grid {
+    grid-template-columns: 1fr;
+  }
+}
