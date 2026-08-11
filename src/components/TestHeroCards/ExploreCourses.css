@@ -1097,17 +1097,23 @@
 
 /* Responsive adjustments */
 @media (max-width: 1024px) {
+  .ec-section {
+    padding: 50px 32px 70px;
+  }
   .ec-grid {
     grid-template-columns: repeat(2, 1fr);
   }
   .ec-stats-strip {
     grid-template-columns: repeat(2, 1fr);
+    gap: 16px;
+    padding: 20px;
   }
   .ec-tracks-grid, .ec-reviews-grid {
     grid-template-columns: repeat(2, 1fr);
   }
   .ec-modal-body {
     grid-template-columns: 1fr;
+    padding: 28px;
   }
   .ec-learn-list {
     grid-template-columns: 1fr;
@@ -1116,28 +1122,60 @@
 
 @media (max-width: 680px) {
   .ec-section {
-    padding: 40px 20px 60px;
+    padding: 36px 16px 50px;
   }
   .ec-grid {
     grid-template-columns: 1fr;
+    gap: 20px;
   }
   .ec-stats-strip {
     grid-template-columns: 1fr;
+    padding: 16px;
+    gap: 16px;
   }
   .ec-tracks-grid, .ec-reviews-grid {
     grid-template-columns: 1fr;
+    gap: 16px;
   }
   .ec-controls-bar {
     flex-direction: column;
     align-items: stretch;
+    gap: 14px;
+  }
+  .ec-tabs {
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 6px;
+    width: 100%;
+  }
+  .ec-tab-btn {
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding: 8px 14px;
+    font-size: 12px;
   }
   .ec-search-box {
     width: 100%;
   }
+  .ec-modal-overlay {
+    padding: 12px;
+  }
+  .ec-modal-content {
+    border-radius: 14px;
+    max-height: 95vh;
+  }
   .ec-modal-header {
-    padding: 24px;
+    padding: 20px;
+  }
+  .ec-modal-title {
+    font-size: 1.4rem;
   }
   .ec-modal-body {
-    padding: 24px;
+    padding: 18px;
+    gap: 20px;
+  }
+  .ec-learn-box {
+    padding: 16px;
   }
 }
