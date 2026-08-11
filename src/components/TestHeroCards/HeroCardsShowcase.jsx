@@ -136,6 +136,18 @@ export default function HeroCardsShowcase() {
 
   const activeCat = CATEGORIES[catIndex];
 
+  const scrollToExploreCourses = () => {
+    if (selectedCard !== null) {
+      setSelectedCard(null);
+    }
+    setTimeout(() => {
+      const el = document.getElementById('explore-courses');
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 100);
+  };
+
   return (
     <div className="hk-root">
       <div className="hk-grid-bg" />
@@ -176,7 +188,9 @@ export default function HeroCardsShowcase() {
             Highlights
           </span>
           <span className="hk-nav-item">About</span>
-          <span className="hk-nav-item">More Projects</span>
+          <span className="hk-nav-item" onClick={scrollToExploreCourses}>
+            Explore Courses
+          </span>
         </nav>
 
         <div className="hk-header-actions">
