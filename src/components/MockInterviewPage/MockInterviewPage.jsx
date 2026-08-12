@@ -71,9 +71,18 @@ export default function MockInterviewPage() {
 
       {/* TOP HEADER */}
       <header className="mock-top-header">
-        <div>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '0.1rem' }}>
-            <h1 style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0f172a' }}>AI Mock Interview</h1>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div onClick={() => navigate('/')} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <div style={{ width: 34, height: 34, borderRadius: 10, background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', boxShadow: '0 4px 12px rgba(79, 70, 229, 0.25)' }}>
+              <Sparkles size={18} />
+            </div>
+            <span className="font-heading" style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a' }}>
+              code<span style={{ background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>ForEveryBody</span>
+            </span>
+          </div>
+          <div style={{ width: 1, height: 24, background: '#e2e8f0' }} />
+          <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+            <h1 className="font-heading" style={{ fontSize: '1.15rem', fontWeight: 700, color: '#0f172a' }}>AI Mock Interview</h1>
             <span style={{ background: 'rgba(79, 70, 229, 0.1)', color: '#4f46e5', fontWeight: 700, fontSize: '0.8rem', padding: '0.2rem 0.6rem', borderRadius: '6px' }}>
               Data Scientist Intern • Zomato
             </span>

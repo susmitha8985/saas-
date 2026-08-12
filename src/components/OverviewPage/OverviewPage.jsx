@@ -115,8 +115,8 @@ export default function OverviewPage() {
           <div className="overview-brand-icon">
             <Sparkles size={20} />
           </div>
-          <span className="overview-brand-title">
-            Career<span style={{ color: '#4f46e5' }}>AI</span>
+          <span className="overview-brand-title font-heading">
+            code<span style={{ background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>ForEveryBody</span>
           </span>
         </div>
 

@@ -86,8 +86,8 @@ export default function LearningPage() {
             <div className="sidebar-logo-icon" style={{ background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)', boxShadow: '0 6px 16px rgba(79, 70, 229, 0.35)' }}>
               <Sparkles size={22} />
             </div>
-            <span className="sidebar-logo-title">
-              Career<span style={{ color: '#4f46e5' }}>AI</span>
+            <span className="sidebar-logo-title font-heading">
+              code<span style={{ background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>ForEveryBody</span>
             </span>
           </div>
 

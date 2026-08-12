@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { ArrowLeft, ArrowUpRight, Terminal, Database, Cpu, Cloud } from 'lucide-react';
+import LandingHero from '../LandingHero/LandingHero';
 import ExploreCourses from './ExploreCourses';
 import AboutUs from './AboutUs';
 import './HeroCardsShowcase.css';
@@ -190,6 +191,9 @@ export default function HeroCardsShowcase() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Root Landing Hero Section based on landingtest.webp */}
+      <LandingHero onExploreClick={scrollToExploreCourses} onAboutClick={scrollToAboutUs} />
 
       {/* Header Bar */}
       <header className="hk-header">

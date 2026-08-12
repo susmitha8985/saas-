@@ -2,8 +2,9 @@
 
 .roadmap-page-wrapper {
   min-height: 100vh;
-  background: #f5f6fe;
-  color: #0f172a;
+  background: var(--bg-color);
+  color: var(--text-dark);
+  font-family: var(--font-sans);
   padding: 1.25rem;
 }
 

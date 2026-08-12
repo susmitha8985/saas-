@@ -231,8 +231,8 @@ export default function DashboardPage() {
             <div className="sidebar-logo-icon" style={{ background: theme.gradient, boxShadow: `0 6px 16px ${theme.border}` }}>
               <Sparkles size={22} />
             </div>
-            <span className="sidebar-logo-title">
-              Career<span style={{ color: theme.accent }}>AI</span>
+            <span className="sidebar-logo-title font-heading">
+              code<span style={{ background: theme.gradient, WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>ForEveryBody</span>
             </span>
           </div>
 

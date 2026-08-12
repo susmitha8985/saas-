@@ -109,9 +109,20 @@ export default function CareerRoadmapPage() {
 
       {/* TOP HEADER */}
       <header className="roadmap-top-header">
-        <div>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 800, color: '#0f172a', marginBottom: '0.1rem' }}>Career Roadmap</h1>
-          <p style={{ fontSize: '0.85rem', color: '#64748b' }}>Your personalized path to become a Data Scientist</p>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
+          <div onClick={() => navigate('/')} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <div style={{ width: 34, height: 34, borderRadius: 10, background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#fff', boxShadow: '0 4px 12px rgba(79, 70, 229, 0.25)' }}>
+              <Sparkles size={18} />
+            </div>
+            <span className="font-heading" style={{ fontSize: '1.25rem', fontWeight: 800, color: '#0f172a' }}>
+              code<span style={{ background: 'linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>ForEveryBody</span>
+            </span>
+          </div>
+          <div style={{ width: 1, height: 24, background: '#e2e8f0' }} />
+          <div>
+            <h1 className="font-heading" style={{ fontSize: '1.15rem', fontWeight: 700, color: '#0f172a', marginBottom: '0.1rem' }}>Career Roadmap</h1>
+            <p style={{ fontSize: '0.8rem', color: '#64748b' }}>Your personalized path to become a Data Scientist</p>
+          </div>
         </div>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.85rem' }}>
