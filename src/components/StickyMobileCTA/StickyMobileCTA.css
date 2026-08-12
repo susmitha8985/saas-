@@ -1,0 +1,62 @@
+/* StickyMobileCTA.css */
+
+.sm-sticky-bar {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .sm-sticky-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(13, 14, 18, 0.96);
+    backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+    padding: 12px 20px;
+    z-index: 999;
+    box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.4);
+    font-family: 'Plus Jakarta Sans', sans-serif;
+  }
+
+  .sm-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .sm-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #818cf8;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+  }
+
+  .sm-title {
+    font-size: 0.88rem;
+    font-weight: 800;
+    color: #ffffff;
+  }
+
+  .sm-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #ffffff;
+    color: #0d0e12;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 30px;
+    font-size: 0.85rem;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 4px 14px rgba(255, 255, 255, 0.2);
+  }
+}

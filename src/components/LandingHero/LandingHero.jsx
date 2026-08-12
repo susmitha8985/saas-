@@ -98,7 +98,7 @@ export default function LandingHero({ onExploreClick, onAboutClick }) {
               </div>
             </div>
             <div className="tl-badge-avatar-box">
-              <img src="/tutor_success_card.jpg" alt="Expert Tutor" />
+              <img src="/tutor_success_card.jpg" alt="Expert Tutor Profile" loading="lazy" />
             </div>
           </motion.div>
 
@@ -119,7 +119,7 @@ export default function LandingHero({ onExploreClick, onAboutClick }) {
               </div>
             </div>
             <div className="tl-badge-avatar-box">
-              <img src="/ceo_laptop_card.jpg" alt="Video Course Preview" />
+              <img src="/ceo_laptop_card.jpg" alt="Video Course Preview" loading="lazy" />
               <div className="tl-play-mini-overlay">
                 <Play size={12} fill="#ffffff" />
               </div>
@@ -134,9 +134,9 @@ export default function LandingHero({ onExploreClick, onAboutClick }) {
             transition={{ duration: 0.5 }}
           >
             <div className="tl-avatar-stack">
-              <img src="/tutor_success_card.jpg" alt="User 1" />
-              <img src="/ceo_laptop_card.jpg" alt="User 2" />
-              <img src="/tutor_experienced_card.jpg" alt="User 3" />
+              <img src="/tutor_success_card.jpg" alt="Student Reviewer 1" loading="lazy" />
+              <img src="/ceo_laptop_card.jpg" alt="Student Reviewer 2" loading="lazy" />
+              <img src="/tutor_experienced_card.jpg" alt="Student Reviewer 3" loading="lazy" />
             </div>
             <span className="tl-reviews-text">125k+ student reviews</span>
           </motion.div>
@@ -194,6 +194,7 @@ export default function LandingHero({ onExploreClick, onAboutClick }) {
             <img
               src="/tutor_success_card.jpg"
               alt="92% Career Outcome Success"
+              loading="lazy"
               className="tl-card-bg-img"
             />
             <div className="tl-card-gradient-overlay">
@@ -212,6 +213,7 @@ export default function LandingHero({ onExploreClick, onAboutClick }) {
             <img
               src="/ceo_laptop_card.jpg"
               alt="Interactive Project Labs"
+              loading="lazy"
               className="tl-card-bg-img"
             />
             <div className="tl-card-gradient-overlay">
@@ -234,6 +236,7 @@ export default function LandingHero({ onExploreClick, onAboutClick }) {
             <img
               src="/tutor_experienced_card.jpg"
               alt="100+ Experienced tutor"
+              loading="lazy"
               className="tl-card-bg-img"
             />
             <div className="tl-card-gradient-overlay">

@@ -591,7 +591,7 @@ export default function ExploreCourses() {
                 onClick={() => setSelectedCourse(course)}
               >
                 <div className="ec-card-media">
-                  <img src={course.image} alt={course.title} className="ec-card-img" />
+                  <img src={course.image} alt={course.title} loading="lazy" className="ec-card-img" />
                   <div className="ec-media-overlay">
                     <span className="ec-preview-badge">
                       <PlayCircle size={14} /> Preview Course

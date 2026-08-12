@@ -5,6 +5,8 @@ import { ArrowLeft, ArrowUpRight, Terminal, Database, Cpu, Cloud } from 'lucide-
 import LandingHero from '../LandingHero/LandingHero';
 import ExploreCourses from './ExploreCourses';
 import AboutUs from './AboutUs';
+import { useSEO } from '../../utils/seo';
+import { trackPageView } from '../../utils/analytics';
 import './HeroCardsShowcase.css';
 
 const CATEGORIES = [
@@ -117,6 +119,15 @@ export default function HeroCardsShowcase() {
   const [catIndex, setCatIndex] = useState(0);
   const [selectedCard, setSelectedCard] = useState(null);
   const [lang, setLang] = useState('EN');
+
+  useSEO({
+    title: 'Build Skills. New Opportunities.',
+    description: 'Master production-ready backend development, system design, and software engineering at codeforeverybody.',
+  });
+
+  useEffect(() => {
+    trackPageView('/');
+  }, []);
 
   // Initial loader animation (1.4s)
   useEffect(() => {
@@ -429,6 +440,22 @@ export default function HeroCardsShowcase() {
 
       {/* Footer */}
       <footer className="hk-footer">
+        <div className="hk-footer-top">
+          <div className="hk-footer-brand-box">
+            <div className="hk-footer-brand-name">codeforeverybody</div>
+            <p className="hk-footer-address">
+              100 Tech Plaza, Suite 400<br />
+              San Francisco, CA 94105, USA<br />
+              Email: support@codeforeverybody.com
+            </p>
+          </div>
+          <div className="hk-footer-legal-links">
+            <a href="/privacy">Privacy Policy</a>
+            <a href="/terms">Terms of Service</a>
+            <a href="/thank-you">Enrollment Confirmation</a>
+          </div>
+        </div>
+
         <div className="hk-socials">
           <a href="https://github.com" target="_blank" rel="noreferrer">
             GitHub
@@ -444,7 +471,7 @@ export default function HeroCardsShowcase() {
           </a>
         </div>
         <div className="hk-footer-note">
-          codeforeverybody
+          © 2026 codeforeverybody. All rights reserved.
         </div>
       </footer>
     </div>

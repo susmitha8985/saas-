@@ -14,6 +14,8 @@ import {
   ShieldCheck,
   Sparkles
 } from 'lucide-react';
+import { useSEO } from '../../utils/seo';
+import { trackPageView } from '../../utils/analytics';
 import './AuthPage.css';
 
 export default function AuthPage() {
@@ -30,6 +32,15 @@ export default function AuthPage() {
   const [showPassword, setShowPassword] = useState(false);
   const [sendOffers, setSendOffers] = useState(true);
 
+  useSEO({
+    title: authMode === 'signup' ? 'Create Account' : 'Log In',
+    description: 'Sign up or log in to access software development courses and interactive project labs on codeforeverybody.',
+  });
+
+  useEffect(() => {
+    trackPageView('/auth');
+  }, []);
+
   useEffect(() => {
     const mode = searchParams.get('mode');
     if (mode === 'signin') {
@@ -42,7 +53,7 @@ export default function AuthPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     // Simulate instant successful authentication
-    navigate('/dashboard');
+    navigate('/thank-you');
   };
 
   return (
