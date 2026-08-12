@@ -1,12 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useSearchParams, useNavigate } from 'react-router-dom';
 import {
-  Search,
-  ShoppingCart,
-  Globe,
-  ChevronDown,
-  X,
-  Menu,
   GraduationCap,
   User,
   Mail,
@@ -16,7 +10,6 @@ import {
   ArrowRight,
   Building2,
   UserPlus,
-  UserCheck,
   CheckCircle2,
   ShieldCheck,
   Sparkles

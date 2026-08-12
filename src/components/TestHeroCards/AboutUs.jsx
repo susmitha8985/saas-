@@ -1,13 +1,8 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import {
   Sparkles,
-  ShieldCheck,
   Cpu,
-  Layers,
   Award,
-  Users,
-  Star,
   CheckCircle2,
   ArrowRight,
   Code,
