@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
-import { ArrowLeft, ArrowUpRight, Terminal, Database, Cpu, Cloud } from 'lucide-react';
+import { ArrowLeft, ArrowUpRight, Terminal, Database, Cpu, Cloud, GraduationCap } from 'lucide-react';
 import LandingHero from '../LandingHero/LandingHero';
 import ExploreCourses from './ExploreCourses';
 import AboutUs from './AboutUs';
@@ -440,38 +440,84 @@ export default function HeroCardsShowcase() {
 
       {/* Footer */}
       <footer className="hk-footer">
-        <div className="hk-footer-top">
-          <div className="hk-footer-brand-box">
-            <div className="hk-footer-brand-name">codeforeverybody</div>
-            <p className="hk-footer-address">
-              100 Tech Plaza, Suite 400<br />
-              San Francisco, CA 94105, USA<br />
-              Email: support@codeforeverybody.com
-            </p>
-          </div>
-          <div className="hk-footer-legal-links">
-            <a href="/privacy">Privacy Policy</a>
-            <a href="/terms">Terms of Service</a>
-            <a href="/thank-you">Enrollment Confirmation</a>
-          </div>
-        </div>
+        <div className="hk-footer-container">
+          <div className="hk-footer-grid">
+            {/* Brand Column */}
+            <div className="hk-footer-col hk-footer-brand-col">
+              <div className="hk-footer-brand">
+                <div className="hk-footer-brand-icon">
+                  <GraduationCap size={20} color="#ffffff" />
+                </div>
+                <span className="hk-footer-brand-title">
+                  code<span className="purple-txt">ForEveryBody</span>
+                </span>
+              </div>
+              <p className="hk-footer-desc">
+                Empowering developers worldwide with production-grade backend architecture, systems design, and hands-on software engineering masterclasses.
+              </p>
+              <div className="hk-footer-currency-badge">
+                <span className="hk-flag">🇮🇳</span> India | INR (₹)
+              </div>
+            </div>
 
-        <div className="hk-socials">
-          <a href="https://github.com" target="_blank" rel="noreferrer">
-            GitHub
-          </a>
-          <a href="https://twitter.com" target="_blank" rel="noreferrer">
-            X
-          </a>
-          <a href="https://linkedin.com" target="_blank" rel="noreferrer">
-            LinkedIn
-          </a>
-          <a href="https://youtube.com" target="_blank" rel="noreferrer">
-            YouTube
-          </a>
-        </div>
-        <div className="hk-footer-note">
-          © 2026 codeforeverybody. All rights reserved.
+            {/* Courses Column */}
+            <div className="hk-footer-col">
+              <h4 className="hk-footer-heading">Top Masterclasses</h4>
+              <ul className="hk-footer-links">
+                <li><a href="#explore-courses">Python & Django REST</a></li>
+                <li><a href="#explore-courses">PostgreSQL & DB Architecture</a></li>
+                <li><a href="#explore-courses">High-Scale System Design</a></li>
+                <li><a href="#explore-courses">Cloud DevOps & Kubernetes</a></li>
+                <li><a href="#explore-courses">Full-Stack React & Node</a></li>
+              </ul>
+            </div>
+
+            {/* Platform Column */}
+            <div className="hk-footer-col">
+              <h4 className="hk-footer-heading">Platform</h4>
+              <ul className="hk-footer-links">
+                <li><a href="#about-us">About Us</a></li>
+                <li><a href="/auth?mode=signup">Create Account</a></li>
+                <li><a href="/auth?mode=signin">Student Sign In</a></li>
+                <li><a href="/thank-you">Enrollment Confirmation</a></li>
+              </ul>
+            </div>
+
+            {/* Legal & Support Column */}
+            <div className="hk-footer-col">
+              <h4 className="hk-footer-heading">Legal & Contact</h4>
+              <ul className="hk-footer-links">
+                <li><a href="/privacy">Privacy Policy</a></li>
+                <li><a href="/terms">Terms of Service</a></li>
+                <li><a href="mailto:support@codeforeverybody.com">support@codeforeverybody.com</a></li>
+              </ul>
+              <p className="hk-footer-address">
+                100 Tech Plaza, Suite 400<br />
+                San Francisco, CA 94105, USA
+              </p>
+            </div>
+          </div>
+
+          <div className="hk-footer-bottom">
+            <div className="hk-footer-copy">
+              © 2026 codeforeverybody. All rights reserved.
+            </div>
+
+            <div className="hk-footer-socials">
+              <a href="https://github.com" target="_blank" rel="noreferrer">
+                GitHub
+              </a>
+              <a href="https://twitter.com" target="_blank" rel="noreferrer">
+                X
+              </a>
+              <a href="https://linkedin.com" target="_blank" rel="noreferrer">
+                LinkedIn
+              </a>
+              <a href="https://youtube.com" target="_blank" rel="noreferrer">
+                YouTube
+              </a>
+            </div>
+          </div>
         </div>
       </footer>
     </div>
