@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import confetti from 'canvas-confetti';
 import {
@@ -490,6 +491,7 @@ const FAQ_ITEMS = [
 ];
 
 export default function ExploreCourses() {
+  const navigate = useNavigate();
   const [activeTab, setActiveTab] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedCourse, setSelectedCourse] = useState(null);
@@ -662,6 +664,18 @@ export default function ExploreCourses() {
                       ) : (
                         'Enroll Now'
                       )}
+                    </button>
+
+                    <button
+                      type="button"
+                      className="ec-enroll-btn"
+                      style={{ background: '#4f46e5', color: '#ffffff' }}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        navigate(`/player/${course.id}`);
+                      }}
+                    >
+                      <PlayCircle size={14} /> Watch Player
                     </button>
                   </div>
                 </div>
@@ -999,6 +1013,15 @@ export default function ExploreCourses() {
                           Enroll Now <ArrowRight size={16} />
                         </>
                       )}
+                    </button>
+
+                    <button
+                      type="button"
+                      className="ec-sticky-enroll-btn"
+                      style={{ background: '#4f46e5', color: '#ffffff', marginTop: '10px' }}
+                      onClick={() => navigate(`/player/${selectedCourse.id}`)}
+                    >
+                      <PlayCircle size={16} /> Start Learning (Course Player)
                     </button>
 
                     <ul className="ec-guarantee-list">

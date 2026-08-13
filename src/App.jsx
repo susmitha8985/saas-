@@ -7,6 +7,7 @@ import ThankYouPage from './components/ThankYouPage/ThankYouPage';
 import { PrivacyPolicyPage, TermsPage } from './components/LegalPages/LegalPages';
 import CookieBanner from './components/CookieBanner/CookieBanner';
 import StickyMobileCTA from './components/StickyMobileCTA/StickyMobileCTA';
+import CoursePlayer from './components/CoursePlayer/CoursePlayer';
 import './App.css';
 
 export default function App() {
@@ -14,6 +15,8 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HeroCardsShowcase />} />
+        <Route path="/player" element={<CoursePlayer />} />
+        <Route path="/player/:courseId" element={<CoursePlayer />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/privacy" element={<PrivacyPolicyPage />} />
         <Route path="/terms" element={<TermsPage />} />
