@@ -1,0 +1,530 @@
+/* =====================================================
+   OVERVIEW PAGE — Student Dashboard
+   Prefix: ov-
+   ===================================================== */
+
+.ov-root {
+  min-height: 100vh;
+  background: #0d0f1a;
+  color: #f1f1f5;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Navbar ── */
+.ov-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 32px;
+  height: 60px;
+  background: rgba(13, 15, 26, 0.9);
+  border-bottom: 1px solid #1e2235;
+  backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.ov-brand {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 18px;
+  font-weight: 700;
+  color: #f1f1f5;
+  letter-spacing: -0.3px;
+}
+
+.ov-brand span { color: #7c3aed; }
+
+.ov-nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.ov-back-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #1e2235;
+  border: 1px solid #2a2d45;
+  border-radius: 8px;
+  color: #9ca3af;
+  font-size: 13px;
+  font-weight: 500;
+  padding: 7px 14px;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.ov-back-btn:hover {
+  background: #252840;
+  color: #f1f1f5;
+}
+
+.ov-notif-btn {
+  position: relative;
+  background: #1e2235;
+  border: 1px solid #2a2d45;
+  border-radius: 8px;
+  color: #9ca3af;
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.ov-notif-btn:hover { background: #252840; color: #f1f1f5; }
+.ov-notif-dot {
+  position: absolute;
+  top: 7px; right: 7px;
+  width: 7px; height: 7px;
+  background: #ef4444;
+  border-radius: 50%;
+  border: 2px solid #0d0f1a;
+}
+
+/* ── Main content ── */
+.ov-content {
+  flex: 1;
+  max-width: 1200px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 36px 24px 60px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+/* ── Greeting bar ── */
+.ov-greeting-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.ov-greeting-left h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 28px;
+  font-weight: 700;
+  color: #f1f1f5;
+  margin-bottom: 4px;
+}
+
+.ov-greeting-left p {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.ov-streak-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: linear-gradient(135deg, #1c1830, #231c3a);
+  border: 1px solid #3d2f6e;
+  border-radius: 40px;
+  padding: 10px 20px;
+}
+
+.ov-streak-fire { font-size: 22px; }
+
+.ov-streak-info strong {
+  display: block;
+  font-size: 18px;
+  font-weight: 700;
+  color: #a78bfa;
+  line-height: 1;
+}
+
+.ov-streak-info span {
+  font-size: 11px;
+  color: #7c6aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+/* ── Stats row ── */
+.ov-stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 16px;
+}
+
+.ov-stat-card {
+  background: #13151f;
+  border: 1px solid #1e2235;
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, border-color 0.2s;
+}
+.ov-stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: var(--stat-color, #4f46e5);
+  border-radius: 3px 3px 0 0;
+}
+.ov-stat-card:hover {
+  transform: translateY(-3px);
+  border-color: var(--stat-color, #4f46e5);
+}
+
+.ov-stat-icon-wrap {
+  width: 42px; height: 42px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--stat-bg, rgba(79,70,229,0.12));
+  color: var(--stat-color, #4f46e5);
+}
+
+.ov-stat-value {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 32px;
+  font-weight: 700;
+  color: #f1f1f5;
+  line-height: 1;
+}
+
+.ov-stat-label {
+  font-size: 13px;
+  color: #6b7280;
+  font-weight: 500;
+}
+
+.ov-stat-delta {
+  font-size: 11px;
+  color: #22c55e;
+  font-weight: 600;
+}
+
+/* ── Two-column body ── */
+.ov-body-grid {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 24px;
+}
+
+/* Section card wrapper */
+.ov-section-card {
+  background: #13151f;
+  border: 1px solid #1e2235;
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.ov-section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.ov-section-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #f1f1f5;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ov-view-all {
+  font-size: 12px;
+  color: #6366f1;
+  cursor: pointer;
+  font-weight: 600;
+  background: none;
+  border: none;
+  transition: color 0.15s;
+}
+.ov-view-all:hover { color: #a78bfa; }
+
+/* ── Continue Learning cards ── */
+.ov-course-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ov-course-card {
+  background: #0d0f1a;
+  border: 1px solid #1e2235;
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.ov-course-card:hover {
+  border-color: #4f46e5;
+  background: #11132099;
+}
+
+.ov-course-thumb {
+  width: 52px; height: 52px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.ov-course-info { flex: 1; }
+
+.ov-course-name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #f1f1f5;
+  margin-bottom: 4px;
+}
+
+.ov-course-meta {
+  font-size: 12px;
+  color: #6b7280;
+  margin-bottom: 10px;
+}
+
+.ov-progress-track {
+  height: 5px;
+  background: #1e2235;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.ov-progress-fill {
+  height: 100%;
+  border-radius: 5px;
+  background: linear-gradient(90deg, #4f46e5, #7c3aed);
+  transition: width 1s ease;
+  animation: progressIn 1.2s ease forwards;
+}
+
+@keyframes progressIn {
+  from { width: 0; }
+}
+
+.ov-progress-label {
+  font-size: 11px;
+  color: #6b7280;
+  margin-top: 5px;
+  text-align: right;
+}
+
+.ov-play-btn {
+  background: #1e2235;
+  border: 1px solid #2a2d45;
+  border-radius: 8px;
+  color: #6366f1;
+  width: 34px; height: 34px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: all 0.15s;
+}
+.ov-play-btn:hover {
+  background: #4f46e5;
+  border-color: #4f46e5;
+  color: #fff;
+}
+
+/* ── Activity feed ── */
+.ov-activity-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.ov-activity-item {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  padding: 12px 0;
+  border-bottom: 1px solid #1a1c2b;
+  position: relative;
+}
+.ov-activity-item:last-child { border-bottom: none; }
+
+.ov-activity-dot-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.ov-activity-dot {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+
+.ov-activity-text {
+  flex: 1;
+}
+
+.ov-activity-action {
+  font-size: 13px;
+  color: #d1d5db;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.ov-activity-time {
+  font-size: 11px;
+  color: #4b5563;
+  margin-top: 2px;
+}
+
+/* ── Right column ── */
+.ov-right-col {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Upcoming sessions */
+.ov-upcoming-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.ov-session-card {
+  background: #0d0f1a;
+  border: 1px solid #1e2235;
+  border-radius: 12px;
+  padding: 14px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  transition: border-color 0.18s;
+}
+.ov-session-card:hover { border-color: #4f46e5; }
+
+.ov-session-date-box {
+  background: linear-gradient(135deg, #4f46e5, #7c3aed);
+  border-radius: 10px;
+  padding: 8px 10px;
+  text-align: center;
+  min-width: 44px;
+  flex-shrink: 0;
+}
+.ov-session-day {
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1;
+}
+.ov-session-month {
+  font-size: 10px;
+  color: rgba(255,255,255,0.75);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+.ov-session-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: #f1f1f5;
+  margin-bottom: 4px;
+}
+.ov-session-time {
+  font-size: 12px;
+  color: #6b7280;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.ov-session-chip {
+  display: inline-block;
+  background: rgba(34,197,94,0.12);
+  color: #22c55e;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  padding: 2px 8px;
+  margin-top: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Quick actions */
+.ov-quick-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+
+.ov-quick-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: #0d0f1a;
+  border: 1px solid #1e2235;
+  border-radius: 12px;
+  padding: 16px 10px;
+  cursor: pointer;
+  transition: all 0.18s;
+  color: #9ca3af;
+  font-size: 12px;
+  font-weight: 600;
+  text-align: center;
+  font-family: inherit;
+}
+.ov-quick-btn:hover {
+  background: #13151f;
+  border-color: #4f46e5;
+  color: #a78bfa;
+  transform: translateY(-2px);
+}
+.ov-quick-icon {
+  width: 36px; height: 36px;
+  border-radius: 10px;
+  background: #1e2235;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.18s;
+}
+.ov-quick-btn:hover .ov-quick-icon {
+  background: rgba(99,102,241,0.15);
+  color: #6366f1;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .ov-stats-row { grid-template-columns: repeat(2, 1fr); }
+  .ov-body-grid { grid-template-columns: 1fr; }
+  .ov-right-col { flex-direction: row; flex-wrap: wrap; }
+  .ov-right-col > * { flex: 1; min-width: 260px; }
+}
+
+@media (max-width: 600px) {
+  .ov-stats-row { grid-template-columns: repeat(2, 1fr); }
+  .ov-content { padding: 20px 16px 40px; gap: 20px; }
+  .ov-greeting-left h1 { font-size: 22px; }
+  .ov-navbar { padding: 0 16px; }
+}
