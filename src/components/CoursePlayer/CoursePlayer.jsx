@@ -2,7 +2,6 @@ import React, { useState, useRef } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   ArrowLeft,
-  X,
   Play,
   Pause,
   RotateCcw,
@@ -26,6 +25,7 @@ import {
   Plus,
   BookMarked
 } from 'lucide-react';
+import AITutorPanel from './AITutorPanel';
 import './CoursePlayer.css';
 
 // Default mock course data matching the UI in courseolayer.webp
@@ -749,47 +749,13 @@ export default function CoursePlayer() {
 
       </div>
 
-      {/* AI SUMMARY GENERATOR MODAL */}
+      {/* AI TUTOR PANEL — Real integration from code_assistant repo */}
       {showAIModal && (
-        <div className="cp-ai-modal-overlay" onClick={() => setShowAIModal(false)}>
-          <div className="cp-ai-modal-card" onClick={(e) => e.stopPropagation()}>
-            <div className="cp-ai-modal-header">
-              <div className="cp-ai-mhead-left">
-                <Sparkles size={20} color="#6366f1" />
-                <h3>AI Content Summary & Key Takeaways</h3>
-              </div>
-              <button
-                type="button"
-                className="cp-modal-close"
-                onClick={() => setShowAIModal(false)}
-              >
-                <X size={18} />
-              </button>
-            </div>
-
-            <div className="cp-ai-modal-body">
-              <h4>Module 1 Summary: Instructional Design</h4>
-              <ul>
-                <li>
-                  <strong>Core Difference:</strong> UI focuses on visual aesthetics, while UX structures user experience & cognitive workflows.
-                </li>
-                <li>
-                  <strong>System Pattern:</strong> Microservices decouple user interfaces from backend data pipelines.
-                </li>
-              </ul>
-            </div>
-
-            <div className="cp-ai-modal-footer">
-              <button
-                type="button"
-                className="cp-ai-close-btn"
-                onClick={() => setShowAIModal(false)}
-              >
-                Close Summary
-              </button>
-            </div>
-          </div>
-        </div>
+        <AITutorPanel
+          lessonId={currentLesson?.id || 'lesson-1'}
+          concept={currentLesson?.title || 'Python Programming'}
+          onClose={() => setShowAIModal(false)}
+        />
       )}
 
     </div>
