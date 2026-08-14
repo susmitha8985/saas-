@@ -981,3 +981,103 @@
     justify-content: center;
   }
 }
+
+/* Global Hamburger Sliding Drawer Overlay matching Profile Route Theme (#FFFFFF, #E5E9EE, #F17B0D) */
+.drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  backdrop-filter: blur(4px);
+  z-index: 99999;
+  display: flex;
+}
+
+.profile-theme-drawer {
+  width: 270px;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: #FFFFFF;
+  border-right: 1px solid #E5E9EE;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 16px;
+  box-shadow: 10px 0 40px rgba(0, 0, 0, 0.18);
+  box-sizing: border-box;
+  z-index: 100000;
+  animation: slideInLeft 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.profile-drawer-logo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #E5E9EE;
+  margin-bottom: 16px;
+}
+
+.drawer-brand-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: #F17B0D;
+  letter-spacing: -0.5px;
+  font-family: 'DM Sans', sans-serif;
+}
+
+.drawer-brand-name span {
+  color: #044635;
+}
+
+.profile-drawer-nav-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.profile-drawer-nav-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  border-radius: 8px;
+  color: #646464;
+  font-size: 14.5px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  background: transparent;
+  border: none;
+  width: 100%;
+  text-align: left;
+}
+
+.profile-drawer-nav-item:hover {
+  background-color: #F8FAFC;
+  color: #044635;
+}
+
+.profile-drawer-nav-item.active {
+  background-color: #FFF4EA;
+  color: #F17B0D;
+  font-weight: 600;
+}
+
+.profile-drawer-user-wrapper {
+  margin-top: 16px;
+  position: relative;
+  border-top: 1px solid #E5E9EE;
+  padding-top: 16px;
+}
+
+@keyframes slideInLeft {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
