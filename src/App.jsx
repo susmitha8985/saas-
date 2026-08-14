@@ -8,8 +8,8 @@ import { PrivacyPolicyPage, TermsPage } from './components/LegalPages/LegalPages
 import CookieBanner from './components/CookieBanner/CookieBanner';
 import StickyMobileCTA from './components/StickyMobileCTA/StickyMobileCTA';
 import CoursePlayer from './components/CoursePlayer/CoursePlayer';
-import OverviewPage from './components/OverviewPage/OverviewPage';
 import ProfilePage from './components/ProfilePage/ProfilePage';
+import JobsPage from './components/JobsPage/JobsPage';
 import './App.css';
 
 export default function App() {
@@ -20,11 +20,14 @@ export default function App() {
         <Route path="/player" element={<CoursePlayer />} />
         <Route path="/player/:courseId" element={<CoursePlayer />} />
         <Route path="/auth" element={<AuthPage />} />
+        <Route path="/profile" element={<ProfilePage />} />
+        <Route path="/profile/:userId" element={<ProfilePage />} />
+        <Route path="/jobs" element={<JobsPage />} />
+        <Route path="/jobs/:userId" element={<JobsPage />} />
+        <Route path="/jobs/detail/:jobId" element={<JobsPage />} />
         <Route path="/privacy" element={<PrivacyPolicyPage />} />
         <Route path="/terms" element={<TermsPage />} />
         <Route path="/thank-you" element={<ThankYouPage />} />
-        <Route path="/overview" element={<OverviewPage />} />
-        <Route path="/profile" element={<ProfilePage />} />
         <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <CookieBanner />
