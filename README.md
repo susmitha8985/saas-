@@ -16,21 +16,34 @@ CareerAI is an intelligent, modern web application built with **React**, **JavaS
 
 ```text
 course-project/
-├── backend/
-│   └── backend/
-└── frontend/
-    ├── public/
-    │   └── favicon.svg
-    ├── src/
-    │   ├── components/
-    │   ├── App.css
-    │   ├── App.jsx
-    │   ├── index.css
-    │   └── main.jsx
-    ├── index.html
-    ├── package.json
-    ├── .oxlintrc.json
-    └── vite.config.js
+├── public/
+│   └── favicon.svg
+├── src/
+│   ├── assets/
+│   ├── components/
+│   │   ├── AuthPage/
+│   │   │   ├── AuthPage.jsx
+│   │   │   └── AuthPage.css
+│   │   ├── DashboardPage/
+│   │   │   ├── DashboardPage.jsx
+│   │   │   └── DashboardPage.css
+│   │   ├── LandingPage/
+│   │   │   ├── LandingPage.jsx
+│   │   │   └── LandingPage.css
+│   │   ├── LearningPage/
+│   │   │   ├── LearningPage.jsx
+│   │   │   └── LearningPage.css
+│   │   └── ProjectsPage/
+│   │       ├── ProjectsPage.jsx
+│   │       └── ProjectsPage.css
+│   ├── App.css
+│   ├── App.jsx
+│   ├── index.css
+│   └── main.jsx
+├── index.html
+├── package.json
+├── README.md
+└── vite.config.js
 ```
 
 ---
@@ -41,11 +54,12 @@ course-project/
 
 Ensure you have Node.js (v18+) and npm installed.
 
-### Installation & Development
+### Installation
 
-1. Navigate to the frontend directory:
+1. Clone the repository:
    ```bash
-   cd frontend
+   git clone https://github.com/susmitha8985/saas-.git
+   cd saas-
    ```
 
 2. Install dependencies:
@@ -65,12 +79,9 @@ Ensure you have Node.js (v18+) and npm installed.
 
 ---
 
-## 📜 Available Frontend Scripts
-
-Run these inside the `frontend/` directory:
+## 📜 Available Scripts
 
 - `npm run dev` - Start local development server
 - `npm run build` - Bundle application for production using Vite
 - `npm run preview` - Preview production build locally
 - `npm run lint` - Lint codebase using Oxlint
-
