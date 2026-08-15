@@ -1,0 +1,217 @@
+/* My Applications Page Styling */
+
+:root {
+  --ap-app-bg: #FAF6F0;
+  --ap-sidebar-bg: #FAF6F0;
+  --ap-active-pill: #1E1E24;
+  --ap-accent-red: #D05249;
+  --ap-accent-red-hover: #B8433B;
+  --ap-text-main: #1E1E24;
+  --ap-text-muted: #71717A;
+  --ap-card-bg: #FFFFFF;
+  --ap-border-light: #EBE5DA;
+  --ap-font-family: 'Plus Jakarta Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+.apps-page-wrapper {
+  min-height: 100vh;
+  width: 100%;
+  background-color: var(--ap-app-bg);
+  display: flex;
+  font-family: var(--ap-font-family);
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+.apps-main-container {
+  width: 100%;
+  max-width: 100%;
+  background-color: var(--ap-app-bg);
+  border-radius: 0;
+  display: flex;
+  overflow: hidden;
+  box-shadow: none;
+  min-height: 100vh;
+}
+
+.apps-sidebar {
+  width: 250px;
+  min-width: 250px;
+  background-color: var(--ap-sidebar-bg);
+  border-right: 1px solid var(--ap-border-light);
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  box-sizing: border-box;
+}
+
+.apps-content {
+  flex-grow: 1;
+  padding: 32px 36px;
+  overflow-y: auto;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* APPLICATIONS LIST & CARDS */
+.apps-list-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.application-card {
+  background-color: var(--ap-card-bg);
+  border-radius: 20px;
+  padding: 20px 24px;
+  border: 1px solid var(--ap-border-light);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.application-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+}
+
+.app-card-top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.company-logo-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  background-color: #FDF4F3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #F8D7D4;
+}
+
+.app-main-info {
+  flex-grow: 1;
+}
+
+.job-title-text {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--ap-text-main);
+  margin: 0 0 4px 0;
+}
+
+.company-name-text {
+  font-size: 13px;
+  color: var(--ap-text-muted);
+  font-weight: 600;
+}
+
+.app-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.app-status-badge.pending {
+  background-color: #FEF3C7;
+  color: #D97706;
+  border: 1px solid #FCD34D;
+}
+
+.app-status-badge.accepted {
+  background-color: #D1FAE5;
+  color: #059669;
+  border: 1px solid #6EE7B7;
+}
+
+.app-status-badge.rejected {
+  background-color: #FEE2E2;
+  color: #DC2626;
+  border: 1px solid #FCA5A5;
+}
+
+.app-card-details {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  padding-top: 4px;
+}
+
+.detail-pill {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--ap-text-muted);
+  background-color: #FAF6F0;
+  padding: 6px 12px;
+  border-radius: 10px;
+}
+
+.app-card-action {
+  display: flex;
+  justify-content: flex-end;
+  border-top: 1px solid var(--ap-border-light);
+  padding-top: 12px;
+}
+
+.view-job-btn {
+  background: none;
+  border: none;
+  color: var(--ap-accent-red);
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  transition: opacity 0.2s ease;
+}
+
+.view-job-btn:hover {
+  opacity: 0.8;
+}
+
+.apps-empty-box {
+  background-color: var(--ap-card-bg);
+  border-radius: 24px;
+  padding: 48px 24px;
+  text-align: center;
+  border: 1px dashed var(--ap-border-light);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.explore-btn {
+  background-color: var(--ap-accent-red);
+  color: #FFFFFF;
+  border: none;
+  padding: 10px 22px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 14px;
+  cursor: pointer;
+  margin-top: 8px;
+}
+
+@media (max-width: 768px) {
+  .apps-sidebar {
+    display: none;
+  }
+}

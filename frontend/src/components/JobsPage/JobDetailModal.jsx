@@ -1,11 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { X, MapPin, DollarSign, Calendar, Briefcase, Mail, User, CheckCircle } from 'lucide-react';
 import { getJobDetails } from '../../utils/jobService';
+import { applyForJob } from '../../utils/applicationService';
+import { getStoredUser } from '../../utils/authService';
 
 export default function JobDetailModal({ jobId, isOpen, onClose }) {
   const [job, setJob] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
   const [applied, setApplied] = useState(false);
+  const [msg, setMsg] = useState('');
+
+  const handleApply = async () => {
+    const storedUser = getStoredUser();
+    setSubmitting(true);
+    setMsg('');
+    try {
+      const res = await applyForJob({ userId: storedUser?.id, jobId });
+      setApplied(true);
+      setMsg(res.message || 'Application Submitted!');
+    } catch (err) {
+      console.error('Failed to apply for job:', err);
+      setMsg('Failed to submit application.');
+    } finally {
+      setSubmitting(false);
+    }
+  };
 
   useEffect(() => {
     if (!jobId || !isOpen) return;
@@ -171,15 +191,15 @@ export default function JobDetailModal({ jobId, isOpen, onClose }) {
                 fontSize: '14px',
               }}
             >
-              <CheckCircle size={18} /> Application Submitted!
+              <CheckCircle size={18} /> {msg || 'Application Submitted!'}
             </div>
           ) : (
             <button
               className="submit-job-btn"
-              onClick={() => setApplied(true)}
-              disabled={loading || !job}
+              onClick={handleApply}
+              disabled={loading || submitting || !job}
             >
-              Apply Now
+              {submitting ? 'Submitting...' : 'Apply Now'}
             </button>
           )}
         </div>

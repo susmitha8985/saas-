@@ -14,6 +14,7 @@ import {
   LayoutDashboard,
   User,
   BookOpen,
+  FileText,
   Mail,
   Info
 } from 'lucide-react';
@@ -23,6 +24,7 @@ import PostJobModal from './PostJobModal';
 import ContactModal from './ContactModal';
 import AboutModal from './AboutModal';
 import { getAllJobs } from '../../utils/jobService';
+import { logoutUser } from '../../utils/authService';
 import './JobsPage.css';
 
 export default function JobsPage() {
@@ -202,6 +204,19 @@ export default function JobsPage() {
 
               <li>
                 <button
+                  className={`profile-drawer-nav-item ${location.pathname.startsWith('/courses') || location.pathname.startsWith('/player') ? 'active' : ''}`}
+                  onClick={() => {
+                    setIsDrawerOpen(false);
+                    navigate('/courses');
+                  }}
+                >
+                  <BookOpen className="sidebar-icon" size={18} />
+                  <span>Courses</span>
+                </button>
+              </li>
+
+              <li>
+                <button
                   className={`profile-drawer-nav-item ${location.pathname.startsWith('/profile') ? 'active' : ''}`}
                   onClick={() => {
                     setIsDrawerOpen(false);
@@ -215,14 +230,14 @@ export default function JobsPage() {
 
               <li>
                 <button
-                  className={`profile-drawer-nav-item ${location.pathname.startsWith('/player') ? 'active' : ''}`}
+                  className={`profile-drawer-nav-item ${location.pathname.startsWith('/applications') ? 'active' : ''}`}
                   onClick={() => {
                     setIsDrawerOpen(false);
-                    navigate('/player');
+                    navigate('/applications');
                   }}
                 >
-                  <BookOpen className="sidebar-icon" size={18} />
-                  <span>Courses</span>
+                  <FileText className="sidebar-icon" size={18} />
+                  <span>Applications</span>
                 </button>
               </li>
 
@@ -277,8 +292,27 @@ export default function JobsPage() {
                   >
                     Jobs Portal
                   </button>
-                  <button className="user-menu-item" onClick={() => setShowDrawerUserMenu(false)}>
-                    Change Password
+                  <button
+                    className="user-menu-item"
+                    onClick={() => {
+                      setShowDrawerUserMenu(false);
+                      setIsDrawerOpen(false);
+                      navigate('/courses');
+                    }}
+                  >
+                    Courses Page
+                  </button>
+                  <button
+                    className="user-menu-item logout-btn"
+                    onClick={() => {
+                      logoutUser();
+                      setShowDrawerUserMenu(false);
+                      setIsDrawerOpen(false);
+                      navigate('/auth?mode=signin');
+                    }}
+                    style={{ color: '#EF4444', fontWeight: '600' }}
+                  >
+                    Log Out
                   </button>
                 </div>
               )}

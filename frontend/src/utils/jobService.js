@@ -1,7 +1,8 @@
 // Job API Service
 // Connects to /jobs (GET), /jobs/:userId (POST), and /jobs/detail/:jobId (GET)
+import { getStoredUser } from './authService';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export const INITIAL_JOBS = [
   {
@@ -124,7 +125,10 @@ export async function getAllJobs() {
     const data = await response.json().catch(() => null);
 
     if (response.ok && Array.isArray(data)) {
-      return data.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
+      // Merge database jobs with initial catalog avoiding duplicates
+      const dbJobIds = new Set(data.map(j => String(j.id)));
+      const combined = [...data, ...INITIAL_JOBS.filter(j => !dbJobIds.has(String(j.id)))];
+      return combined.sort((a, b) => (b.createdAt || 0) - (a.createdAt || 0));
     }
   } catch (error) {
     console.warn('GET /jobs API offline, loading cached/default jobs:', error.message);
@@ -177,7 +181,6 @@ export async function getJobDetails(jobId) {
 
   if (found) return found;
 
-  // Fallback generic object
   return {
     id: jobId,
     jobId,
@@ -201,62 +204,62 @@ export async function getJobDetails(jobId) {
  * Method: POST
  * Endpoint: /jobs/:userId
  * @param {string} userId - Recruiter ID
- * @param {Object} jobPayload - { title, description, company, location, salary, tags }
+ * @param {Object} jobPayload - { title, description, company, location, salary, tags, bgColor, companyLogo, recruiterName, recruiterEmail }
  * @returns {Promise<Object>} Created job object
  */
-export async function postNewJob(userId = 'b6f48769-201a-4319-ae04-146a62cdc935', jobPayload = {}) {
-  if (!userId) throw new Error('UserId is required to post a job');
+export async function postNewJob(userId, jobPayload = {}) {
+  const storedUser = getStoredUser();
+  const activeUserId = userId || storedUser?.id || 'b6f48769-201a-4319-ae04-146a62cdc935';
 
   const newJobObject = {
-    id: `job_${Date.now()}`,
-    jobId: `job_${Date.now()}`,
     title: jobPayload.title || 'Fullstack Developer',
     description: jobPayload.description || 'Looking for a NestJS & React developer.',
     company: jobPayload.company || 'Tech Corp',
     location: jobPayload.location || 'Remote',
     salary: jobPayload.salary || '$150/hr',
-    date: 'Today',
     bgColor: jobPayload.bgColor || '#E6E1F9',
     tags: jobPayload.tags || ['Full time', 'Senior level', 'Remote', 'Project work'],
     companyLogo: jobPayload.companyLogo || 'https://cdn-icons-png.flaticon.com/512/1006/1006771.png',
-    recruiterId: userId,
-    recruiterName: jobPayload.recruiterName || 'Lead Recruiter',
-    recruiterEmail: jobPayload.recruiterEmail || 'hiring@techcorp.com',
-    createdAt: Date.now(),
+    recruiterName: jobPayload.recruiterName || storedUser?.name || 'Lead Recruiter',
+    recruiterEmail: jobPayload.recruiterEmail || storedUser?.email || 'hiring@techcorp.com',
   };
 
   try {
-    const response = await fetch(`${API_BASE_URL}/jobs/${userId}`, {
+    const token = localStorage.getItem('auth_token');
+    const response = await fetch(`${API_BASE_URL}/jobs/${activeUserId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
+        ...(token ? { Authorization: `Bearer ${token}` } : {}),
       },
-      body: JSON.stringify({
-        title: newJobObject.title,
-        description: newJobObject.description,
-        company: newJobObject.company,
-        location: newJobObject.location,
-        salary: newJobObject.salary,
-        tags: newJobObject.tags,
-      }),
+      body: JSON.stringify(newJobObject),
     });
 
     const data = await response.json().catch(() => null);
 
     if (response.ok && data) {
-      const merged = { ...newJobObject, ...data };
+      const createdJob = data.job || data;
       const currentList = await getAllJobs();
-      const updatedList = [merged, ...currentList];
+      const updatedList = [createdJob, ...currentList];
       localStorage.setItem('app_jobs_list', JSON.stringify(updatedList));
-      return merged;
+      return createdJob;
     }
   } catch (error) {
     console.warn('POST /jobs API unreachable, saving job locally:', error.message);
   }
 
-  // Local storage save
+  // Local storage save fallback
+  const fallbackJob = {
+    ...newJobObject,
+    id: `job_${Date.now()}`,
+    jobId: `job_${Date.now()}`,
+    date: 'Today',
+    recruiterId: activeUserId,
+    createdAt: Date.now(),
+  };
+
   const currentList = await getAllJobs();
-  const updatedList = [newJobObject, ...currentList];
+  const updatedList = [fallbackJob, ...currentList];
   localStorage.setItem('app_jobs_list', JSON.stringify(updatedList));
-  return newJobObject;
+  return fallbackJob;
 }

@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { X, Send } from 'lucide-react';
 import { postNewJob } from '../../utils/jobService';
+import { getStoredUser } from '../../utils/authService';
 
 export default function PostJobModal({ isOpen, onClose, onJobPosted }) {
-  const [userId, setUserId] = useState('b6f48769-201a-4319-ae04-146a62cdc935');
+  const storedUser = getStoredUser();
+  const [userId, setUserId] = useState(storedUser?.id || 'b6f48769-201a-4319-ae04-146a62cdc935');
   const [formData, setFormData] = useState({
     title: 'Fullstack Developer',
     description: 'Looking for a NestJS & React developer.',
@@ -16,6 +18,13 @@ export default function PostJobModal({ isOpen, onClose, onJobPosted }) {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  useEffect(() => {
+    const user = getStoredUser();
+    if (user && user.id) {
+      setUserId(user.id);
+    }
+  }, [isOpen]);
+
   if (!isOpen) return null;
 
   const handleChange = (e) => {
@@ -25,8 +34,25 @@ export default function PostJobModal({ isOpen, onClose, onJobPosted }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setError(null);
+
+    // Validation
+    if (!formData.title.trim()) {
+      setError('Please enter a job title.');
+      return;
+    }
+
+    if (!formData.company.trim()) {
+      setError('Please enter a company name.');
+      return;
+    }
+
+    if (!formData.description.trim() || formData.description.trim().length < 10) {
+      setError('Description must be at least 10 characters long.');
+      return;
+    }
+
+    setLoading(true);
 
     const tagsArray = formData.tagsStr
       .split(',')
@@ -34,11 +60,11 @@ export default function PostJobModal({ isOpen, onClose, onJobPosted }) {
       .filter(Boolean);
 
     const payload = {
-      title: formData.title,
-      description: formData.description,
-      company: formData.company,
-      location: formData.location,
-      salary: formData.salary,
+      title: formData.title.trim(),
+      description: formData.description.trim(),
+      company: formData.company.trim(),
+      location: formData.location.trim(),
+      salary: formData.salary.trim(),
       tags: tagsArray,
     };
 

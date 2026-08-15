@@ -8,20 +8,27 @@ import { PrivacyPolicyPage, TermsPage } from './components/LegalPages/LegalPages
 import CookieBanner from './components/CookieBanner/CookieBanner';
 import StickyMobileCTA from './components/StickyMobileCTA/StickyMobileCTA';
 import CoursePlayer from './components/CoursePlayer/CoursePlayer';
+import CoursesPage from './components/CoursesPage/CoursesPage';
+import DashboardPage from './components/DashboardPage/DashboardPage';
 import ProfilePage from './components/ProfilePage/ProfilePage';
 import JobsPage from './components/JobsPage/JobsPage';
+import MyApplicationsPage from './components/MyApplicationsPage/MyApplicationsPage';
 import './App.css';
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<HeroCardsShowcase />} />
-        <Route path="/player" element={<CoursePlayer />} />
+        <Route path="/" element={<DashboardPage />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
+        <Route path="/courses" element={<CoursesPage />} />
+        <Route path="/player" element={<CoursesPage />} />
         <Route path="/player/:courseId" element={<CoursePlayer />} />
         <Route path="/auth" element={<AuthPage />} />
         <Route path="/profile" element={<ProfilePage />} />
         <Route path="/profile/:userId" element={<ProfilePage />} />
+        <Route path="/applications" element={<MyApplicationsPage />} />
+        <Route path="/applications/my" element={<MyApplicationsPage />} />
         <Route path="/jobs" element={<JobsPage />} />
         <Route path="/jobs/:userId" element={<JobsPage />} />
         <Route path="/jobs/detail/:jobId" element={<JobsPage />} />

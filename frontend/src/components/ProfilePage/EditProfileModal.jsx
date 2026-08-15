@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { X } from 'lucide-react';
+import { X, Upload, CheckCircle2 } from 'lucide-react';
+import { uploadResumeFile } from '../../utils/uploadService';
 
 export default function EditProfileModal({ isOpen, onClose, profile, onSave, section = 'personal' }) {
   const [formData, setFormData] = useState({
@@ -19,6 +20,31 @@ export default function EditProfileModal({ isOpen, onClose, profile, onSave, sec
   });
 
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
+  const [uploadSuccess, setUploadSuccess] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
+
+  const handleFileUpload = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    setUploading(true);
+    setUploadSuccess('');
+    setErrorMsg('');
+
+    try {
+      const res = await uploadResumeFile(profile?.id || profile?.userId, file);
+      if (res && res.path) {
+        setFormData((prev) => ({ ...prev, resumeUrl: res.path }));
+        setUploadSuccess(`File uploaded successfully: ${file.name}`);
+      }
+    } catch (err) {
+      console.error('File upload error:', err);
+      setErrorMsg('Failed to upload file to backend server.');
+    } finally {
+      setUploading(false);
+    }
+  };
 
   useEffect(() => {
     if (profile) {
@@ -37,6 +63,7 @@ export default function EditProfileModal({ isOpen, onClose, profile, onSave, sec
         education: profile.education || 'B.Tech in Computer Science',
         resumeUrl: profile.resumeUrl || 'https://example.com/resume.pdf',
       });
+      setErrorMsg('');
     }
   }, [profile, isOpen]);
 
@@ -49,6 +76,18 @@ export default function EditProfileModal({ isOpen, onClose, profile, onSave, sec
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setErrorMsg('');
+
+    if (section === 'personal' && !formData.firstName.trim()) {
+      setErrorMsg('First name is required.');
+      return;
+    }
+
+    if (formData.email && !formData.email.includes('@')) {
+      setErrorMsg('Please enter a valid email address.');
+      return;
+    }
+
     setSaving(true);
 
     const skillsArray = formData.skillsStr
@@ -105,6 +144,11 @@ export default function EditProfileModal({ isOpen, onClose, profile, onSave, sec
         {/* Form Body */}
         <form onSubmit={handleSubmit}>
           <div className="modal-body">
+            {errorMsg && (
+              <div style={{ padding: '10px 14px', backgroundColor: '#FEF2F2', border: '1px solid #FCA5A5', color: '#991B1B', borderRadius: '8px', fontSize: '13px', marginBottom: '12px' }}>
+                {errorMsg}
+              </div>
+            )}
             {section === 'personal' && (
               <>
                 <div className="form-grid-2">
@@ -267,14 +311,50 @@ export default function EditProfileModal({ isOpen, onClose, profile, onSave, sec
                 </div>
 
                 <div className="form-group">
-                  <label className="form-label">Resume URL</label>
+                  <label className="form-label">Resume PDF File Upload (Direct to Backend Server)</label>
+                  <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
+                    <label
+                      htmlFor="resume-file-input"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        padding: '8px 16px',
+                        backgroundColor: '#044635',
+                        color: '#FFFFFF',
+                        borderRadius: '10px',
+                        fontSize: '13px',
+                        fontWeight: '700',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <Upload size={16} /> {uploading ? 'Uploading PDF...' : 'Choose PDF File'}
+                    </label>
+                    <input
+                      id="resume-file-input"
+                      type="file"
+                      accept=".pdf,.doc,.docx"
+                      onChange={handleFileUpload}
+                      style={{ display: 'none' }}
+                      disabled={uploading}
+                    />
+                  </div>
+                  {uploadSuccess && (
+                    <div style={{ color: '#059669', fontSize: '12px', marginTop: '6px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                      <CheckCircle2 size={14} /> {uploadSuccess}
+                    </div>
+                  )}
+                </div>
+
+                <div className="form-group">
+                  <label className="form-label">Resume Path / URL</label>
                   <input
-                    type="url"
+                    type="text"
                     name="resumeUrl"
                     value={formData.resumeUrl}
                     onChange={handleChange}
                     className="form-input"
-                    placeholder="https://example.com/resume.pdf"
+                    placeholder="/uploads/resume.pdf"
                   />
                 </div>
               </>
