@@ -2,7 +2,6 @@ import React from 'react';
 import { Search, MessageSquare, Bell } from 'lucide-react';
 
 export default function TopHeader() {
-  // Format current or fallback date matching screenshot: "Tuesday, 18 July"
   const formattedDate = new Date().toLocaleDateString('en-GB', {
     weekday: 'long',
     day: 'numeric',

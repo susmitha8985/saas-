@@ -1,7 +1,27 @@
 // Authentication Service
 // Connects to the backend auth routes (/auth/register, /auth/login)
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
+
+/**
+ * Helper to validate email format via Regex
+ * @param {string} email
+ * @returns {boolean}
+ */
+export function isValidEmail(email) {
+  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  return emailRegex.test(String(email).toLowerCase());
+}
+
+/**
+ * Check if current session is authenticated
+ * @returns {boolean}
+ */
+export function isAuthenticated() {
+  const token = getStoredToken();
+  const user = getStoredUser();
+  return Boolean(token && user);
+}
 
 /**
  * Register a new user
@@ -9,13 +29,25 @@ const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
  * @returns {Promise<Object>} API response with created user object and message
  */
 export async function registerUser({ name, email, password }) {
+  if (!name || name.trim().length < 2) {
+    throw new Error('Please enter a valid full name (at least 2 characters).');
+  }
+
+  if (!email || !isValidEmail(email)) {
+    throw new Error('Please enter a valid email address.');
+  }
+
+  if (!password || password.length < 6) {
+    throw new Error('Password must be at least 6 characters long.');
+  }
+
   try {
     const response = await fetch(`${API_BASE_URL}/auth/register`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ name, email, password }),
+      body: JSON.stringify({ name: name.trim(), email: email.trim(), password: password.trim() }),
     });
 
     const data = await response.json().catch(() => ({}));
@@ -37,13 +69,21 @@ export async function registerUser({ name, email, password }) {
  * @returns {Promise<Object>} API response with token (JWT) and user object
  */
 export async function loginUser({ email, password }) {
+  if (!email || !isValidEmail(email)) {
+    throw new Error('Please enter a valid email address.');
+  }
+
+  if (!password || password.length < 6) {
+    throw new Error('Password must be at least 6 characters long.');
+  }
+
   try {
     const response = await fetch(`${API_BASE_URL}/auth/login`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ email: email.trim(), password: password.trim() }),
     });
 
     const data = await response.json().catch(() => ({}));

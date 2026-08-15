@@ -4,20 +4,33 @@ import {
   LayoutDashboard,
   Briefcase,
   BookOpen,
+  User,
+  FileText,
   Mail,
   Info,
   ChevronDown
 } from 'lucide-react';
 
+import { logoutUser, getStoredUser } from '../../utils/authService';
+
 export default function Sidebar({ user, activeTab, onTabChange, collapsed = false }) {
   const [showUserMenu, setShowUserMenu] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+  const storedUser = getStoredUser();
+
+  const handleLogout = () => {
+    logoutUser();
+    setShowUserMenu(false);
+    navigate('/auth?mode=signin');
+  };
 
   const navItems = [
     { name: 'Dashboard', icon: LayoutDashboard, path: '/' },
     { name: 'Jobs', icon: Briefcase, path: '/jobs' },
-    { name: 'Courses', icon: BookOpen, path: '/player' },
+    { name: 'Courses', icon: BookOpen, path: '/courses' },
+    { name: 'My Profile', icon: User, path: '/profile' },
+    { name: 'Applications', icon: FileText, path: '/applications' },
     { name: 'Contact', icon: Mail, path: '#' },
     { name: 'About', icon: Info, path: '#' },
   ];
@@ -94,11 +107,12 @@ export default function Sidebar({ user, activeTab, onTabChange, collapsed = fals
             >
               Course Player
             </button>
-            <button className="user-menu-item" onClick={() => setShowUserMenu(false)}>
-              My Balance
-            </button>
-            <button className="user-menu-item" onClick={() => setShowUserMenu(false)}>
-              Change Password
+            <button
+              className="user-menu-item logout-btn"
+              onClick={handleLogout}
+              style={{ color: '#EF4444', fontWeight: '600' }}
+            >
+              Log Out
             </button>
           </div>
         )}
@@ -115,9 +129,11 @@ export default function Sidebar({ user, activeTab, onTabChange, collapsed = fals
           />
           <div className="sidebar-user-info">
             <span className="sidebar-user-name">
-              {user?.firstName ? `${user.firstName} ${user.lastName || ''}` : user?.name || 'Natashia Khaleira'}
+              {user?.firstName ? `${user.firstName} ${user.lastName || ''}` : user?.name || storedUser?.name || 'Natashia Khaleira'}
             </span>
-            <span className="sidebar-user-email">jonson@bress.com</span>
+            <span className="sidebar-user-email">
+              {user?.email || storedUser?.email || 'student@codeforeverybody.com'}
+            </span>
           </div>
           <ChevronDown size={16} color="#64748B" />
         </div>

@@ -68,8 +68,18 @@ export default function AuthPage() {
     setErrorMessage('');
     setSuccessMessage('');
 
-    if (!fullName.trim() || !email.trim() || !password.trim()) {
-      setErrorMessage('Please fill in all required fields.');
+    if (!fullName.trim()) {
+      setErrorMessage('Please enter your full name.');
+      return;
+    }
+
+    if (!email.trim() || !email.includes('@')) {
+      setErrorMessage('Please enter a valid email address.');
+      return;
+    }
+
+    if (!password.trim() || password.length < 6) {
+      setErrorMessage('Password must be at least 6 characters long.');
       return;
     }
 
@@ -81,7 +91,7 @@ export default function AuthPage() {
         password: password.trim(),
       });
 
-      setSuccessMessage(response.message || 'Account created successfully! Please log in.');
+      setSuccessMessage(response.message || 'Account created successfully! Redirecting to login...');
       setFullName('');
       setPassword('');
 
@@ -101,8 +111,13 @@ export default function AuthPage() {
     setErrorMessage('');
     setSuccessMessage('');
 
-    if (!email.trim() || !password.trim()) {
-      setErrorMessage('Please enter your email and password.');
+    if (!email.trim() || !email.includes('@')) {
+      setErrorMessage('Please enter a valid email address.');
+      return;
+    }
+
+    if (!password.trim() || password.length < 6) {
+      setErrorMessage('Password must be at least 6 characters long.');
       return;
     }
 
@@ -113,11 +128,11 @@ export default function AuthPage() {
         password: password.trim(),
       });
 
-      setSuccessMessage('Login successful! Redirecting...');
+      setSuccessMessage('Login successful! Redirecting to Dashboard...');
 
-      // Redirect after brief delay
+      // Redirect directly to /dashboard after successful login
       setTimeout(() => {
-        navigate('/thank-you');
+        navigate('/dashboard');
       }, 800);
     } catch (err) {
       setErrorMessage(err.message || 'Invalid email or password. Please try again.');

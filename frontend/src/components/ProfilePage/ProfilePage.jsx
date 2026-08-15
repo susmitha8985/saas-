@@ -1,21 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { Edit2, Camera, ExternalLink, CheckCircle } from 'lucide-react';
 import Sidebar from './Sidebar';
 import TopHeader from './TopHeader';
 import EditProfileModal from './EditProfileModal';
 import { getProfile, updateProfile, DEFAULT_PROFILE } from '../../utils/profileService';
+import { getStoredUser, isAuthenticated } from '../../utils/authService';
 import './ProfilePage.css';
 
 export default function ProfilePage() {
   const { userId: paramUserId } = useParams();
-  const userId = paramUserId || DEFAULT_PROFILE.userId;
+  const navigate = useNavigate();
+  const storedUser = getStoredUser();
+  const userId = paramUserId || storedUser?.id || DEFAULT_PROFILE.userId;
 
   const [profile, setProfile] = useState(DEFAULT_PROFILE);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [activeModalSection, setActiveModalSection] = useState(null); // 'personal' | 'address' | 'academic' | null
   const [toastMessage, setToastMessage] = useState('');
+
+  // Authorization check for protected profile route
+  useEffect(() => {
+    if (!paramUserId && !isAuthenticated()) {
+      navigate('/auth?mode=signin');
+    }
+  }, [paramUserId, navigate]);
 
   // Fetch profile on mount or userId param change
   useEffect(() => {

@@ -1,14 +1,15 @@
 // Profile API Service
 // Connects to /profile/:userId (GET and PUT) as specified in API documentation
+import { getStoredUser } from './authService';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export const DEFAULT_PROFILE = {
   userId: 'b6f48769-201a-4319-ae04-146a62cdc935',
   firstName: 'Natashia',
   lastName: 'Khaleira',
   name: 'Natashia Khaleira',
-  role: 'Admin',
+  role: 'Student',
   email: 'info@binary-fusion.com',
   phone: '(+62) 821 2554-5846',
   dateOfBirth: '1990-10-12',
@@ -24,15 +25,24 @@ export const DEFAULT_PROFILE = {
   resumeUrl: 'https://example.com/resume.pdf',
 };
 
+function resolveUserId(providedId) {
+  if (providedId && providedId !== DEFAULT_PROFILE.userId) return providedId;
+  const storedUser = getStoredUser();
+  if (storedUser && storedUser.id) return storedUser.id;
+  return DEFAULT_PROFILE.userId;
+}
+
 /**
  * Get User Profile by userId
  * @param {string} userId
  * @returns {Promise<Object>} Profile data object
  */
-export async function getProfile(userId = DEFAULT_PROFILE.userId) {
+export async function getProfile(userId) {
+  const activeUserId = resolveUserId(userId);
+
   try {
     const token = localStorage.getItem('auth_token');
-    const response = await fetch(`${API_BASE_URL}/profile/${userId}`, {
+    const response = await fetch(`${API_BASE_URL}/profile/${activeUserId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -42,24 +52,24 @@ export async function getProfile(userId = DEFAULT_PROFILE.userId) {
 
     const data = await response.json().catch(() => null);
 
-    if (response.ok && data) {
-      return { ...DEFAULT_PROFILE, ...data };
+    if (response.ok && data && !data.message?.includes('nahi hai')) {
+      return { ...DEFAULT_PROFILE, ...data, userId: activeUserId };
     }
   } catch (error) {
     console.warn('Backend API unreachable, returning cached/default profile:', error.message);
   }
 
   // Local fallback
-  const localProfile = localStorage.getItem(`user_profile_${userId}`);
+  const localProfile = localStorage.getItem(`user_profile_${activeUserId}`);
   if (localProfile) {
     try {
-      return { ...DEFAULT_PROFILE, ...JSON.parse(localProfile) };
+      return { ...DEFAULT_PROFILE, ...JSON.parse(localProfile), userId: activeUserId };
     } catch {
       // return default
     }
   }
 
-  return DEFAULT_PROFILE;
+  return { ...DEFAULT_PROFILE, userId: activeUserId };
 }
 
 /**
@@ -68,17 +78,18 @@ export async function getProfile(userId = DEFAULT_PROFILE.userId) {
  * @param {Object} profileData
  * @returns {Promise<Object>} Updated profile object
  */
-export async function updateProfile(userId = DEFAULT_PROFILE.userId, profileData = {}) {
-  const currentProfile = await getProfile(userId);
+export async function updateProfile(userId, profileData = {}) {
+  const activeUserId = resolveUserId(userId);
+  const currentProfile = await getProfile(activeUserId);
   const updatedPayload = {
     ...currentProfile,
     ...profileData,
-    userId,
+    userId: activeUserId,
   };
 
   try {
     const token = localStorage.getItem('auth_token');
-    const response = await fetch(`${API_BASE_URL}/profile/${userId}`, {
+    const response = await fetch(`${API_BASE_URL}/profile/${activeUserId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -91,10 +102,8 @@ export async function updateProfile(userId = DEFAULT_PROFILE.userId, profileData
         resumeUrl: updatedPayload.resumeUrl,
         firstName: updatedPayload.firstName,
         lastName: updatedPayload.lastName,
-        email: updatedPayload.email,
         phone: updatedPayload.phone,
         dateOfBirth: updatedPayload.dateOfBirth,
-        role: updatedPayload.role,
         country: updatedPayload.country,
         city: updatedPayload.city,
         postalCode: updatedPayload.postalCode,
@@ -104,8 +113,8 @@ export async function updateProfile(userId = DEFAULT_PROFILE.userId, profileData
     const data = await response.json().catch(() => null);
 
     if (response.ok && data) {
-      const merged = { ...updatedPayload, ...data };
-      localStorage.setItem(`user_profile_${userId}`, JSON.stringify(merged));
+      const merged = { ...updatedPayload, ...data, userId: activeUserId };
+      localStorage.setItem(`user_profile_${activeUserId}`, JSON.stringify(merged));
       return merged;
     }
   } catch (error) {
@@ -113,6 +122,6 @@ export async function updateProfile(userId = DEFAULT_PROFILE.userId, profileData
   }
 
   // Save to localStorage as fallback
-  localStorage.setItem(`user_profile_${userId}`, JSON.stringify(updatedPayload));
+  localStorage.setItem(`user_profile_${activeUserId}`, JSON.stringify(updatedPayload));
   return updatedPayload;
 }
