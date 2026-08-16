@@ -1,0 +1,358 @@
+/* Overview Dashboard - Full Screen Unified Theme */
+
+:root {
+  --ov-page-bg: #FAF7F2;
+  --ov-card-bg: #FFFFFF;
+  --ov-accent-red: #D9534F;
+  --ov-accent-red-hover: #C9433F;
+  --ov-dark-pill: #1E1E1E;
+  --ov-text-dark: #1E1E1E;
+  --ov-text-muted: #78746D;
+  --ov-border-light: #EFEBE4;
+}
+
+.ov-page-container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--ov-page-bg);
+  display: flex;
+  box-sizing: border-box;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.ov-dashboard-frame {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex: 1;
+  background-color: var(--ov-page-bg);
+}
+
+.ov-main-content {
+  flex: 1;
+  padding: 36px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  overflow-y: auto;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Header Row */
+.ov-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.ov-welcome-title {
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--ov-text-dark);
+  letter-spacing: -0.6px;
+  margin: 0 0 4px 0;
+}
+
+.ov-welcome-sub {
+  font-size: 14px;
+  color: var(--ov-text-muted);
+  margin: 0;
+}
+
+.ov-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ov-icon-btn {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background-color: #FFFFFF;
+  border: 1px solid var(--ov-border-light);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333333;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ov-icon-btn:hover {
+  background-color: #F2EDE4;
+}
+
+.ov-primary-btn {
+  background-color: var(--ov-accent-red);
+  color: #FFFFFF;
+  font-size: 14px;
+  font-weight: 700;
+  padding: 12px 22px;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(217, 83, 79, 0.28);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.ov-primary-btn:hover {
+  background-color: var(--ov-accent-red-hover);
+  transform: translateY(-1px);
+}
+
+/* KPI Stats Grid */
+.ov-stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+
+.ov-stat-card {
+  background-color: var(--ov-card-bg);
+  border-radius: 18px;
+  padding: 22px;
+  border: 1px solid var(--ov-border-light);
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.02);
+  transition: transform 0.2s ease;
+}
+
+.ov-stat-card:hover {
+  transform: translateY(-3px);
+}
+
+.ov-stat-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.ov-stat-value {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--ov-text-dark);
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.ov-stat-label {
+  font-size: 13px;
+  color: var(--ov-text-muted);
+  font-weight: 600;
+}
+
+/* 2-Column Split Content */
+.ov-split-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 24px;
+}
+
+.ov-section-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.ov-sec-title {
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--ov-text-dark);
+  margin: 0;
+}
+
+.ov-view-all-link {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--ov-accent-red);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* In-Progress Course Card */
+.ov-progress-banner {
+  background-color: var(--ov-card-bg);
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid var(--ov-border-light);
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+  margin-bottom: 24px;
+}
+
+.ov-banner-img {
+  width: 140px;
+  height: 95px;
+  border-radius: 14px;
+  object-fit: cover;
+}
+
+.ov-banner-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.ov-badge-tag {
+  background-color: #FEE2E2;
+  color: var(--ov-accent-red);
+  font-size: 11px;
+  font-weight: 800;
+  padding: 3px 8px;
+  border-radius: 6px;
+  width: fit-content;
+}
+
+.ov-banner-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--ov-text-dark);
+  margin: 0;
+}
+
+.ov-progress-bar-bg {
+  width: 100%;
+  height: 6px;
+  background-color: #EFEBE4;
+  border-radius: 4px;
+  overflow: hidden;
+  margin-top: 4px;
+}
+
+.ov-progress-bar-fill {
+  height: 100%;
+  background-color: var(--ov-accent-red);
+  border-radius: 4px;
+}
+
+/* Quick Jobs Grid */
+.ov-jobs-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ov-job-row {
+  background-color: var(--ov-card-bg);
+  border-radius: 16px;
+  padding: 16px 20px;
+  border: 1px solid var(--ov-border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: transform 0.2s ease;
+  cursor: pointer;
+}
+
+.ov-job-row:hover {
+  transform: translateX(4px);
+  border-color: #D8D2C6;
+}
+
+.ov-job-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.ov-job-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  object-fit: contain;
+}
+
+.ov-job-title {
+  font-size: 15px;
+  font-weight: 800;
+  color: var(--ov-text-dark);
+  margin: 0 0 3px 0;
+}
+
+.ov-job-meta {
+  font-size: 12px;
+  color: var(--ov-text-muted);
+}
+
+.ov-job-salary {
+  font-size: 14px;
+  font-weight: 800;
+  color: var(--ov-text-dark);
+}
+
+/* Right Column Widgets */
+.ov-widget-card {
+  background-color: var(--ov-card-bg);
+  border-radius: 20px;
+  padding: 24px;
+  border: 1px solid var(--ov-border-light);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.ov-widget-title {
+  font-size: 16px;
+  font-weight: 800;
+  color: var(--ov-text-dark);
+  margin: 0;
+}
+
+.ov-action-link-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background-color: #FAF7F2;
+  border-radius: 12px;
+  border: 1px solid var(--ov-border-light);
+  color: var(--ov-text-dark);
+  font-size: 14px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.ov-action-link-btn:hover {
+  background-color: #EFE8DD;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 1200px) {
+  .ov-stats-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ov-split-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 900px) {
+  .ov-main-content {
+    padding: 24px 20px;
+  }
+  .ov-stats-grid {
+    grid-template-columns: 1fr;
+  }
+}

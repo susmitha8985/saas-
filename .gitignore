@@ -25,7 +25,6 @@ dist-ssr
 
 # Backend and Environment (Keep local only, ignore on Git/GitHub)
 backend/
-frontend/
 .env
 .env.*
 *.db

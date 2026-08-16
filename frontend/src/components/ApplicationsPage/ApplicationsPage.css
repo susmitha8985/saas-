@@ -1,0 +1,237 @@
+/* Applications Page Styles - Unified Theme */
+
+:root {
+  --app-page-bg: #FAF7F2;
+  --app-card-bg: #FFFFFF;
+  --app-accent-red: #D9534F;
+  --app-accent-red-hover: #C9433F;
+  --app-dark-pill: #1E1E1E;
+  --app-text-dark: #1E1E1E;
+  --app-text-muted: #78746D;
+  --app-border-light: #EFEBE4;
+}
+
+.ap-page-container {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--app-page-bg);
+  display: flex;
+  box-sizing: border-box;
+  font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.ap-dashboard-frame {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  flex: 1;
+  background-color: var(--app-page-bg);
+}
+
+.ap-main-content {
+  flex: 1;
+  padding: 36px 48px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  overflow-y: auto;
+  min-height: 100vh;
+  box-sizing: border-box;
+}
+
+/* Header Row */
+.ap-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.ap-page-title {
+  font-size: 30px;
+  font-weight: 800;
+  color: var(--app-text-dark);
+  letter-spacing: -0.6px;
+  margin: 0 0 4px 0;
+}
+
+.ap-page-sub {
+  font-size: 14px;
+  color: var(--app-text-muted);
+  margin: 0;
+}
+
+/* Filter Tabs matching coursespage.webp tabs */
+.ap-tabs-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid var(--app-border-light);
+  padding-bottom: 14px;
+}
+
+.ap-tab-btn {
+  background: transparent;
+  border: 1px solid transparent;
+  padding: 8px 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--app-text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ap-tab-btn:hover {
+  color: var(--app-text-dark);
+  background-color: rgba(0, 0, 0, 0.04);
+}
+
+.ap-tab-btn.active {
+  background-color: var(--app-dark-pill);
+  color: #FFFFFF;
+}
+
+/* Applications Cards Grid */
+.ap-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.ap-card {
+  background-color: var(--app-card-bg);
+  border-radius: 18px;
+  padding: 22px 28px;
+  border: 1px solid var(--app-border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s ease;
+}
+
+.ap-card:hover {
+  transform: translateY(-2px);
+  border-color: #D8D2C6;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.04);
+}
+
+.ap-card-left {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+}
+
+.ap-card-logo {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  object-fit: contain;
+}
+
+.ap-card-title {
+  font-size: 17px;
+  font-weight: 800;
+  color: var(--app-text-dark);
+  margin: 0 0 4px 0;
+}
+
+.ap-card-company {
+  font-size: 13px;
+  color: var(--app-text-muted);
+  font-weight: 600;
+}
+
+.ap-card-right {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.ap-status-badge {
+  font-size: 12px;
+  font-weight: 800;
+  padding: 6px 14px;
+  border-radius: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.ap-status-pending {
+  background-color: #FEF3C7;
+  color: #D97706;
+}
+
+.ap-status-accepted {
+  background-color: #DCFCE7;
+  color: #16A34A;
+}
+
+.ap-status-reviewed {
+  background-color: #E0E7FF;
+  color: #4F46E5;
+}
+
+.ap-view-btn {
+  background-color: #FAF7F2;
+  border: 1px solid var(--app-border-light);
+  color: var(--app-text-dark);
+  font-size: 13px;
+  font-weight: 700;
+  padding: 10px 18px;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.ap-view-btn:hover {
+  background-color: var(--app-dark-pill);
+  color: #FFFFFF;
+}
+
+/* Empty State Card */
+.ap-empty-state {
+  background-color: var(--app-card-bg);
+  border-radius: 20px;
+  padding: 60px 24px;
+  text-align: center;
+  border: 1px dashed #D8D2C6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.ap-empty-title {
+  font-size: 18px;
+  font-weight: 800;
+  color: var(--app-text-dark);
+  margin: 0;
+}
+
+.ap-empty-desc {
+  font-size: 14px;
+  color: var(--app-text-muted);
+  max-width: 380px;
+  margin: 0;
+}
+
+/* Responsive Media Queries */
+@media (max-width: 900px) {
+  .ap-main-content {
+    padding: 24px 20px;
+  }
+  .ap-card {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .ap-card-right {
+    width: 100%;
+    justify-content: space-between;
+  }
+}
