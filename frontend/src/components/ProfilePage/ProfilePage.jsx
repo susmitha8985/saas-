@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { Edit2, Camera, ExternalLink, CheckCircle } from 'lucide-react';
-import Sidebar from './Sidebar';
+import AppSidebar from '../common/AppSidebar';
 import TopHeader from './TopHeader';
 import EditProfileModal from './EditProfileModal';
 import { getProfile, updateProfile, DEFAULT_PROFILE } from '../../utils/profileService';
+import { getStoredUser } from '../../utils/authService';
 import './ProfilePage.css';
 
 export default function ProfilePage() {
   const { userId: paramUserId } = useParams();
-  const userId = paramUserId || DEFAULT_PROFILE.userId;
+  const storedUser = getStoredUser();
+  const userId = paramUserId || storedUser?.id || DEFAULT_PROFILE.userId;
 
   const [profile, setProfile] = useState(DEFAULT_PROFILE);
   const [loading, setLoading] = useState(true);
@@ -67,7 +69,7 @@ export default function ProfilePage() {
   return (
     <div className="profile-app-container">
       {/* Left Navigation Sidebar */}
-      <Sidebar user={profile} activeTab="Pages" />
+      <AppSidebar customUser={profile} />
 
       {/* Main Container Area */}
       <main className="profile-main-wrapper">

@@ -1,4 +1,19 @@
-/* Jobs Dashboard Styles with Deep Forest Green (#044635) Navbar for Brand Consistency */
+.jobs-app-fullscreen-layout {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  box-sizing: border-box;
+  background-color: #F8FAFC;
+}
+
+.jobs-main-content-wrapper {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  overflow-y: auto;
+  min-width: 0;
+}
 
 .jobs-app-container {
   display: flex;
@@ -8,6 +23,7 @@
   font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
   color: #0F172A;
   box-sizing: border-box;
+  width: 100%;
 }
 
 /* Top Navbar Container - Deep Forest Green (#044635) */

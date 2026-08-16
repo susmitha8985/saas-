@@ -63,22 +63,45 @@ export default function AuthPage() {
     setAuthMode(newMode);
   };
 
+  const validateEmail = (emailStr) => {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(emailStr);
+  };
+
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
     setErrorMessage('');
     setSuccessMessage('');
 
-    if (!fullName.trim() || !email.trim() || !password.trim()) {
+    const trimmedName = fullName.trim();
+    const trimmedEmail = email.trim();
+    const trimmedPassword = password.trim();
+
+    if (!trimmedName || !trimmedEmail || !trimmedPassword) {
       setErrorMessage('Please fill in all required fields.');
+      return;
+    }
+
+    if (trimmedName.length < 2) {
+      setErrorMessage('Full Name must be at least 2 characters long.');
+      return;
+    }
+
+    if (!validateEmail(trimmedEmail)) {
+      setErrorMessage('Please enter a valid email address.');
+      return;
+    }
+
+    if (trimmedPassword.length < 6) {
+      setErrorMessage('Password must be at least 6 characters long.');
       return;
     }
 
     setIsLoading(true);
     try {
       const response = await registerUser({
-        name: fullName.trim(),
-        email: email.trim(),
-        password: password.trim(),
+        name: trimmedName,
+        email: trimmedEmail,
+        password: trimmedPassword,
       });
 
       setSuccessMessage(response.message || 'Account created successfully! Please log in.');
@@ -88,7 +111,7 @@ export default function AuthPage() {
       // Auto-switch to email sign-in mode after successful registration
       setTimeout(() => {
         switchMode('signin_email');
-      }, 1500);
+      }, 1200);
     } catch (err) {
       setErrorMessage(err.message || 'Registration failed. Please try again.');
     } finally {
@@ -101,24 +124,38 @@ export default function AuthPage() {
     setErrorMessage('');
     setSuccessMessage('');
 
-    if (!email.trim() || !password.trim()) {
+    const trimmedEmail = email.trim();
+    const trimmedPassword = password.trim();
+
+    if (!trimmedEmail || !trimmedPassword) {
       setErrorMessage('Please enter your email and password.');
+      return;
+    }
+
+    if (!validateEmail(trimmedEmail)) {
+      setErrorMessage('Please enter a valid email address.');
+      return;
+    }
+
+    if (trimmedPassword.length < 6) {
+      setErrorMessage('Password must be at least 6 characters long.');
       return;
     }
 
     setIsLoading(true);
     try {
-      await loginUser({
-        email: email.trim(),
-        password: password.trim(),
+      const response = await loginUser({
+        email: trimmedEmail,
+        password: trimmedPassword,
       });
 
-      setSuccessMessage('Login successful! Redirecting...');
+      setSuccessMessage('Login successful! Redirecting to profile...');
 
-      // Redirect after brief delay
+      // Redirect directly to Profile Page
       setTimeout(() => {
-        navigate('/thank-you');
-      }, 800);
+        const userId = response?.user?.id;
+        navigate(userId ? `/profile/${userId}` : '/profile');
+      }, 600);
     } catch (err) {
       setErrorMessage(err.message || 'Invalid email or password. Please try again.');
     } finally {

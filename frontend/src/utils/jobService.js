@@ -1,7 +1,6 @@
-// Job API Service
-// Connects to /jobs (GET), /jobs/:userId (POST), and /jobs/detail/:jobId (GET)
+import { getStoredUser } from './authService';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export const INITIAL_JOBS = [
   {
@@ -204,8 +203,9 @@ export async function getJobDetails(jobId) {
  * @param {Object} jobPayload - { title, description, company, location, salary, tags }
  * @returns {Promise<Object>} Created job object
  */
-export async function postNewJob(userId = 'b6f48769-201a-4319-ae04-146a62cdc935', jobPayload = {}) {
-  if (!userId) throw new Error('UserId is required to post a job');
+export async function postNewJob(userId, jobPayload = {}) {
+  const storedUser = getStoredUser();
+  const targetUserId = userId || storedUser?.id || 'b6f48769-201a-4319-ae04-146a62cdc935';
 
   const newJobObject = {
     id: `job_${Date.now()}`,
@@ -219,14 +219,14 @@ export async function postNewJob(userId = 'b6f48769-201a-4319-ae04-146a62cdc935'
     bgColor: jobPayload.bgColor || '#E6E1F9',
     tags: jobPayload.tags || ['Full time', 'Senior level', 'Remote', 'Project work'],
     companyLogo: jobPayload.companyLogo || 'https://cdn-icons-png.flaticon.com/512/1006/1006771.png',
-    recruiterId: userId,
+    recruiterId: targetUserId,
     recruiterName: jobPayload.recruiterName || 'Lead Recruiter',
     recruiterEmail: jobPayload.recruiterEmail || 'hiring@techcorp.com',
     createdAt: Date.now(),
   };
 
   try {
-    const response = await fetch(`${API_BASE_URL}/jobs/${userId}`, {
+    const response = await fetch(`${API_BASE_URL}/jobs/${targetUserId}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

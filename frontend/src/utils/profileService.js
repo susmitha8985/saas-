@@ -1,7 +1,6 @@
-// Profile API Service
-// Connects to /profile/:userId (GET and PUT) as specified in API documentation
+import { getStoredUser } from './authService';
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 export const DEFAULT_PROFILE = {
   userId: 'b6f48769-201a-4319-ae04-146a62cdc935',
@@ -29,10 +28,13 @@ export const DEFAULT_PROFILE = {
  * @param {string} userId
  * @returns {Promise<Object>} Profile data object
  */
-export async function getProfile(userId = DEFAULT_PROFILE.userId) {
+export async function getProfile(userId) {
+  const storedUser = getStoredUser();
+  const targetUserId = userId || storedUser?.id || DEFAULT_PROFILE.userId;
+
   try {
     const token = localStorage.getItem('auth_token');
-    const response = await fetch(`${API_BASE_URL}/profile/${userId}`, {
+    const response = await fetch(`${API_BASE_URL}/profile/${targetUserId}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
@@ -68,17 +70,19 @@ export async function getProfile(userId = DEFAULT_PROFILE.userId) {
  * @param {Object} profileData
  * @returns {Promise<Object>} Updated profile object
  */
-export async function updateProfile(userId = DEFAULT_PROFILE.userId, profileData = {}) {
-  const currentProfile = await getProfile(userId);
+export async function updateProfile(userId, profileData = {}) {
+  const storedUser = getStoredUser();
+  const targetUserId = userId || storedUser?.id || DEFAULT_PROFILE.userId;
+  const currentProfile = await getProfile(targetUserId);
   const updatedPayload = {
     ...currentProfile,
     ...profileData,
-    userId,
+    userId: targetUserId,
   };
 
   try {
     const token = localStorage.getItem('auth_token');
-    const response = await fetch(`${API_BASE_URL}/profile/${userId}`, {
+    const response = await fetch(`${API_BASE_URL}/profile/${targetUserId}`, {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json',
@@ -105,7 +109,7 @@ export async function updateProfile(userId = DEFAULT_PROFILE.userId, profileData
 
     if (response.ok && data) {
       const merged = { ...updatedPayload, ...data };
-      localStorage.setItem(`user_profile_${userId}`, JSON.stringify(merged));
+      localStorage.setItem(`user_profile_${targetUserId}`, JSON.stringify(merged));
       return merged;
     }
   } catch (error) {
@@ -113,6 +117,6 @@ export async function updateProfile(userId = DEFAULT_PROFILE.userId, profileData
   }
 
   // Save to localStorage as fallback
-  localStorage.setItem(`user_profile_${userId}`, JSON.stringify(updatedPayload));
+  localStorage.setItem(`user_profile_${targetUserId}`, JSON.stringify(updatedPayload));
   return updatedPayload;
 }

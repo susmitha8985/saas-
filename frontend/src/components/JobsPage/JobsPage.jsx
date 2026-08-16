@@ -15,7 +15,8 @@ import {
   User,
   BookOpen,
   Mail,
-  Info
+  Info,
+  LogOut
 } from 'lucide-react';
 import JobCard from './JobCard';
 import JobDetailModal from './JobDetailModal';
@@ -23,6 +24,8 @@ import PostJobModal from './PostJobModal';
 import ContactModal from './ContactModal';
 import AboutModal from './AboutModal';
 import { getAllJobs } from '../../utils/jobService';
+import { getStoredUser, logoutUser } from '../../utils/authService';
+import AppSidebar from '../common/AppSidebar';
 import './JobsPage.css';
 
 export default function JobsPage() {
@@ -37,9 +40,6 @@ export default function JobsPage() {
   const [selectedExperience, setSelectedExperience] = useState('All');
   const [salaryMax, setSalaryMax] = useState(2000);
 
-  // Hamburger Drawer & User Menu State
-  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-  const [showDrawerUserMenu, setShowDrawerUserMenu] = useState(false);
   const [showContactModal, setShowContactModal] = useState(false);
   const [showAboutModal, setShowAboutModal] = useState(false);
 
@@ -125,184 +125,13 @@ export default function JobsPage() {
   }, [jobs, searchTitle]);
 
   return (
-    <div className="jobs-app-container">
-      {/* 1. Top Navbar Header with Hamburger Button & brand logo */}
-      <header className="jobs-navbar-header">
-        <div className="nav-brand-left">
-          {/* Hamburger Menu Button */}
-          <button
-            className="hamburger-btn"
-            onClick={() => setIsDrawerOpen(true)}
-            aria-label="Open Navigation Menu"
-            title="Open Menu"
-          >
-            <Menu size={22} />
-          </button>
+    <div className="jobs-app-fullscreen-layout">
+      {/* Unified App Sidebar */}
+      <AppSidebar />
 
-          {/* brand codeforeverybody */}
-          <div className="brand-title-box" onClick={() => navigate('/')}>
-            <div className="brand-name">
-              codefor<span>everybody</span>
-            </div>
-            <span className="brand-subtitle">
-              Course Selling & Tech Career Platform
-            </span>
-          </div>
-        </div>
-      </header>
-
-      {/* 2. Sliding Hamburger Drawer (Matching Profile Route Menu Theme) */}
-      {isDrawerOpen && (
-        <div className="drawer-backdrop" onClick={() => setIsDrawerOpen(false)}>
-          <aside
-            className="profile-theme-drawer"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Drawer Logo */}
-            <div className="profile-drawer-logo">
-              <div className="drawer-brand-name" onClick={() => { setIsDrawerOpen(false); navigate('/'); }}>
-                codefor<span>everybody</span>
-              </div>
-              <button
-                className="modal-close-btn"
-                onClick={() => setIsDrawerOpen(false)}
-                aria-label="Close drawer"
-              >
-                <X size={18} color="#646464" />
-              </button>
-            </div>
-
-            {/* Navigation List - Same Theme as Profile Route Sidebar */}
-            <ul className="profile-drawer-nav-list">
-              <li>
-                <button
-                  className={`profile-drawer-nav-item ${location.pathname === '/' ? 'active' : ''}`}
-                  onClick={() => {
-                    setIsDrawerOpen(false);
-                    navigate('/');
-                  }}
-                >
-                  <LayoutDashboard className="sidebar-icon" size={18} />
-                  <span>Dashboard</span>
-                </button>
-              </li>
-
-              <li>
-                <button
-                  className={`profile-drawer-nav-item ${location.pathname.startsWith('/jobs') ? 'active' : ''}`}
-                  onClick={() => {
-                    setIsDrawerOpen(false);
-                    navigate('/jobs');
-                  }}
-                >
-                  <Briefcase className="sidebar-icon" size={18} />
-                  <span>Jobs</span>
-                </button>
-              </li>
-
-              <li>
-                <button
-                  className={`profile-drawer-nav-item ${location.pathname.startsWith('/profile') ? 'active' : ''}`}
-                  onClick={() => {
-                    setIsDrawerOpen(false);
-                    navigate('/profile');
-                  }}
-                >
-                  <User className="sidebar-icon" size={18} />
-                  <span>My Profile</span>
-                </button>
-              </li>
-
-              <li>
-                <button
-                  className={`profile-drawer-nav-item ${location.pathname.startsWith('/player') ? 'active' : ''}`}
-                  onClick={() => {
-                    setIsDrawerOpen(false);
-                    navigate('/player');
-                  }}
-                >
-                  <BookOpen className="sidebar-icon" size={18} />
-                  <span>Courses</span>
-                </button>
-              </li>
-
-              <li>
-                <button
-                  className="profile-drawer-nav-item"
-                  onClick={() => {
-                    setIsDrawerOpen(false);
-                    setShowContactModal(true);
-                  }}
-                >
-                  <Mail className="sidebar-icon" size={18} />
-                  <span>Contact</span>
-                </button>
-              </li>
-
-              <li>
-                <button
-                  className="profile-drawer-nav-item"
-                  onClick={() => {
-                    setIsDrawerOpen(false);
-                    setShowAboutModal(true);
-                  }}
-                >
-                  <Info className="sidebar-icon" size={18} />
-                  <span>About</span>
-                </button>
-              </li>
-            </ul>
-
-            {/* Profile User Pill at Bottom (Matching Profile Route Sidebar) */}
-            <div className="profile-drawer-user-wrapper">
-              {showDrawerUserMenu && (
-                <div className="user-menu-popover" style={{ bottom: '70px', left: '16px', right: '16px' }}>
-                  <button
-                    className="user-menu-item"
-                    onClick={() => {
-                      setShowDrawerUserMenu(false);
-                      setIsDrawerOpen(false);
-                      navigate('/profile');
-                    }}
-                  >
-                    My Profile
-                  </button>
-                  <button
-                    className="user-menu-item active"
-                    onClick={() => {
-                      setShowDrawerUserMenu(false);
-                      setIsDrawerOpen(false);
-                      navigate('/jobs');
-                    }}
-                  >
-                    Jobs Portal
-                  </button>
-                  <button className="user-menu-item" onClick={() => setShowDrawerUserMenu(false)}>
-                    Change Password
-                  </button>
-                </div>
-              )}
-
-              <div
-                className="sidebar-user-pill"
-                onClick={() => setShowDrawerUserMenu(!showDrawerUserMenu)}
-                title="Profile Options"
-              >
-                <img
-                  src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80"
-                  alt="User avatar"
-                  className="sidebar-avatar"
-                />
-                <div className="sidebar-user-info">
-                  <span className="sidebar-user-name">Natashia Khaleira</span>
-                  <span className="sidebar-user-email">jonson@bress.com</span>
-                </div>
-                <ChevronDown size={16} color="#64748B" />
-              </div>
-            </div>
-          </aside>
-        </div>
-      )}
+      <div className="jobs-main-content-wrapper">
+        <div className="jobs-app-container">
+          {/* Top Filter Bar */}
 
       {/* 3. Dark Top Filter Bar (#0F1217) */}
       <header className="jobs-top-filter-bar">
@@ -545,6 +374,8 @@ export default function JobsPage() {
         isOpen={showAboutModal}
         onClose={() => setShowAboutModal(false)}
       />
+        </div>
+      </div>
     </div>
   );
 }

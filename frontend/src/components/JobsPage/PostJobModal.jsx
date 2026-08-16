@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import { X, Send } from 'lucide-react';
 import { postNewJob } from '../../utils/jobService';
+import { getStoredUser } from '../../utils/authService';
 
 export default function PostJobModal({ isOpen, onClose, onJobPosted }) {
-  const [userId, setUserId] = useState('b6f48769-201a-4319-ae04-146a62cdc935');
+  const [userId, setUserId] = useState(() => getStoredUser()?.id || 'b6f48769-201a-4319-ae04-146a62cdc935');
   const [formData, setFormData] = useState({
     title: 'Fullstack Developer',
     description: 'Looking for a NestJS & React developer.',
@@ -25,8 +26,22 @@ export default function PostJobModal({ isOpen, onClose, onJobPosted }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
     setError(null);
+
+    if (!formData.title.trim()) {
+      setError('Job Title is required.');
+      return;
+    }
+    if (!formData.company.trim()) {
+      setError('Company Name is required.');
+      return;
+    }
+    if (!formData.description.trim()) {
+      setError('Job Description is required.');
+      return;
+    }
+
+    setLoading(true);
 
     const tagsArray = formData.tagsStr
       .split(',')

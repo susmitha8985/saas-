@@ -1,7 +1,7 @@
 // Authentication Service
 // Connects to the backend auth routes (/auth/register, /auth/login)
 
-const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000';
 
 /**
  * Register a new user

@@ -29,10 +29,11 @@ import {
   Briefcase,
   User,
   Mail,
-  Info
+  Info,
+  LogOut
 } from 'lucide-react';
 import AITutorPanel from './AITutorPanel';
-import Sidebar from '../ProfilePage/Sidebar';
+import { getStoredUser, logoutUser } from '../../utils/authService';
 import './CoursePlayer.css';
 
 // Default mock course data matching the UI in courseolayer.webp
@@ -312,31 +313,8 @@ export default function CoursePlayer() {
       {/* Container Box matching exact frame in courseolayer.webp */}
       <div className="cp-main-card">
         {/* Top Header Bar */}
-        <header className="cp-top-bar" style={{ position: 'relative' }}>
+        <header className="cp-top-bar">
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
-            <button
-              type="button"
-              className="cp-icon-btn"
-              onClick={() => setShowNavMenu(!showNavMenu)}
-              aria-label="Toggle Navigation Menu"
-              title="Navigation Menu"
-              style={{
-                background: showNavMenu ? '#044635' : '#F1F5F9',
-                color: showNavMenu ? '#FFFFFF' : '#0F172A',
-                border: '1px solid #E2E8F0',
-                width: '38px',
-                height: '38px',
-                borderRadius: '10px',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                cursor: 'pointer',
-                transition: 'all 0.2s ease'
-              }}
-            >
-              <Menu size={20} />
-            </button>
-
             <div
               className="drawer-brand-name"
               onClick={() => navigate('/')}
@@ -344,127 +322,6 @@ export default function CoursePlayer() {
             >
               codefor<span>everybody</span>
             </div>
-
-            {/* Floating Navigation Popover Menu */}
-            {showNavMenu && (
-              <>
-                <div
-                  style={{
-                    position: 'fixed',
-                    inset: 0,
-                    zIndex: 9998,
-                    background: 'transparent',
-                  }}
-                  onClick={() => setShowNavMenu(false)}
-                />
-                <div
-                  style={{
-                    position: 'absolute',
-                    top: '48px',
-                    left: '0',
-                    width: '240px',
-                    backgroundColor: '#FFFFFF',
-                    borderRadius: '16px',
-                    boxShadow: '0 12px 36px rgba(15, 23, 42, 0.16)',
-                    border: '1px solid #E2E8F0',
-                    padding: '12px',
-                    zIndex: 9999,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '4px',
-                    animation: 'fadeIn 0.15s ease-out'
-                  }}
-                >
-                  <div
-                    style={{
-                      fontSize: '18px',
-                      fontWeight: '700',
-                      color: '#F17B0D',
-                      padding: '6px 12px 10px 12px',
-                      borderBottom: '1px solid #F1F5F9',
-                      cursor: 'pointer',
-                    }}
-                    onClick={() => { setShowNavMenu(false); navigate('/'); }}
-                  >
-                    codefor<span style={{ color: '#044635' }}>everybody</span>
-                  </div>
-
-                  <button
-                    type="button"
-                    style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '8px', border: 'none', background: 'transparent', cursor: 'pointer', fontSize: '14px', fontWeight: '500', color: '#464646' }}
-                    onClick={() => { setShowNavMenu(false); navigate('/'); }}
-                  >
-                    <LayoutDashboard size={17} color="#044635" /> Dashboard
-                  </button>
-
-                  <button
-                    type="button"
-                    style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '8px', border: 'none', background: 'transparent', cursor: 'pointer', fontSize: '14px', fontWeight: '500', color: '#464646' }}
-                    onClick={() => { setShowNavMenu(false); navigate('/jobs'); }}
-                  >
-                    <Briefcase size={17} color="#044635" /> Jobs
-                  </button>
-
-                  <button
-                    type="button"
-                    style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '8px', border: 'none', background: 'transparent', cursor: 'pointer', fontSize: '14px', fontWeight: '500', color: '#464646' }}
-                    onClick={() => { setShowNavMenu(false); navigate('/profile'); }}
-                  >
-                    <User size={17} color="#044635" /> My Profile
-                  </button>
-
-                  <button
-                    type="button"
-                    style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '8px', border: 'none', background: '#FFF4EA', cursor: 'pointer', fontSize: '14px', fontWeight: '600', color: '#F17B0D' }}
-                    onClick={() => { setShowNavMenu(false); navigate('/player'); }}
-                  >
-                    <BookOpen size={17} color="#F17B0D" /> Courses
-                  </button>
-
-                  <button
-                    type="button"
-                    style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '8px', border: 'none', background: 'transparent', cursor: 'pointer', fontSize: '14px', fontWeight: '500', color: '#464646' }}
-                    onClick={() => { setShowNavMenu(false); navigate('/jobs'); }}
-                  >
-                    <Mail size={17} color="#044635" /> Contact
-                  </button>
-
-                  <button
-                    type="button"
-                    style={{ display: 'flex', alignItems: 'center', gap: '10px', padding: '10px 12px', borderRadius: '8px', border: 'none', background: 'transparent', cursor: 'pointer', fontSize: '14px', fontWeight: '500', color: '#464646' }}
-                    onClick={() => { setShowNavMenu(false); navigate('/jobs'); }}
-                  >
-                    <Info size={17} color="#044635" /> About
-                  </button>
-
-                  <div
-                    style={{
-                      borderTop: '1px solid #F1F5F9',
-                      marginTop: '6px',
-                      paddingTop: '10px',
-                      display: 'flex',
-                      alignItems: 'center',
-                      gap: '10px',
-                      paddingLeft: '6px',
-                    }}
-                  >
-                    <img
-                      src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=120&q=80"
-                      alt="User"
-                      style={{ width: '32px', height: '32px', borderRadius: '50%', objectFit: 'cover' }}
-                    />
-                    <div style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
-                      <span style={{ fontSize: '12.5px', fontWeight: '700', color: '#0F172A', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                        Natashia Khaleira
-                      </span>
-                      <span style={{ fontSize: '11px', color: '#64748B', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                        jonson@bress.com
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </>
-            )}
           </div>
 
           <button

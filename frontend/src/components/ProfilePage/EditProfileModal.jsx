@@ -19,8 +19,10 @@ export default function EditProfileModal({ isOpen, onClose, profile, onSave, sec
   });
 
   const [saving, setSaving] = useState(false);
+  const [error, setError] = useState('');
 
   useEffect(() => {
+    setError('');
     if (profile) {
       setFormData({
         firstName: profile.firstName || '',
@@ -49,6 +51,13 @@ export default function EditProfileModal({ isOpen, onClose, profile, onSave, sec
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setError('');
+
+    if (formData.email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
+      setError('Please enter a valid email address.');
+      return;
+    }
+
     setSaving(true);
 
     const skillsArray = formData.skillsStr
@@ -80,6 +89,7 @@ export default function EditProfileModal({ isOpen, onClose, profile, onSave, sec
       onClose();
     } catch (err) {
       console.error('Failed to save profile changes:', err);
+      setError(err.message || 'Failed to update profile.');
     } finally {
       setSaving(false);
     }
@@ -105,6 +115,11 @@ export default function EditProfileModal({ isOpen, onClose, profile, onSave, sec
         {/* Form Body */}
         <form onSubmit={handleSubmit}>
           <div className="modal-body">
+            {error && (
+              <div style={{ padding: '10px 14px', backgroundColor: '#FEF2F2', color: '#991B1B', borderRadius: '8px', fontSize: '13px', marginBottom: '14px' }}>
+                {error}
+              </div>
+            )}
             {section === 'personal' && (
               <>
                 <div className="form-grid-2">
