@@ -4,6 +4,9 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ─────────────────────────────────────────────
+   DESIGN TOKENS
+───────────────────────────────────────────── */
 :root {
   --font-sans: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --font-heading: 'Space Grotesk', 'Plus Jakarta Sans', sans-serif;
@@ -12,32 +15,43 @@
   --primary-gradient: linear-gradient(135deg, #9D6872 0%, #848670 100%);
   --primary-indigo: #9D6872; /* Dusty burgundy accent */
   --primary-purple: #848670; /* Olive accent */
-  --primary-blue: #B79968; /* Understated gold */
-  --text-dark: #F3EFF1; /* Light primary text */
+  --primary-blue: #B79968;  /* Understated gold */
+  --text-dark: #F3EFF1;     /* Light primary text */
   --text-main: #F3EFF1;
-  --text-muted: #B9AEB4; /* Muted secondary text */
-  --border-light: #403942; /* Darker border */
+  --text-muted: #B9AEB4;    /* Muted secondary text */
+  --border-light: #403942;  /* Darker border */
   --border-active: #9D6872;
-  --card-bg: #242126; /* Surface cards */
+  --card-bg: #242126;       /* Surface cards */
   --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.45), 0 0 1px rgba(157, 104, 114, 0.15);
+  --focus-ring-color: #9D6872;
+  --focus-ring-offset: #181719;
 }
 
-* {
+/* ─────────────────────────────────────────────
+   RESET
+───────────────────────────────────────────── */
+*, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
+/* ─────────────────────────────────────────────
+   TYPOGRAPHY HIERARCHY
+───────────────────────────────────────────── */
 h1, h2, h3, h4, h5, h6,
 .font-heading,
 .heading-font {
   font-family: var(--font-heading);
 }
 
+/* ─────────────────────────────────────────────
+   BASE BODY STYLES
+───────────────────────────────────────────── */
 body {
   font-family: var(--font-sans);
   background: var(--bg-color);
-  background-image: 
+  background-image:
     linear-gradient(to right, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
     linear-gradient(to bottom, rgba(255, 255, 255, 0.015) 1px, transparent 1px),
     radial-gradient(at 10% 10%, rgba(157, 104, 114, 0.08) 0px, transparent 50%),
@@ -48,100 +62,183 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
+  /* Ensure minimum 1rem (16px) base so text-scale at 200% works */
+  font-size: 1rem;
+  line-height: 1.6;
 }
 
-/* Scrollbar Customization */
-::-webkit-scrollbar {
-  width: 6px;
-}
-::-webkit-scrollbar-track {
-  background: rgba(8, 12, 20, 0.5);
-}
-::-webkit-scrollbar-thumb {
-  background: #334155;
-  border-radius: 9999px;
-}
-::-webkit-scrollbar-thumb:hover {
-  background: #475569;
-}
-
-/* Animations */
-@keyframes floatSlow {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(-12px) rotate(1deg); }
-}
-
-@keyframes floatReverse {
-  0%, 100% { transform: translateY(0px) rotate(0deg); }
-  50% { transform: translateY(10px) rotate(-1deg); }
+/* ─────────────────────────────────────────────
+   ACCESSIBILITY: SKIP LINK (WCAG 2.4.1)
+   Visually hidden until focused by keyboard.
+───────────────────────────────────────────── */
+.skip-link {
+  position: fixed;
+  top: -100%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 9999;
+  padding: 0.75rem 1.5rem;
+  background: var(--primary-indigo);
+  color: #fff;
+  font-family: var(--font-sans);
+  font-weight: 700;
+  font-size: 0.875rem;
+  border-radius: 0 0 0.75rem 0.75rem;
+  text-decoration: none;
+  transition: top 0.15s ease;
+  /* Hide from layout when not focused */
+  white-space: nowrap;
 }
 
-@keyframes pulseGlow {
-  0%, 100% { opacity: 0.4; transform: scale(1); }
-  50% { opacity: 0.7; transform: scale(1.04); }
+.skip-link:focus,
+.skip-link.focused {
+  top: 0;
+  outline: 3px solid #fff;
+  outline-offset: 2px;
 }
 
-.animate-float {
-  animation: floatSlow 8s ease-in-out infinite;
+/* ─────────────────────────────────────────────
+   ACCESSIBILITY: SCREEN-READER ONLY UTILITY
+   Hides content visually while keeping it for
+   assistive technologies. (WCAG 1.1.1, 4.1.2)
+───────────────────────────────────────────── */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
 }
 
-.animate-float-reverse {
-  animation: floatReverse 9s ease-in-out infinite;
+/* ─────────────────────────────────────────────
+   ACCESSIBILITY: GLOBAL FOCUS-VISIBLE RING
+   Ensures consistent 2px focused ring on all
+   interactive elements for keyboard users.
+   (WCAG 2.4.7 — Level AA)
+───────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid var(--focus-ring-color);
+  outline-offset: 3px;
+  border-radius: 4px;
 }
 
-.animate-pulse-glow {
-  animation: pulseGlow 5s ease-in-out infinite;
+/* Remove focus ring for mouse users (focus-visible only) */
+:focus:not(:focus-visible) {
+  outline: none;
 }
 
-/* Reels Vertical Doomscroll layout helpers */
-.no-scrollbar::-webkit-scrollbar {
-  display: none;
-}
+/* ─────────────────────────────────────────────
+   SCROLLBAR CUSTOMIZATION
+───────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: rgba(8, 12, 20, 0.5); }
+::-webkit-scrollbar-thumb { background: #334155; border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #475569; }
+
+/* ─────────────────────────────────────────────
+   REELS LAYOUT HELPERS
+───────────────────────────────────────────── */
+.no-scrollbar::-webkit-scrollbar { display: none; }
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }
 
-.snap-y-mandatory {
-  scroll-snap-type: y mandatory;
-}
-.snap-start {
-  scroll-snap-align: start;
+.snap-y-mandatory { scroll-snap-type: y mandatory; }
+.snap-start { scroll-snap-align: start; }
+
+/* ─────────────────────────────────────────────
+   TOAST NOTIFICATION SYSTEM (WCAG 4.1.3)
+───────────────────────────────────────────── */
+.toast-container {
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 9000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  max-width: min(24rem, calc(100vw - 2rem));
+  pointer-events: none;
 }
 
-/* Custom Marquee for Music Audio Track scroll */
+.toast-item {
+  display: flex;
+  align-items: flex-start;
+  padding: 0.875rem 1rem;
+  border: 1px solid;
+  border-radius: 0.75rem;
+  backdrop-filter: blur(12px);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+  pointer-events: all;
+  animation: toastSlideIn 0.25s ease forwards;
+}
+
+@keyframes toastSlideIn {
+  from { opacity: 0; transform: translateX(1rem); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+/* ─────────────────────────────────────────────
+   ANIMATIONS
+───────────────────────────────────────────── */
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(-12px) rotate(1deg); }
+}
+
+@keyframes floatReverse {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  50%       { transform: translateY(10px) rotate(-1deg); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 0.4; transform: scale(1); }
+  50%       { opacity: 0.7; transform: scale(1.04); }
+}
+
 @keyframes marquee {
-  0% { transform: translate3d(0, 0, 0); }
+  0%   { transform: translate3d(0, 0, 0); }
   100% { transform: translate3d(-100%, 0, 0); }
 }
 
-.animate-marquee {
-  display: inline-block;
-  animation: marquee 12s linear infinite;
-}
-
-/* Spin slow for Vinyl Disc */
 @keyframes spinSlow {
-  0% { transform: rotate(0deg); }
+  0%   { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
 
-.animate-spin-slow {
-  animation: spinSlow 4s linear infinite;
-}
-
-/* Double Tap Heart Pop Animation */
 @keyframes heartPop {
-  0% { transform: scale(0) rotate(0deg); opacity: 0; }
-  15% { transform: scale(1.3) rotate(-12deg); opacity: 0.95; }
-  30% { transform: scale(0.9) rotate(8deg); opacity: 1; }
-  45% { transform: scale(1) rotate(0deg); opacity: 1; }
-  80% { transform: scale(1) rotate(0deg); opacity: 0.8; }
+  0%   { transform: scale(0) rotate(0deg); opacity: 0; }
+  15%  { transform: scale(1.3) rotate(-12deg); opacity: 0.95; }
+  30%  { transform: scale(0.9) rotate(8deg); opacity: 1; }
+  45%  { transform: scale(1) rotate(0deg); opacity: 1; }
+  80%  { transform: scale(1) rotate(0deg); opacity: 0.8; }
   100% { transform: scale(1.8) rotate(15deg); opacity: 0; }
 }
 
-.animate-heartPop {
-  animation: heartPop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+.animate-float         { animation: floatSlow 8s ease-in-out infinite; }
+.animate-float-reverse { animation: floatReverse 9s ease-in-out infinite; }
+.animate-pulse-glow    { animation: pulseGlow 5s ease-in-out infinite; }
+.animate-marquee       { display: inline-block; animation: marquee 12s linear infinite; }
+.animate-spin-slow     { animation: spinSlow 4s linear infinite; }
+.animate-heartPop      { animation: heartPop 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+
+/* ─────────────────────────────────────────────
+   ACCESSIBILITY: REDUCED MOTION (WCAG 2.3.3)
+   Pauses all decorative animations when the
+   user has requested reduced motion in their OS.
+───────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
-
-
